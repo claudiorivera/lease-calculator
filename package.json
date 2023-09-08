@@ -11,7 +11,7 @@
 		"db:push": "prisma db push",
 		"db:generate": "prisma generate",
 		"db:studio": "prisma studio",
-		"db:seed": "prisma db seed",
+		"db:seed": "NODE_ENV=development prisma db seed",
 		"format": "prettier --write ."
 	},
 	"dependencies": {
