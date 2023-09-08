@@ -6,8 +6,8 @@ export const transformer = superjson;
 
 function getBaseUrl() {
 	if (typeof window !== "undefined") return "";
-	const vc = process.env.VERCEL_URL;
-	if (vc) return "https://" + vc;
+	const vercelUrl = process.env.VERCEL_URL;
+	if (vercelUrl) return "https://" + vercelUrl;
 	return "http://localhost:3000";
 }
 

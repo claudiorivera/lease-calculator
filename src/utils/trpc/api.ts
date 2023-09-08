@@ -2,14 +2,14 @@
 
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import {
-	experimental_createActionHook,
-	experimental_createTRPCNextAppDirClient,
-	experimental_serverActionLink,
+	experimental_createActionHook as createActionHook,
+	experimental_createTRPCNextAppDirClient as createTRPCNextAppDirClient,
+	experimental_serverActionLink as serverActionLink,
 } from "@trpc/next/app-dir/client";
 import { type AppRouter } from "~/server/api/root";
 import { getUrl, transformer } from "./shared";
 
-export const api = experimental_createTRPCNextAppDirClient<AppRouter>({
+export const api = createTRPCNextAppDirClient<AppRouter>({
 	config() {
 		return {
 			transformer,
@@ -32,8 +32,8 @@ export const api = experimental_createTRPCNextAppDirClient<AppRouter>({
 	},
 });
 
-export const useAction = experimental_createActionHook({
-	links: [loggerLink(), experimental_serverActionLink()],
+export const useAction = createActionHook({
+	links: [loggerLink(), serverActionLink()],
 	transformer,
 });
 
