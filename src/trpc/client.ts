@@ -6,6 +6,7 @@ import {
 	experimental_createTRPCNextAppDirClient as createTRPCNextAppDirClient,
 	experimental_serverActionLink as serverActionLink,
 } from "@trpc/next/app-dir/client";
+import { env } from "~/env.mjs";
 import { type AppRouter } from "~/server/api/root";
 import { getUrl, transformer } from "./shared";
 
@@ -16,7 +17,7 @@ export const api = createTRPCNextAppDirClient<AppRouter>({
 			links: [
 				loggerLink({
 					enabled: (op) =>
-						process.env.NODE_ENV === "development" ||
+						env.NODE_ENV === "development" ||
 						(op.direction === "down" && op.result instanceof Error),
 				}),
 				httpBatchLink({

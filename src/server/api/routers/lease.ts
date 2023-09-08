@@ -1,9 +1,9 @@
+import { createLeaseSchema } from "~/schemas/lease";
 import {
 	createTRPCRouter,
 	protectedProcedure,
 	publicProcedure,
 } from "~/server/api/trpc";
-import { createLeaseSchema } from "~/utils/schemas/createLease";
 
 export const leaseRouter = createTRPCRouter({
 	all: publicProcedure.query(({ ctx }) => {
@@ -23,4 +23,13 @@ export const leaseRouter = createTRPCRouter({
 				},
 			});
 		}),
+	mine: protectedProcedure.query(({ ctx }) => {
+		return ctx.prisma.lease.findMany({
+			where: {
+				user: {
+					id: ctx.session.user.id,
+				},
+			},
+		});
+	}),
 });
