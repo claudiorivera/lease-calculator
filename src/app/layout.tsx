@@ -25,7 +25,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 					inter.variable,
 				)}
 			>
-				<TrpcProvider>{children}</TrpcProvider>
+				<TrpcProvider>
+					<main className="container mx-auto max-w-md py-4">{children}</main>
+				</TrpcProvider>
 			</body>
 		</html>
 	);

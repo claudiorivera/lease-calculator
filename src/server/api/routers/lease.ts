@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { z } from "zod";
 import { createLeaseSchema } from "~/schemas/lease";
 import {
 	createTRPCRouter,
@@ -37,6 +38,13 @@ export const leaseRouter = createTRPCRouter({
 				},
 			},
 			select: defaultLeaseSelect,
+		});
+	}),
+	byId: protectedProcedure.input(z.string().cuid()).query(({ ctx, input }) => {
+		return ctx.prisma.lease.findUniqueOrThrow({
+			where: {
+				id: input,
+			},
 		});
 	}),
 });

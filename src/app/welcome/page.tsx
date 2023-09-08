@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { Fragment } from "react";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function WelcomePage() {
@@ -9,13 +10,9 @@ export default async function WelcomePage() {
 	}
 
 	return (
-		<>
+		<Fragment>
+			<a href="/api/auth/signin">Sign In</a>
 			<h1>Welcome to Lease Calculator</h1>
-
-			<div>
-				<a href="/api/auth/signin">Sign In</a>
-				<span> to get started!</span>
-			</div>
-		</>
+		</Fragment>
 	);
 }

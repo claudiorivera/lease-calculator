@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { Fragment } from "react";
 import CurrentUserLeaseList from "~/app/CurrentUserLeaseList";
 import { getServerAuthSession } from "~/server/auth";
 
@@ -10,10 +11,11 @@ export default async function HomePage() {
 	}
 
 	return (
-		<div>
+		<Fragment>
 			<a href="/api/auth/signout">Sign Out</a>
 			<h1>My Leases</h1>
+
 			<CurrentUserLeaseList />
-		</div>
+		</Fragment>
 	);
 }
