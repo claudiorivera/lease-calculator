@@ -55,22 +55,22 @@ model VerificationToken {
 model Lease {
     id String @id @default(cuid())
 
-    name           String
-    startDate      DateTime
-    endDate        DateTime
-    allowedMileage Int
-    feePerMile     Float
+    name                    String
+    startDate               DateTime
+    numberOfMonths          Int
+    allowedMiles            Int
+    excessFeePerMileInCents Int
 
-    user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId          String
-    mileageReadings MileageReading[]
+    user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId           String
+    odometerReadings OdometerReading[]
 }
 
-model MileageReading {
+model OdometerReading {
     id String @id @default(cuid())
 
-    date    DateTime
-    mileage Int
+    date  DateTime
+    miles Int
 
     lease   Lease  @relation(fields: [leaseId], references: [id], onDelete: Cascade)
     leaseId String
