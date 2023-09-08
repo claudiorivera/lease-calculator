@@ -7,12 +7,12 @@
  * need to use are documented accordingly near the end.
  */
 
+import { experimental_createServerActionHandler } from "@trpc/next/app-dir/server";
 import { initTRPC, TRPCError } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
+import { type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { headers } from "next/headers";
 import superjson from "superjson";
 import { ZodError } from "zod";
-
 import { getServerAuthSession } from "~/server/auth";
 import { prisma } from "~/server/db";
 
@@ -24,9 +24,9 @@ import { prisma } from "~/server/db";
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
 
-interface CreateContextOptions {
-	session: Session | null;
-}
+type CreateContextOptions = {
+  headers: Headers;
+};
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -38,11 +38,14 @@ interface CreateContextOptions {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-const createInnerTRPCContext = (opts: CreateContextOptions) => {
-	return {
-		session: opts.session,
-		prisma,
-	};
+export const createInnerTRPCContext = async (opts: CreateContextOptions) => {
+  const session = await getServerAuthSession();
+
+  return {
+    session,
+    headers: opts.headers,
+    prisma,
+  };
 };
 
 /**
@@ -51,15 +54,12 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-	const { req, res } = opts;
+export const createTRPCContext = async (opts: FetchCreateContextFnOptions) => {
+  // Fetch stuff that depends on the request
 
-	// Get the session from the server using the getServerSession wrapper function
-	const session = await getServerAuthSession({ req, res });
-
-	return createInnerTRPCContext({
-		session,
-	});
+  return await createInnerTRPCContext({
+    headers: opts.req.headers,
+  });
 };
 
 /**
@@ -71,17 +71,30 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  */
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
-	transformer: superjson,
-	errorFormatter({ shape, error }) {
-		return {
-			...shape,
-			data: {
-				...shape.data,
-				zodError:
-					error.cause instanceof ZodError ? error.cause.flatten() : null,
-			},
-		};
-	},
+  transformer: superjson,
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    };
+  },
+});
+
+/**
+ * Helper to create validated server actions from trpc procedures, or build inline actions using the
+ * reusable procedure builders.
+ */
+export const createAction = experimental_createServerActionHandler(t, {
+  async createContext() {
+    const ctx = await createInnerTRPCContext({
+      headers: headers(),
+    });
+    return ctx;
+  },
 });
 
 /**
@@ -109,15 +122,15 @@ export const publicProcedure = t.procedure;
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-	if (!ctx.session?.user) {
-		throw new TRPCError({ code: "UNAUTHORIZED" });
-	}
-	return next({
-		ctx: {
-			// infers the `session` as non-nullable
-			session: { ...ctx.session, user: ctx.session.user },
-		},
-	});
+  if (!ctx.session || !ctx.session.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
 });
 
 /**
