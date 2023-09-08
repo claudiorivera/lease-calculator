@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getAllLeases } from "~/app/actions";
+import CurrentUserLeaseList from "~/app/CurrentUserLeaseList";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function HomePage() {
@@ -9,12 +9,11 @@ export default async function HomePage() {
 		return redirect("/welcome");
 	}
 
-	const leases = await getAllLeases();
-
 	return (
 		<div>
 			<a href="/api/auth/signout">Sign Out</a>
-			<pre>{JSON.stringify(leases, null, 2)}</pre>
+			<h1>My Leases</h1>
+			<CurrentUserLeaseList />
 		</div>
 	);
 }

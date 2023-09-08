@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import { type ReactNode } from "react";
+import { TrpcProvider } from "~/app/providers";
+import { cn } from "~/lib/cn";
 import "~/styles/globals.css";
-import { cn } from "~/utils/cn";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 					inter.variable,
 				)}
 			>
-				{children}
+				<TrpcProvider>{children}</TrpcProvider>
 			</body>
 		</html>
 	);
