@@ -21,9 +21,13 @@ function LeaseList({
 	return (
 		<Fragment>
 			<a href="/leases/new">Create new lease</a>
-			{leases.map((lease) => (
-				<p key={lease.id}>{lease.name}</p>
-			))}
+			<ul>
+				{leases.map((lease) => (
+					<li key={lease.id}>
+						<a href={`/leases/${lease.id}`}>{lease.name}</a>
+					</li>
+				))}
+			</ul>
 		</Fragment>
 	);
 }
