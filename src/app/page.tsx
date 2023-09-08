@@ -1,7 +1,7 @@
 import { getAllLeases } from "~/app/actions";
 
 export default async function HomePage() {
-  const leases = await getAllLeases();
+	const leases = await getAllLeases();
 
-  return <pre>{JSON.stringify(leases, null, 2)}</pre>;
+	return <pre>{JSON.stringify(leases, null, 2)}</pre>;
 }
