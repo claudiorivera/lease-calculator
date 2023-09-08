@@ -20,6 +20,7 @@ function LeaseList({
 }) {
 	return (
 		<Fragment>
+			<a href="/leases/new">Create new lease</a>
 			{leases.map((lease) => (
 				<p key={lease.id}>{lease.name}</p>
 			))}
