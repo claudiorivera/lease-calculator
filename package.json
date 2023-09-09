@@ -7,11 +7,12 @@
 		"dev": "next dev",
 		"postinstall": "prisma generate",
 		"lint": "next lint",
-		"start": "prisma migrate deploy && next start",
+		"start": "next start",
 		"db:push": "prisma db push",
 		"db:generate": "prisma generate",
 		"db:studio": "prisma studio",
 		"db:seed": "prisma db seed",
+		"db:deploy": "prisma migrate deploy",
 		"format": "prettier --write ."
 	},
 	"dependencies": {
