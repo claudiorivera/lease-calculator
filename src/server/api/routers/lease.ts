@@ -6,6 +6,7 @@ import {
 	protectedProcedure,
 	publicProcedure,
 } from "~/server/api/trpc";
+import { type RouterOutputs } from "~/trpc/shared";
 
 const defaultLeaseSelect = Prisma.validator<Prisma.LeaseSelect>()({
 	id: true,
@@ -45,6 +46,22 @@ export const leaseRouter = createTRPCRouter({
 			where: {
 				id: input,
 			},
+			select: {
+				...defaultLeaseSelect,
+				allowedMiles: true,
+				excessFeePerMileInCents: true,
+				numberOfMonths: true,
+				startDate: true,
+				userId: true,
+				odometerReadings: {
+					select: {
+						date: true,
+						miles: true,
+					},
+				},
+			},
 		});
 	}),
 });
+
+export type LeaseByIdOutput = RouterOutputs["lease"]["byId"];
