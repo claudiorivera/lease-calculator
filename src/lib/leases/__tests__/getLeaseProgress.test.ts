@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it } from "bun:test";
 import MockDate from "mockdate";
+import { afterEach, describe, expect, it } from "vitest";
 import { getLeaseProgress } from "~/lib/leases";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
@@ -34,10 +34,10 @@ describe("getLeaseProgress", () => {
 		numberOfMonths: 12,
 		today: "2023-12-31",
 		expectedLeaseDaysRemaining: 1,
-		allowedMiles: 100,
-		excessFeePerMileInCents: 25,
+		allowedMiles: 0,
+		excessFeePerMileInCents: 0,
 		latestOdometerReadingMiles: 0,
-		expectedLeaseMilesRemaining: 100,
+		expectedLeaseMilesRemaining: 0,
 	});
 
 	makeTest({
@@ -46,9 +46,9 @@ describe("getLeaseProgress", () => {
 		numberOfMonths: 12,
 		today: "2023-01-01",
 		expectedLeaseDaysRemaining: 365,
-		allowedMiles: 100,
-		excessFeePerMileInCents: 25,
-		latestOdometerReadingMiles: 100,
+		allowedMiles: 0,
+		excessFeePerMileInCents: 0,
+		latestOdometerReadingMiles: 0,
 		expectedLeaseMilesRemaining: 0,
 	});
 
@@ -56,12 +56,48 @@ describe("getLeaseProgress", () => {
 		baseTestLease,
 		startDate: "2023-01-01",
 		numberOfMonths: 12,
-		today: "2023-07-01",
-		expectedLeaseDaysRemaining: 184,
+		today: "2024-01-01",
+		expectedLeaseDaysRemaining: 0,
+		allowedMiles: 0,
+		excessFeePerMileInCents: 0,
+		latestOdometerReadingMiles: 0,
+		expectedLeaseMilesRemaining: 0,
+	});
+
+	makeTest({
+		baseTestLease,
+		startDate: "2023-01-01",
+		numberOfMonths: 12,
+		today: "2023-12-31",
+		expectedLeaseDaysRemaining: 1,
 		allowedMiles: 100,
-		excessFeePerMileInCents: 25,
+		excessFeePerMileInCents: 0,
 		latestOdometerReadingMiles: 50,
 		expectedLeaseMilesRemaining: 50,
+	});
+
+	makeTest({
+		baseTestLease,
+		startDate: "2023-01-01",
+		numberOfMonths: 12,
+		today: "2023-12-31",
+		expectedLeaseDaysRemaining: 1,
+		allowedMiles: 100,
+		excessFeePerMileInCents: 0,
+		latestOdometerReadingMiles: 0,
+		expectedLeaseMilesRemaining: 100,
+	});
+
+	makeTest({
+		baseTestLease,
+		startDate: "2023-01-01",
+		numberOfMonths: 12,
+		today: "2023-12-31",
+		expectedLeaseDaysRemaining: 1,
+		allowedMiles: 100,
+		excessFeePerMileInCents: 0,
+		latestOdometerReadingMiles: 100,
+		expectedLeaseMilesRemaining: 0,
 	});
 });
 

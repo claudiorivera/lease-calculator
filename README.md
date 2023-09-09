@@ -3,11 +3,14 @@
 Log your odometer readings and the lease calculator will tell you how much you may owe at the end of your lease.
 
 ## Prerequisites
-- [Bun](https://bun.sh)
+
+- [pnpm](https://pnpm.js.org/en/installation)
 
 ## Setup
+
 - `cp .env.example .env` and update values
-- `bun install`
+- `pnpm i`
 
 ## Develop
-- `bun dev`
+
+- `pnpm dev`
