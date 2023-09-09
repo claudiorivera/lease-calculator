@@ -1,4 +1,4 @@
 {
-	"installCommand": "curl -fsSL https://bun.sh/install | bash && ~/.bun/bin/bun install --frozen-lockfile",
-	"runCommand": "~/.bun/bin/bun build"
+	"installCommand": "curl -fsSL https://bun.sh/install | bash && bun install --frozen-lockfile",
+	"runCommand": "bun build"
 }
