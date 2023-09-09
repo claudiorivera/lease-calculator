@@ -16,8 +16,7 @@
 		"db:seed": "prisma db seed",
 		"format": "prettier .",
 		"typecheck": "tsc --noEmit",
-		"test": "vitest",
-		"test:watch": "vitest --watch"
+		"test": "vitest"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "3.3.1",

@@ -7,20 +7,31 @@ export function getLeaseProgress({
 	allowedMiles,
 	odometerReadings,
 }: LeaseByIdOutput) {
+	return {
+		leaseDaysRemaining: getLeaseDaysRemaining({
+			startDate,
+			numberOfMonths,
+		}),
+		leaseMilesRemaining: getLeaseMilesRemaining({
+			allowedMiles,
+			odometerReadings,
+		}),
+	};
+}
+
+function getLeaseDaysRemaining({
+	startDate,
+	numberOfMonths,
+}: {
+	startDate: LeaseByIdOutput["startDate"];
+	numberOfMonths: LeaseByIdOutput["numberOfMonths"];
+}) {
 	const lastLeaseDay = getLastDay({
 		startDate,
 		numberOfMonths,
 	});
-	const leaseDaysRemaining = getDaysUntil(lastLeaseDay);
-	const leaseMilesRemaining = getLeaseMilesRemaining({
-		allowedMiles,
-		odometerReadings,
-	});
 
-	return {
-		leaseDaysRemaining,
-		leaseMilesRemaining,
-	};
+	return getDaysUntil(lastLeaseDay);
 }
 
 function getLeaseMilesRemaining({
