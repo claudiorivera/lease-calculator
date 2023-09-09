@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
-import CurrentUserLeaseList from "~/app/CurrentUserLeaseList";
+import { CurrentUserLeaseList } from "~/components/CurrentUserLeaseList";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function HomePage() {

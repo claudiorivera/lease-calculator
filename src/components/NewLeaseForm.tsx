@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { createLeaseSchema, type CreateLeaseInput } from "~/schemas/lease";
 import { api } from "~/trpc/client";
 
-export const NewLeaseForm = () => {
+export function NewLeaseForm() {
 	const router = useRouter();
 	const { mutate: createNewLease, isLoading } = api.lease.create.useMutation();
 	const {
@@ -83,7 +83,7 @@ export const NewLeaseForm = () => {
 			</button>
 		</form>
 	);
-};
+}
 
 const Input = forwardRef<
 	HTMLInputElement,

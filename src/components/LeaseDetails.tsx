@@ -1,11 +1,11 @@
 "use client";
 
-import { LeaseDetailsLoadingError } from "~/app/leases/[id]/LeaseDetailsLoadingError";
-import { LeaseDetailsLoadingSkeleton } from "~/app/leases/[id]/LeaseDetailsLoadingSkeleton";
-import { LeaseDetailsView } from "~/app/leases/[id]/LeaseDetailsView";
+import { LeaseDetailsLoadingError } from "~/components/LeaseDetailsLoadingError";
+import { LeaseDetailsLoadingSkeleton } from "~/components/LeaseDetailsLoadingSkeleton";
+import { LeaseDetailsView } from "~/components/LeaseDetailsView";
 import { api } from "~/trpc/client";
 
-export default function LeaseDetails({ id }: { id: string }) {
+export function LeaseDetails({ id }: { id: string }) {
 	const {
 		data: lease,
 		isLoading,

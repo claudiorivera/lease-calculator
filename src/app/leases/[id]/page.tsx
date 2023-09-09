@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
-import LeaseDetails from "~/app/leases/[id]/LeaseDetails";
+import { LeaseDetails } from "~/components/LeaseDetails";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function LeaseDetailsPage({
