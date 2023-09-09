@@ -17,8 +17,11 @@ export default async function LeaseDetailsPage({
 	return (
 		<Fragment>
 			<h1>Lease Details</h1>
+			<a href="/">Back</a>
 
-			<LeaseDetails id={params.id} />
+			<section>
+				<LeaseDetails id={params.id} />
+			</section>
 		</Fragment>
 	);
 }
