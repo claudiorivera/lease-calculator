@@ -99,6 +99,18 @@ describe("getLeaseProgress", () => {
 		latestOdometerReadingMiles: 100,
 		expectedLeaseMilesRemaining: 0,
 	});
+
+	makeTest({
+		baseTestLease,
+		startDate: "2023-01-01",
+		numberOfMonths: 12,
+		today: "2024-01-01",
+		expectedLeaseDaysRemaining: 0,
+		allowedMiles: 100,
+		excessFeePerMileInCents: 0,
+		latestOdometerReadingMiles: 101,
+		expectedLeaseMilesRemaining: -1,
+	});
 });
 
 function makeTest({
