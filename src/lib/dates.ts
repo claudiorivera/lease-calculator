@@ -23,3 +23,7 @@ export function getLastDay({
 }) {
 	return dayjs(startDate).add(numberOfMonths, "month").toDate();
 }
+
+export function getNumberOfDays({ start, end }: { start: Date; end: Date }) {
+	return dayjs(end).diff(dayjs(start), "day");
+}
