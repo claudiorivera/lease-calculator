@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import { afterEach, describe, expect, it } from "vitest";
-import { getLeaseProgress } from "~/lib/leases";
+import { getLeaseDaysRemaining, getLeaseMilesRemaining } from "~/lib/leases";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
 type BaseTestLease = Pick<LeaseByIdOutput, "id" | "name" | "userId">;
@@ -145,8 +145,8 @@ function makeTest({
 			],
 		};
 
-		const { leaseDaysRemaining, leaseMilesRemaining } =
-			getLeaseProgress(testLease);
+		const leaseDaysRemaining = getLeaseDaysRemaining(testLease);
+		const leaseMilesRemaining = getLeaseMilesRemaining(testLease);
 
 		expect(leaseDaysRemaining).toBe(expectedLeaseDaysRemaining);
 		expect(leaseMilesRemaining).toBe(expectedLeaseMilesRemaining);

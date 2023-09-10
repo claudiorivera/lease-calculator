@@ -1,31 +1,32 @@
-import { getDaysUntil, getLastDay } from "~/lib/dates";
+import { getDaysSince, getDaysUntil, getLastDay } from "~/lib/dates";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
-export function getLeaseProgress({
-	startDate,
-	numberOfMonths,
-	allowedMiles,
-	odometerReadings,
-}: LeaseByIdOutput) {
-	return {
-		leaseDaysRemaining: getLeaseDaysRemaining({
-			startDate,
-			numberOfMonths,
-		}),
-		leaseMilesRemaining: getLeaseMilesRemaining({
-			allowedMiles,
-			odometerReadings,
-		}),
-	};
+export function getEstimatedExcessMileageFeeInCents(lease: LeaseByIdOutput) {
+	const currentOdometerReading = getCurrentOdometerReading(
+		lease.odometerReadings,
+	);
+
+	const averageMilesPerDay =
+		currentOdometerReading / getLeaseDaysElapsed(lease);
+
+	const leaseDaysRemaining = getLeaseDaysRemaining(lease);
+
+	const estimatedMilesAtLeaseEnd =
+		averageMilesPerDay * leaseDaysRemaining + currentOdometerReading;
+
+	const estimatedExcessMiles = estimatedMilesAtLeaseEnd - lease.allowedMiles;
+
+	return estimatedExcessMiles * lease.excessFeePerMileInCents;
 }
 
-function getLeaseDaysRemaining({
+function getLeaseDaysElapsed({ startDate }: LeaseByIdOutput) {
+	return getDaysSince(startDate);
+}
+
+export function getLeaseDaysRemaining({
 	startDate,
 	numberOfMonths,
-}: {
-	startDate: LeaseByIdOutput["startDate"];
-	numberOfMonths: LeaseByIdOutput["numberOfMonths"];
-}) {
+}: LeaseByIdOutput) {
 	const lastLeaseDay = getLastDay({
 		startDate,
 		numberOfMonths,
@@ -34,19 +35,19 @@ function getLeaseDaysRemaining({
 	return getDaysUntil(lastLeaseDay);
 }
 
-function getLeaseMilesRemaining({
+export function getLeaseMilesRemaining({
 	allowedMiles,
 	odometerReadings,
-}: {
-	allowedMiles: number;
-	odometerReadings: LeaseByIdOutput["odometerReadings"];
-}) {
-	if (!odometerReadings.length) return allowedMiles;
+}: LeaseByIdOutput) {
+	const currentOdometerReading = getCurrentOdometerReading(odometerReadings);
 
-	const currentOdometerReading = odometerReadings.at(-1);
+	return allowedMiles - currentOdometerReading;
+}
 
-	const leaseMilesRemaining =
-		allowedMiles - (currentOdometerReading?.miles ?? 0);
+function getCurrentOdometerReading(
+	odometerReadings: LeaseByIdOutput["odometerReadings"],
+) {
+	if (!odometerReadings.length) return 0;
 
-	return leaseMilesRemaining;
+	return odometerReadings.at(-1)?.miles ?? 0;
 }

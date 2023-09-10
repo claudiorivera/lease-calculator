@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { getLeaseProgress } from "~/lib/leases";
+import { getLeaseDaysRemaining, getLeaseMilesRemaining } from "~/lib/leases";
 import { type RouterOutputs } from "~/trpc/shared";
 
 export function LeaseDetailsView({
@@ -7,7 +7,8 @@ export function LeaseDetailsView({
 }: {
 	lease: NonNullable<RouterOutputs["lease"]["byId"]>;
 }) {
-	const { leaseDaysRemaining, leaseMilesRemaining } = getLeaseProgress(lease);
+	const leaseDaysRemaining = getLeaseDaysRemaining(lease);
+	const leaseMilesRemaining = getLeaseMilesRemaining(lease);
 
 	return (
 		<Fragment>
