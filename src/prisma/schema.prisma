@@ -57,6 +57,7 @@ model Lease {
 
     name                    String
     startDate               DateTime
+    initialMiles            Int      @default(0)
     numberOfMonths          Int
     allowedMiles            Int
     excessFeePerMileInCents Int
@@ -67,9 +68,9 @@ model Lease {
 }
 
 model OdometerReading {
-    id String @id @default(cuid())
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
 
-    date  DateTime
     miles Int
 
     lease   Lease  @relation(fields: [leaseId], references: [id], onDelete: Cascade)

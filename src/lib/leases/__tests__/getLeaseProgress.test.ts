@@ -140,7 +140,7 @@ function makeTest({
 			excessFeePerMileInCents,
 			odometerReadings: [
 				{
-					date: new Date(today),
+					createdAt: new Date(today),
 					miles: latestOdometerReadingMiles,
 				},
 			],

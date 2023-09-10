@@ -27,7 +27,6 @@ export default function NewOdometerReadingForm({
 		resolver: zodResolver(createOdometerReadingSchema),
 		defaultValues: {
 			leaseId,
-			date: new Date(),
 		},
 	});
 

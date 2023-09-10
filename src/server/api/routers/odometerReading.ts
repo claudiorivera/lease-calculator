@@ -5,7 +5,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 const defaultOdometerReadingSelect =
 	Prisma.validator<Prisma.OdometerReadingSelect>()({
 		id: true,
-		date: true,
+		createdAt: true,
 		miles: true,
 	});
 

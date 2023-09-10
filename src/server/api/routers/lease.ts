@@ -55,7 +55,7 @@ export const leaseRouter = createTRPCRouter({
 				userId: true,
 				odometerReadings: {
 					select: {
-						date: true,
+						createdAt: true,
 						miles: true,
 					},
 				},
