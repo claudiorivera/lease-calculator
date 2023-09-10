@@ -4,6 +4,7 @@ import { getEstimatedMilesAtEndOfLease } from "~/lib/leases";
 type MakeTestArgs = {
 	leaseDaysElapsed: number;
 	leaseDaysRemaining: number;
+	initialMiles?: number;
 	currentOdometerReading: number;
 	expectedEstimatedMilesAtEndOfLease: number;
 };
@@ -43,11 +44,20 @@ describe("getEstimatedMilesAtEndOfLease", () => {
 		currentOdometerReading: 0,
 		expectedEstimatedMilesAtEndOfLease: 0,
 	});
+
+	makeTest({
+		leaseDaysElapsed: 1,
+		leaseDaysRemaining: 1,
+		initialMiles: 100,
+		currentOdometerReading: 101,
+		expectedEstimatedMilesAtEndOfLease: 102,
+	});
 });
 
 function makeTest({
 	leaseDaysElapsed,
 	leaseDaysRemaining,
+	initialMiles = 0,
 	currentOdometerReading,
 	expectedEstimatedMilesAtEndOfLease,
 }: MakeTestArgs) {
@@ -55,6 +65,7 @@ function makeTest({
 		const estimatedMilesAtEndOfLease = getEstimatedMilesAtEndOfLease({
 			leaseDaysElapsed,
 			leaseDaysRemaining,
+			initialMiles,
 			currentOdometerReading,
 		});
 

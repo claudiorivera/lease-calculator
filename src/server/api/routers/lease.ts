@@ -48,6 +48,7 @@ export const leaseRouter = createTRPCRouter({
 			},
 			select: {
 				...defaultLeaseSelect,
+				initialMiles: true,
 				allowedMiles: true,
 				excessFeePerMileInCents: true,
 				numberOfMonths: true,

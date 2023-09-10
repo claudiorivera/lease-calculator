@@ -44,7 +44,13 @@ export function LeaseDetailsView({
 }
 
 function useLeaseDetails(lease: LeaseByIdOutput) {
-	const { startDate, numberOfMonths, allowedMiles, odometerReadings } = lease;
+	const {
+		startDate,
+		numberOfMonths,
+		allowedMiles,
+		odometerReadings,
+		initialMiles,
+	} = lease;
 
 	const leaseDaysRemaining = getLeaseDaysRemaining({
 		startDate,
@@ -57,6 +63,7 @@ function useLeaseDetails(lease: LeaseByIdOutput) {
 		}),
 	});
 	const leaseMilesRemaining = getLeaseMilesRemaining({
+		initialMiles,
 		allowedMiles,
 		odometerReadings,
 	});
@@ -64,6 +71,7 @@ function useLeaseDetails(lease: LeaseByIdOutput) {
 		leaseDaysElapsed: getLeaseDaysElapsed({
 			startDate,
 		}),
+		initialMiles,
 		currentOdometerReading: getCurrentOdometerReading({ odometerReadings }),
 		leaseDaysRemaining,
 	});

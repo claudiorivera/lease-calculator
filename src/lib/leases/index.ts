@@ -4,15 +4,18 @@ import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 export function getEstimatedMilesAtEndOfLease({
 	leaseDaysElapsed,
 	leaseDaysRemaining,
+	initialMiles,
 	currentOdometerReading,
 }: {
 	leaseDaysElapsed: number;
 	leaseDaysRemaining: number;
+	initialMiles: number;
 	currentOdometerReading: number;
 }) {
-	if (leaseDaysElapsed === 0) return currentOdometerReading;
+	if (leaseDaysElapsed === 0) return initialMiles;
 
-	const averageMilesPerDay = currentOdometerReading / leaseDaysElapsed;
+	const averageMilesPerDay =
+		(currentOdometerReading - initialMiles) / leaseDaysElapsed;
 
 	return Math.ceil(
 		averageMilesPerDay * leaseDaysRemaining + currentOdometerReading,
@@ -38,14 +41,18 @@ export function getLeaseDaysRemaining({
 }
 
 export function getLeaseMilesRemaining({
+	initialMiles,
 	allowedMiles,
 	odometerReadings,
-}: Pick<LeaseByIdOutput, "allowedMiles" | "odometerReadings">) {
+}: Pick<
+	LeaseByIdOutput,
+	"allowedMiles" | "odometerReadings" | "initialMiles"
+>) {
 	const currentOdometerReading = getCurrentOdometerReading({
 		odometerReadings,
 	});
 
-	return allowedMiles - currentOdometerReading;
+	return initialMiles + allowedMiles - currentOdometerReading;
 }
 
 export function getCurrentOdometerReading({

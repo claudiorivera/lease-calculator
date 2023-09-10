@@ -9,6 +9,7 @@ type BaseTestLease = Pick<LeaseByIdOutput, "id" | "name" | "userId">;
 type MakeTestArgs = {
 	baseTestLease: BaseTestLease;
 	startDate: string;
+	initialMiles?: number;
 	numberOfMonths: number;
 	today: string;
 	expectedLeaseDaysRemaining: number;
@@ -112,11 +113,38 @@ describe("getLeaseProgress", () => {
 		latestOdometerReadingMiles: 101,
 		expectedLeaseMilesRemaining: -1,
 	});
+
+	makeTest({
+		baseTestLease,
+		startDate: "2023-01-01",
+		initialMiles: 100,
+		numberOfMonths: 1,
+		today: "2023-01-01",
+		allowedMiles: 100,
+		excessFeePerMileInCents: 0,
+		latestOdometerReadingMiles: 100,
+		expectedLeaseDaysRemaining: 31,
+		expectedLeaseMilesRemaining: 100,
+	});
+
+	makeTest({
+		baseTestLease,
+		startDate: "2023-01-01",
+		initialMiles: 100,
+		numberOfMonths: 12,
+		today: "2023-12-31",
+		allowedMiles: 100,
+		excessFeePerMileInCents: 0,
+		latestOdometerReadingMiles: 199,
+		expectedLeaseDaysRemaining: 1,
+		expectedLeaseMilesRemaining: 1,
+	});
 });
 
 function makeTest({
 	baseTestLease,
 	startDate,
+	initialMiles = 0,
 	numberOfMonths,
 	today,
 	expectedLeaseDaysRemaining,
@@ -126,15 +154,17 @@ function makeTest({
 	expectedLeaseMilesRemaining,
 }: MakeTestArgs) {
 	return it(`
-  should return ${expectedLeaseDaysRemaining} day(s) remaining and ${expectedLeaseMilesRemaining} miles remaining
-  when start date is ${startDate}
-  and when today is ${today} 
-  and latest odometer reads ${latestOdometerReadingMiles}`, () => {
+	should return ${expectedLeaseDaysRemaining} day(s) remaining and ${expectedLeaseMilesRemaining} miles remaining
+	when lease started on ${startDate}
+	and today is ${today} 
+	and odometer started with ${initialMiles} miles
+	and now reads ${latestOdometerReadingMiles}`, () => {
 		MockDate.set(new Date(today));
 
 		const testLease: LeaseByIdOutput = {
 			...baseTestLease,
 			startDate: new Date(startDate),
+			initialMiles,
 			numberOfMonths,
 			allowedMiles,
 			excessFeePerMileInCents,

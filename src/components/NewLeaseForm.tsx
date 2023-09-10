@@ -35,6 +35,7 @@ export function NewLeaseForm() {
 					placeholder="My Car Lease"
 					{...register("name")}
 				/>
+
 				<Input
 					type="date"
 					label="Start Date"
@@ -56,6 +57,16 @@ export function NewLeaseForm() {
 
 				<Input
 					type="number"
+					label="Miles at Start of Lease"
+					placeholder="0"
+					errorMessage={errors.initialMiles?.message}
+					{...register("initialMiles", {
+						valueAsNumber: true,
+					})}
+				/>
+
+				<Input
+					type="number"
 					label="Allowed Miles"
 					placeholder="36000"
 					errorMessage={errors.allowedMiles?.message}
@@ -63,6 +74,7 @@ export function NewLeaseForm() {
 						valueAsNumber: true,
 					})}
 				/>
+
 				<Input
 					type="number"
 					label="Excess Fee Per Mile"
