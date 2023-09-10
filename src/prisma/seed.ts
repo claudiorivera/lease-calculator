@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
-import { prisma } from "~/server/db";
+import { db } from "~/server/db";
 
 async function main() {
-	await prisma.user.deleteMany();
+	await db.user.deleteMany();
 
-	await prisma.user.create({
+	await db.user.create({
 		data: {
 			name: faker.person.fullName(),
 			leases: {
@@ -36,10 +36,10 @@ async function main() {
 
 main()
 	.then(async () => {
-		await prisma.$disconnect();
+		await db.$disconnect();
 	})
 	.catch(async (e) => {
 		console.error(e);
-		await prisma.$disconnect();
+		await db.$disconnect();
 		process.exit(1);
 	});

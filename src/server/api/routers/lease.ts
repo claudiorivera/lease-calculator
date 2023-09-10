@@ -15,12 +15,12 @@ const defaultLeaseSelect = Prisma.validator<Prisma.LeaseSelect>()({
 
 export const leaseRouter = createTRPCRouter({
 	all: publicProcedure.query(({ ctx }) => {
-		return ctx.prisma.lease.findMany();
+		return ctx.db.lease.findMany();
 	}),
 	create: protectedProcedure
 		.input(createLeaseSchema)
 		.mutation(({ ctx, input }) => {
-			return ctx.prisma.lease.create({
+			return ctx.db.lease.create({
 				data: {
 					...input,
 					user: {
@@ -32,7 +32,7 @@ export const leaseRouter = createTRPCRouter({
 			});
 		}),
 	mine: protectedProcedure.query(({ ctx }) => {
-		return ctx.prisma.lease.findMany({
+		return ctx.db.lease.findMany({
 			where: {
 				user: {
 					id: ctx.session.user.id,
@@ -42,7 +42,7 @@ export const leaseRouter = createTRPCRouter({
 		});
 	}),
 	byId: protectedProcedure.input(z.string().cuid()).query(({ ctx, input }) => {
-		return ctx.prisma.lease.findUniqueOrThrow({
+		return ctx.db.lease.findUniqueOrThrow({
 			where: {
 				id: input,
 			},

@@ -13,7 +13,7 @@ export const odometerReadingRouter = createTRPCRouter({
 	create: protectedProcedure
 		.input(createOdometerReadingSchema)
 		.mutation(({ ctx, input }) => {
-			return ctx.prisma.odometerReading.create({
+			return ctx.db.odometerReading.create({
 				data: input,
 				select: defaultOdometerReadingSelect,
 			});

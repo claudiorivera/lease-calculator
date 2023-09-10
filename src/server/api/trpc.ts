@@ -14,7 +14,7 @@ import { headers } from "next/headers";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { getServerAuthSession } from "~/server/auth";
-import { prisma } from "~/server/db";
+import { db } from "~/server/db";
 
 /**
  * 1. CONTEXT
@@ -44,7 +44,7 @@ export const createInnerTRPCContext = async (opts: CreateContextOptions) => {
 	return {
 		session,
 		headers: opts.headers,
-		prisma,
+		db,
 	};
 };
 
