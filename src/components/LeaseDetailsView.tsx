@@ -5,7 +5,6 @@ import {
 	getEstimatedMilesAtEndOfLease,
 	getLeaseDaysElapsed,
 	getLeaseDaysRemaining,
-	getLeaseMilesRemaining,
 } from "~/lib/leases";
 import { type RouterOutputs } from "~/trpc/shared";
 
@@ -23,21 +22,19 @@ export function LeaseDetailsView({
 		id,
 	} = lease;
 
-	const leaseDaysRemaining = getLeaseDaysRemaining({
-		startDate,
-		totalLeaseDays: getNumberOfDays({
-			start: startDate,
-			end: getLastDay({
-				startDate,
-				numberOfMonths,
-			}),
+	const totalLeaseDays = getNumberOfDays({
+		start: startDate,
+		end: getLastDay({
+			startDate,
+			numberOfMonths,
 		}),
 	});
-	const leaseMilesRemaining = getLeaseMilesRemaining({
-		initialMiles,
-		allowedMiles,
-		odometerReadings,
+
+	const leaseDaysRemaining = getLeaseDaysRemaining({
+		startDate,
+		totalLeaseDays,
 	});
+
 	const estimatedMilesAtEndOfLease = getEstimatedMilesAtEndOfLease({
 		leaseDaysElapsed: getLeaseDaysElapsed({
 			startDate,
@@ -50,18 +47,20 @@ export function LeaseDetailsView({
 		leaseDaysRemaining,
 	});
 
+	const estimatedMiles = estimatedMilesAtEndOfLease - allowedMiles;
+
 	return (
 		<Fragment>
-			<section>
-				<p>Days left:&nbsp;</p>
-				<span>{leaseDaysRemaining}</span>
-				<p>Miles left:&nbsp;</p>
-				<span>{leaseMilesRemaining}</span>
-				<p>Estimated miles at end of lease:&nbsp;</p>
-				<span>{estimatedMilesAtEndOfLease}</span>
-				<p>Estimated difference:&nbsp;</p>
-				<span>{estimatedMilesAtEndOfLease - allowedMiles}</span>
-			</section>
+			<div className="flex flex-col items-center rounded-full bg-neutral-100 p-4">
+				<p className="text-2xl font-bold">{Math.abs(estimatedMiles)}</p>
+				<p>
+					miles{" "}
+					<span className="font-semibold">
+						{estimatedMiles > 0 ? "over" : "under"}
+					</span>{" "}
+					your allowance
+				</p>
+			</div>
 
 			<a href={`/leases/${id}/odometer-readings/new`}>
 				Add an odometer reading
