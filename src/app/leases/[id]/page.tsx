@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import { LeaseDetails } from "~/components/LeaseDetails";
@@ -17,7 +18,7 @@ export default async function LeaseDetailsPage({
 	return (
 		<Fragment>
 			<h1>Lease Details</h1>
-			<a href="/">Back</a>
+			<Link href="/">Back</Link>
 
 			<section>
 				<LeaseDetails id={params.id} />

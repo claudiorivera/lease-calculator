@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Fragment } from "react";
 import { type RouterOutputs } from "~/trpc/shared";
 
@@ -8,11 +9,11 @@ export function LeaseList({
 }) {
 	return (
 		<Fragment>
-			<a href="/leases/new">Create new lease</a>
+			<Link href="/leases/new">Create new lease</Link>
 			<ul>
 				{leases.map((lease) => (
 					<li key={lease.id}>
-						<a href={`/leases/${lease.id}`}>{lease.name}</a>
+						<Link href={`/leases/${lease.id}`}>{lease.name}</Link>
 					</li>
 				))}
 			</ul>

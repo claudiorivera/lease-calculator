@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import { CurrentUserLeaseList } from "~/components/CurrentUserLeaseList";
@@ -12,7 +13,7 @@ export default async function HomePage() {
 
 	return (
 		<Fragment>
-			<a href="/api/auth/signout">Sign Out</a>
+			<Link href="/api/auth/signout">Sign Out</Link>
 			<h1>My Leases</h1>
 
 			<CurrentUserLeaseList />
