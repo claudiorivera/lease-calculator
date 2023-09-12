@@ -7,12 +7,12 @@ import {
 	getLeaseDaysElapsed,
 	getLeaseDaysRemaining,
 } from "~/lib/leases";
-import { type RouterOutputs } from "~/trpc/shared";
+import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
 export function LeaseDetailsView({
 	lease,
 }: {
-	lease: NonNullable<RouterOutputs["lease"]["byId"]>;
+	lease: NonNullable<LeaseByIdOutput>;
 }) {
 	const {
 		startDate,
