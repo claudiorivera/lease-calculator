@@ -72,7 +72,10 @@ function useLeaseDetails(lease: LeaseByIdOutput) {
 			startDate,
 		}),
 		initialMiles,
-		currentOdometerReading: getCurrentOdometerReading({ odometerReadings }),
+		currentOdometerReading: getCurrentOdometerReading({
+			odometerReadings,
+			initialMiles,
+		}),
 		leaseDaysRemaining,
 	});
 

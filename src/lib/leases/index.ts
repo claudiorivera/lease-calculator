@@ -50,6 +50,7 @@ export function getLeaseMilesRemaining({
 >) {
 	const currentOdometerReading = getCurrentOdometerReading({
 		odometerReadings,
+		initialMiles,
 	});
 
 	return initialMiles + allowedMiles - currentOdometerReading;
@@ -57,10 +58,9 @@ export function getLeaseMilesRemaining({
 
 export function getCurrentOdometerReading({
 	odometerReadings,
-}: {
-	odometerReadings: LeaseByIdOutput["odometerReadings"];
-}) {
-	if (!odometerReadings.length) return 0;
+	initialMiles,
+}: Pick<LeaseByIdOutput, "odometerReadings" | "initialMiles">) {
+	if (!odometerReadings.length) return initialMiles;
 
 	return odometerReadings.at(-1)?.miles ?? 0;
 }
