@@ -64,3 +64,15 @@ export function getCurrentOdometerReading({
 
 	return odometerReadings.at(-1)?.miles ?? 0;
 }
+
+export function getDaysElapsedPercentage({
+	daysElapsed,
+	totalLeaseDays,
+}: {
+	daysElapsed: number;
+	totalLeaseDays: number;
+}) {
+	if (totalLeaseDays === 0) return 0;
+
+	return Math.floor((daysElapsed / totalLeaseDays) * 100);
+}

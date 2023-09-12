@@ -1,7 +1,8 @@
-import { Fragment } from "react";
+import Link from "next/link";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
 import {
 	getCurrentOdometerReading,
+	getDaysElapsedPercentage,
 	getEstimatedMilesAtEndOfLease,
 	getLeaseDaysElapsed,
 	getLeaseDaysRemaining,
@@ -49,22 +50,35 @@ export function LeaseDetailsView({
 
 	const estimatedMiles = estimatedMilesAtEndOfLease - allowedMiles;
 
+	const daysElapsedPercentage = getDaysElapsedPercentage({
+		daysElapsed: totalLeaseDays - leaseDaysRemaining,
+		totalLeaseDays,
+	});
+
 	return (
-		<Fragment>
-			<div className="flex flex-col items-center rounded-full bg-neutral-100 p-4">
-				<p className="text-2xl font-bold">{Math.abs(estimatedMiles)}</p>
-				<p>
-					miles{" "}
-					<span className="font-semibold">
-						{estimatedMiles > 0 ? "over" : "under"}
-					</span>{" "}
-					your allowance
+		<div className="flex flex-col items-center">
+			<div className="flex flex-col items-center">
+				<h1 className="text-lg">Current Status</h1>
+				<Link className="text-sm" href={`/leases/${id}/odometer-readings/new`}>
+					Update Now
+				</Link>
+			</div>
+			<div className="flex flex-col items-center">
+				<div className="flex flex-col items-center py-8">
+					<p className="text-4xl font-black">{Math.abs(estimatedMiles)}</p>
+					<p>
+						miles{" "}
+						<span className="font-semibold">
+							{estimatedMiles > 0 ? "over" : "under"}
+						</span>{" "}
+						your allowance
+					</p>
+				</div>
+				<p className="text-sm">
+					<span className="font-semibold">{daysElapsedPercentage}%</span> of
+					lease elapsed
 				</p>
 			</div>
-
-			<a href={`/leases/${id}/odometer-readings/new`}>
-				Add an odometer reading
-			</a>
-		</Fragment>
+		</div>
 	);
 }
