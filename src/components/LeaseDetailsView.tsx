@@ -36,15 +36,17 @@ export function LeaseDetailsView({
 		totalLeaseDays,
 	});
 
+	const currentOdometerReading = getCurrentOdometerReading({
+		odometerReadings,
+		initialMiles,
+	});
+
 	const estimatedMilesAtEndOfLease = getEstimatedMilesAtEndOfLease({
 		leaseDaysElapsed: getLeaseDaysElapsed({
 			startDate,
 		}),
 		initialMiles,
-		currentOdometerReading: getCurrentOdometerReading({
-			odometerReadings,
-			initialMiles,
-		}),
+		currentOdometerReading,
 		leaseDaysRemaining,
 	});
 
@@ -78,6 +80,36 @@ export function LeaseDetailsView({
 					<span className="font-semibold">{daysElapsedPercentage}%</span> of
 					lease elapsed
 				</p>
+			</div>
+			<div className="flex w-full justify-evenly py-8">
+				<DisplayValueAndLabel
+					label="Current Miles"
+					value={currentOdometerReading}
+				/>
+				<div className="w-0.5 bg-neutral-100"></div>
+				<DisplayValueAndLabel label="Allowed Miles" value={allowedMiles} />
+				<div className="w-0.5 bg-neutral-100"></div>
+				<DisplayValueAndLabel
+					label="Days Remaining"
+					value={leaseDaysRemaining}
+				/>
+			</div>
+		</div>
+	);
+}
+
+function DisplayValueAndLabel({
+	value,
+	label,
+}: {
+	value: number;
+	label: string;
+}) {
+	return (
+		<div>
+			<div className="flex flex-col items-center">
+				<p className="text-xl">{value}</p>
+				<p className="text-sm">{label}</p>
 			</div>
 		</div>
 	);
