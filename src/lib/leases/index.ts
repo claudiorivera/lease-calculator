@@ -1,26 +1,5 @@
-import { getDaysSince } from "~/lib/dates";
+import { getDaysSince, getLastDay, getNumberOfDays } from "~/lib/dates";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
-
-export function getEstimatedMilesAtEndOfLease({
-	leaseDaysElapsed,
-	leaseDaysRemaining,
-	initialMiles,
-	currentOdometerReading,
-}: {
-	leaseDaysElapsed: number;
-	leaseDaysRemaining: number;
-	initialMiles: number;
-	currentOdometerReading: number;
-}) {
-	if (leaseDaysElapsed === 0) return initialMiles;
-
-	const averageMilesPerDay =
-		(currentOdometerReading - initialMiles) / leaseDaysElapsed;
-
-	return Math.ceil(
-		averageMilesPerDay * leaseDaysRemaining + currentOdometerReading,
-	);
-}
 
 export function getLeaseDaysElapsed({
 	startDate,
@@ -75,4 +54,31 @@ export function getDaysElapsedPercentage({
 	if (totalLeaseDays === 0) return 0;
 
 	return Math.floor((daysElapsed / totalLeaseDays) * 100);
+}
+
+export function getAllowedMilesToDate({
+	startDate,
+	numberOfMonths,
+	allowedMiles,
+	initialMiles,
+}: Pick<
+	LeaseByIdOutput,
+	"startDate" | "numberOfMonths" | "allowedMiles" | "initialMiles"
+>) {
+	const leaseDaysElapsed = getLeaseDaysElapsed({
+		startDate,
+	});
+
+	const totalLeaseDays = getNumberOfDays({
+		start: startDate,
+		end: getLastDay({
+			startDate,
+			numberOfMonths,
+		}),
+	});
+
+	return (
+		Math.floor((leaseDaysElapsed * allowedMiles) / totalLeaseDays) +
+		initialMiles
+	);
 }

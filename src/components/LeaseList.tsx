@@ -5,7 +5,7 @@ import { type RouterOutputs } from "~/trpc/shared";
 export function LeaseList({
 	leases,
 }: {
-	leases: NonNullable<RouterOutputs["lease"]["mine"]>;
+	leases: RouterOutputs["lease"]["mine"];
 }) {
 	return (
 		<Fragment>
