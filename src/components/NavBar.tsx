@@ -1,6 +1,6 @@
 import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
-import { type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { DarkModeToggleButton } from "~/components/DarkModeToggleButton";
 import { Button } from "~/components/ui/button";
 import {
@@ -10,6 +10,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { getServerAuthSession } from "~/server/auth";
 
 const links = [
 	{
@@ -22,7 +23,9 @@ const links = [
 	},
 ];
 
-export function NavBar() {
+export async function NavBar() {
+	const session = await getServerAuthSession();
+
 	return (
 		<nav className="py-4">
 			<ul className="flex items-center justify-between">
@@ -34,13 +37,19 @@ export function NavBar() {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="start">
-							{links.map(({ href, label }) => (
-								<NavLink key={href} href={href}>
-									{label}
-								</NavLink>
-							))}
-							<DropdownMenuSeparator />
-							<NavLink href="/api/auth/signout">Sign Out</NavLink>
+							{session ? (
+								<Fragment>
+									{links.map(({ href, label }) => (
+										<NavLink key={href} href={href}>
+											{label}
+										</NavLink>
+									))}
+									<DropdownMenuSeparator />
+									<NavLink href="/api/auth/signout">Sign Out</NavLink>
+								</Fragment>
+							) : (
+								<NavLink href="/api/auth/signin">Sign In</NavLink>
+							)}
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</li>
