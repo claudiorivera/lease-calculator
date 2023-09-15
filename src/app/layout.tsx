@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import { type ReactNode } from "react";
 import { TrpcProvider } from "~/app/providers";
+import { NavBar } from "~/components/NavBar";
+import { ThemeProvider } from "~/components/ThemeProvider";
 import { cn } from "~/lib/utils";
 import "~/styles/globals.css";
 
@@ -21,7 +23,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 		<html lang="en">
 			<body className={cn("font-sans", inter.variable)}>
 				<TrpcProvider>
-					<main className="container mx-auto max-w-md">{children}</main>
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+						<main className="container mx-auto max-w-md">
+							<NavBar />
+							<div>{children}</div>
+						</main>
+					</ThemeProvider>
 				</TrpcProvider>
 			</body>
 		</html>
