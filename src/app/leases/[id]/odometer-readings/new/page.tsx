@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import NewOdometerReadingForm from "~/components/NewOdometerReadingForm";
 
 export default function NewOdometerReadingPage({
@@ -8,11 +7,5 @@ export default function NewOdometerReadingPage({
 }) {
 	const leaseId = params.id;
 
-	return (
-		<Fragment>
-			<h1>New Odometer Reading</h1>
-
-			<NewOdometerReadingForm leaseId={leaseId} />
-		</Fragment>
-	);
+	return <NewOdometerReadingForm leaseId={leaseId} />;
 }
