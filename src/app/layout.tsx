@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import { type ReactNode } from "react";
 import { TrpcProvider } from "~/app/providers";
-import { cn } from "~/lib/cn";
+import { cn } from "~/lib/utils";
 import "~/styles/globals.css";
 
 const inter = Inter({
