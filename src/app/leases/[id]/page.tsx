@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import { LeaseDetails } from "~/components/LeaseDetails";
+import { Button } from "~/components/ui/button";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function LeaseDetailsPage({
@@ -17,8 +18,9 @@ export default async function LeaseDetailsPage({
 
 	return (
 		<Fragment>
-			<h1>Lease Details</h1>
-			<Link href="/">Back</Link>
+			<Button asChild variant="ghost">
+				<Link href="/">Back</Link>
+			</Button>
 
 			<section>
 				<LeaseDetails id={params.id} />

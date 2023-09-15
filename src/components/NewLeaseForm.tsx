@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Input } from "~/components/Input";
+import { Button } from "~/components/ui/button";
 import { createLeaseSchema, type CreateLeaseInput } from "~/schemas/lease";
 import { api } from "~/trpc/client";
 
@@ -86,13 +87,9 @@ export function NewLeaseForm() {
 				/>
 			</section>
 
-			<button
-				className="rounded bg-blue-500 px-4 py-2 font-semibold text-white"
-				type="submit"
-				disabled={isLoading}
-			>
+			<Button type="submit" disabled={isLoading}>
 				Submit
-			</button>
+			</Button>
 		</form>
 	);
 }

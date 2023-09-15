@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
 import {
 	getAllowedMilesToDate,
@@ -21,12 +22,14 @@ export function LeaseDetailsView({ lease }: { lease: LeaseByIdOutput }) {
 		<div className="flex flex-col items-center">
 			<div className="flex flex-col items-center">
 				<h1 className="text-lg">Current Status</h1>
-				<Link
-					className="text-sm"
-					href={`/leases/${lease.id}/odometer-readings/new`}
-				>
-					Update Now
-				</Link>
+				<Button asChild variant="ghost">
+					<Link
+						className="text-sm"
+						href={`/leases/${lease.id}/odometer-readings/new`}
+					>
+						Update Now
+					</Link>
+				</Button>
 			</div>
 			<div className="flex flex-col items-center">
 				<div className="flex flex-col items-center py-8">

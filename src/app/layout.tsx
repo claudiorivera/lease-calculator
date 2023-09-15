@@ -19,14 +19,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang="en">
-			<body
-				className={cn(
-					"bg-background text-foreground font-sans",
-					inter.variable,
-				)}
-			>
+			<body className={cn("font-sans", inter.variable)}>
 				<TrpcProvider>
-					<main className="container mx-auto max-w-md py-4">{children}</main>
+					<main className="container mx-auto max-w-md">{children}</main>
 				</TrpcProvider>
 			</body>
 		</html>

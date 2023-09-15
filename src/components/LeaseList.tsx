@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Fragment } from "react";
+import { Button } from "~/components/ui/button";
 import { type RouterOutputs } from "~/trpc/shared";
 
 export function LeaseList({
@@ -9,7 +10,9 @@ export function LeaseList({
 }) {
 	return (
 		<Fragment>
-			<Link href="/leases/new">Create new lease</Link>
+			<Button asChild>
+				<Link href="/leases/new">Create new lease</Link>
+			</Button>
 			<ul>
 				{leases.map((lease) => (
 					<li key={lease.id}>
