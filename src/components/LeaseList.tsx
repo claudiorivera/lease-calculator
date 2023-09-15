@@ -7,7 +7,7 @@ export function LeaseList({
 	leases: RouterOutputs["lease"]["mine"];
 }) {
 	return (
-		<ul>
+		<ul className="flex flex-col items-center gap-4">
 			{leases.map((lease) => (
 				<li key={lease.id}>
 					<Link href={`/leases/${lease.id}`}>{lease.name}</Link>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DisplayValueAndLabel } from "~/components/DisplayValueAndLabel";
 import { Button } from "~/components/ui/button";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
 import {
@@ -120,21 +121,4 @@ function getLeaseProgress({
 		allowedMilesToDate,
 		leaseDaysRemaining,
 	};
-}
-
-function DisplayValueAndLabel({
-	value,
-	label,
-}: {
-	value: number;
-	label: string;
-}) {
-	return (
-		<div>
-			<div className="flex flex-col items-center">
-				<p className="text-xl">{value}</p>
-				<p className="text-sm">{label}</p>
-			</div>
-		</div>
-	);
 }
