@@ -2,6 +2,8 @@ import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { Fragment, type ReactNode } from "react";
 import { DarkModeToggleButton } from "~/components/DarkModeToggleButton";
+import { SignInButton } from "~/components/SignInButton";
+import { SignOutButton } from "~/components/SignOutButton";
 import { Button } from "~/components/ui/button";
 import {
 	DropdownMenu,
@@ -45,10 +47,10 @@ export async function NavBar() {
 										</NavLink>
 									))}
 									<DropdownMenuSeparator />
-									<NavLink href="/api/auth/signout">Sign Out</NavLink>
+									<SignOutButton />
 								</Fragment>
 							) : (
-								<NavLink href="/api/auth/signin">Sign In</NavLink>
+								<SignInButton />
 							)}
 						</DropdownMenuContent>
 					</DropdownMenu>
