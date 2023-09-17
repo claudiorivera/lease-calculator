@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { CurrentUserLeaseList } from "~/components/CurrentUserLeaseList";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function HomePage() {
@@ -9,5 +8,5 @@ export default async function HomePage() {
 		return redirect("/welcome");
 	}
 
-	return <CurrentUserLeaseList />;
+	return <p>Select a lease or create one to get started!</p>;
 }

@@ -13,9 +13,5 @@ export default async function LeaseDetailsPage({
 		return redirect("/welcome");
 	}
 
-	return (
-		<section>
-			<LeaseDetails id={params.id} />
-		</section>
-	);
+	return <LeaseDetails id={params.id} />;
 }

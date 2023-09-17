@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { SignInButton } from "~/components/SignInButton";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function WelcomePage() {
@@ -8,5 +9,10 @@ export default async function WelcomePage() {
 		return redirect("/");
 	}
 
-	return <h1>Welcome to Lease Calculator</h1>;
+	return (
+		<div className="flex flex-col items-center gap-4">
+			<h1>Welcome to Lease Calculator</h1>
+			<SignInButton />
+		</div>
+	);
 }

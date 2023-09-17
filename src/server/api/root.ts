@@ -1,3 +1,4 @@
+import { authRouter } from "~/server/api/routers/auth";
 import { leaseRouter } from "~/server/api/routers/lease";
 import { odometerReadingRouter } from "~/server/api/routers/odometerReading";
 import { createTRPCRouter } from "~/server/api/trpc";
@@ -10,6 +11,7 @@ import { createTRPCRouter } from "~/server/api/trpc";
 export const appRouter = createTRPCRouter({
 	lease: leaseRouter,
 	odometerReading: odometerReadingRouter,
+	auth: authRouter,
 });
 
 // export type definition of API

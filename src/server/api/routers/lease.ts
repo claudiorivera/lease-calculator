@@ -66,3 +66,4 @@ export const leaseRouter = createTRPCRouter({
 });
 
 export type LeaseByIdOutput = RouterOutputs["lease"]["byId"];
+export type LeaseMineOutput = RouterOutputs["lease"]["mine"];
