@@ -34,12 +34,16 @@ import {
 } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
 import { createLeaseSchema, type CreateLeaseInput } from "~/schemas/lease";
+import { type LeaseMineOutput } from "~/server/api/routers/lease";
 import { api } from "~/trpc/client";
 
 export default function LeaseSwitcher() {
 	const router = useRouter();
 	const [open, setOpen] = useState(false);
 	const [showNewLeaseDialog, setShowNewLeaseDialog] = useState(false);
+	const [activeLease, setActiveLease] = useState<
+		LeaseMineOutput[number] | null
+	>(null);
 	const { data: leases = [] } = api.lease.mine.useQuery();
 
 	return (
@@ -53,7 +57,7 @@ export default function LeaseSwitcher() {
 						aria-label="Select a lease"
 						className={cn("w-48")}
 					>
-						Select a Lease
+						{activeLease ? activeLease.name : "Select a Lease"}
 						<CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
 					</Button>
 				</PopoverTrigger>
@@ -65,6 +69,7 @@ export default function LeaseSwitcher() {
 									<CommandItem
 										key={lease.id}
 										onSelect={() => {
+											setActiveLease(lease);
 											router.push(`/leases/${lease.id}`);
 											setOpen(false);
 										}}
@@ -74,7 +79,9 @@ export default function LeaseSwitcher() {
 										<CheckIcon
 											className={cn(
 												"ml-auto h-4 w-4",
-												true ? "opacity-100" : "opacity-0",
+												activeLease?.id === lease.id
+													? "opacity-100"
+													: "opacity-0",
 											)}
 										/>
 									</CommandItem>
