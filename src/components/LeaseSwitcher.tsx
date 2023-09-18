@@ -157,73 +157,72 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<section className="my-4 flex flex-col gap-4">
-				<Input
-					label="Name"
-					errorMessage={errors.name?.message}
-					placeholder="My Car Lease"
-					{...register("name")}
-				/>
+		<form
+			className="my-4 flex flex-col gap-4"
+			onSubmit={handleSubmit(onSubmit)}
+		>
+			<Input
+				label="Name"
+				errorMessage={errors.name?.message}
+				placeholder="My Car Lease"
+				{...register("name")}
+			/>
 
-				<Input
-					type="date"
-					label="Start Date"
-					errorMessage={errors.startDate?.message}
-					{...register("startDate", {
-						valueAsDate: true,
-					})}
-				/>
+			<Input
+				type="date"
+				label="Start Date"
+				errorMessage={errors.startDate?.message}
+				{...register("startDate", {
+					valueAsDate: true,
+				})}
+			/>
 
-				<Input
-					type="number"
-					label="Number of Months"
-					placeholder="36"
-					errorMessage={errors.numberOfMonths?.message}
-					{...register("numberOfMonths", {
-						valueAsNumber: true,
-					})}
-				/>
+			<Input
+				type="number"
+				label="Number of Months"
+				placeholder="36"
+				errorMessage={errors.numberOfMonths?.message}
+				{...register("numberOfMonths", {
+					valueAsNumber: true,
+				})}
+			/>
 
-				<Input
-					type="number"
-					label="Miles at Start of Lease"
-					placeholder="0"
-					errorMessage={errors.initialMiles?.message}
-					{...register("initialMiles", {
-						valueAsNumber: true,
-					})}
-				/>
+			<Input
+				type="number"
+				label="Miles at Start of Lease"
+				placeholder="0"
+				errorMessage={errors.initialMiles?.message}
+				{...register("initialMiles", {
+					valueAsNumber: true,
+				})}
+			/>
 
-				<Input
-					type="number"
-					label="Allowed Miles"
-					placeholder="36000"
-					errorMessage={errors.allowedMiles?.message}
-					{...register("allowedMiles", {
-						valueAsNumber: true,
-					})}
-				/>
+			<Input
+				type="number"
+				label="Allowed Miles"
+				placeholder="36000"
+				errorMessage={errors.allowedMiles?.message}
+				{...register("allowedMiles", {
+					valueAsNumber: true,
+				})}
+			/>
 
-				<Input
-					type="number"
-					label="Excess Fee Per Mile"
-					placeholder="25"
-					errorMessage={errors.excessFeePerMileInCents?.message}
-					{...register("excessFeePerMileInCents", {
-						valueAsNumber: true,
-					})}
-				/>
-			</section>
+			<Input
+				type="number"
+				label="Excess Fee Per Mile"
+				placeholder="25"
+				errorMessage={errors.excessFeePerMileInCents?.message}
+				{...register("excessFeePerMileInCents", {
+					valueAsNumber: true,
+				})}
+			/>
 
-			<div className="flex flex-col gap-2">
-				<Button className="w-full" type="submit" disabled={isLoading}>
-					Submit
-				</Button>
-				<Button onClick={onFinished} variant="outline" className="w-full">
-					Cancel
-				</Button>
-			</div>
+			<Button className="w-full" type="submit" disabled={isLoading}>
+				Submit
+			</Button>
+			<Button onClick={onFinished} variant="outline" className="w-full">
+				Cancel
+			</Button>
 		</form>
 	);
 }
