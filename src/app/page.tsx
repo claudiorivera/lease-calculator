@@ -8,5 +8,9 @@ export default async function HomePage() {
 		return redirect("/welcome");
 	}
 
-	return <p>Select a lease or create one to get started!</p>;
+	return (
+		<div className="flex flex-col items-center py-8">
+			<p>Select a lease or create one to get started!</p>
+		</div>
+	);
 }
