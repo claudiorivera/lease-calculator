@@ -1,5 +1,6 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	CaretSortIcon,
 	CheckIcon,
@@ -8,6 +9,8 @@ import {
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Input } from "~/components/Input";
 import { Button } from "~/components/ui/button";
 import {
 	Command,
@@ -19,29 +22,18 @@ import {
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
-	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 } from "~/components/ui/dialog";
 import { Icons } from "~/components/ui/icons";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "~/components/ui/popover";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "~/components/ui/select";
-
 import { cn } from "~/lib/utils";
+import { createLeaseSchema, type CreateLeaseInput } from "~/schemas/lease";
 import { api } from "~/trpc/client";
 
 export default function LeaseSwitcher() {
@@ -126,50 +118,105 @@ export default function LeaseSwitcher() {
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Add a Lease</DialogTitle>
-					<DialogDescription>
-						Add a new lease to manage products and customers.
-					</DialogDescription>
 				</DialogHeader>
-				<div>
-					<div className="space-y-4 py-2 pb-4">
-						<div className="space-y-2">
-							<Label htmlFor="name">Lease name</Label>
-							<Input id="name" placeholder="Acme Inc." />
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="plan">Subscription plan</Label>
-							<Select>
-								<SelectTrigger>
-									<SelectValue placeholder="Select a plan" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="free">
-										<span className="font-medium">Free</span> -{" "}
-										<span className="text-muted-foreground">
-											Trial for two weeks
-										</span>
-									</SelectItem>
-									<SelectItem value="pro">
-										<span className="font-medium">Pro</span> -{" "}
-										<span className="text-muted-foreground">
-											$9/month per user
-										</span>
-									</SelectItem>
-								</SelectContent>
-							</Select>
-						</div>
-					</div>
-				</div>
-				<DialogFooter>
-					<Button
-						variant="outline"
-						onClick={() => setShowNewLeaseDialog(false)}
-					>
-						Cancel
-					</Button>
-					<Button type="submit">Continue</Button>
-				</DialogFooter>
+
+				<NewLeaseForm onFinished={() => setShowNewLeaseDialog(false)} />
 			</DialogContent>
 		</Dialog>
+	);
+}
+
+function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
+	const router = useRouter();
+	const utils = api.useContext();
+	const { mutate: createNewLease, isLoading } = api.lease.create.useMutation({
+		onSettled: () => utils.lease.mine.invalidate(),
+	});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<CreateLeaseInput>({
+		resolver: zodResolver(createLeaseSchema),
+	});
+
+	const onSubmit = (data: CreateLeaseInput) => {
+		createNewLease(data, {
+			onSuccess: (data) => {
+				onFinished();
+				router.push(`/leases/${data.id}`);
+			},
+		});
+	};
+
+	return (
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<section className="my-4 flex flex-col gap-4">
+				<Input
+					label="Name"
+					errorMessage={errors.name?.message}
+					placeholder="My Car Lease"
+					{...register("name")}
+				/>
+
+				<Input
+					type="date"
+					label="Start Date"
+					errorMessage={errors.startDate?.message}
+					{...register("startDate", {
+						valueAsDate: true,
+					})}
+				/>
+
+				<Input
+					type="number"
+					label="Number of Months"
+					placeholder="36"
+					errorMessage={errors.numberOfMonths?.message}
+					{...register("numberOfMonths", {
+						valueAsNumber: true,
+					})}
+				/>
+
+				<Input
+					type="number"
+					label="Miles at Start of Lease"
+					placeholder="0"
+					errorMessage={errors.initialMiles?.message}
+					{...register("initialMiles", {
+						valueAsNumber: true,
+					})}
+				/>
+
+				<Input
+					type="number"
+					label="Allowed Miles"
+					placeholder="36000"
+					errorMessage={errors.allowedMiles?.message}
+					{...register("allowedMiles", {
+						valueAsNumber: true,
+					})}
+				/>
+
+				<Input
+					type="number"
+					label="Excess Fee Per Mile"
+					placeholder="25"
+					errorMessage={errors.excessFeePerMileInCents?.message}
+					{...register("excessFeePerMileInCents", {
+						valueAsNumber: true,
+					})}
+				/>
+			</section>
+
+			<div className="flex flex-col gap-2">
+				<Button className="w-full" type="submit" disabled={isLoading}>
+					Submit
+				</Button>
+				<Button onClick={onFinished} variant="outline" className="w-full">
+					Cancel
+				</Button>
+			</div>
+		</form>
 	);
 }
