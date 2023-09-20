@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DeleteLeaseButton } from "~/components/DeleteLeaseButton";
 import { DisplayValueAndLabel } from "~/components/DisplayValueAndLabel";
 import { Button } from "~/components/ui/button";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
@@ -65,6 +66,9 @@ export function LeaseDetailsView({ lease }: { lease: LeaseByIdOutput }) {
 					label="Days Remaining"
 					value={leaseDaysRemaining}
 				/>
+			</div>
+			<div className="flex w-full justify-evenly">
+				<DeleteLeaseButton leaseId={lease.id} />
 			</div>
 		</div>
 	);

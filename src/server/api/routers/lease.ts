@@ -63,6 +63,15 @@ export const leaseRouter = createTRPCRouter({
 			},
 		});
 	}),
+	deleteById: protectedProcedure
+		.input(z.string().cuid())
+		.mutation(({ ctx, input }) => {
+			return ctx.db.lease.delete({
+				where: {
+					id: input,
+				},
+			});
+		}),
 });
 
 export type LeaseByIdOutput = RouterOutputs["lease"]["byId"];

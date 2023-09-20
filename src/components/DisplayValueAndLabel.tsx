@@ -6,7 +6,7 @@ export function DisplayValueAndLabel({
 	label: string;
 }) {
 	return (
-		<div className="flex flex-col items-center">
+		<div className="flex flex-1 flex-col items-center">
 			<p className="text-xl">{value}</p>
 			<p className="text-sm">{label}</p>
 		</div>

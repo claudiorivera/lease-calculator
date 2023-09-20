@@ -151,6 +151,7 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 		createNewLease(data, {
 			onSuccess: (data) => {
 				onFinished();
+
 				router.push(`/leases/${data.id}`);
 			},
 		});
