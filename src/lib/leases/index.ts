@@ -82,3 +82,17 @@ export function getAllowedMilesToDate({
 		initialMiles
 	);
 }
+
+export function getAverageMilesPerDay({
+	daysElapsed,
+	initialMiles,
+	currentOdometerReading,
+}: {
+	daysElapsed: number;
+	initialMiles: number;
+	currentOdometerReading: number;
+}) {
+	if (daysElapsed === 0) return 0;
+
+	return (currentOdometerReading - initialMiles) / daysElapsed;
+}
