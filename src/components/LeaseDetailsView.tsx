@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { DeleteLeaseButton } from "~/components/DeleteLeaseButton";
-import { DisplayValueAndLabel } from "~/components/DisplayValueAndLabel";
+import { MilesDisplay } from "~/components/LeaseDetailsMilesDisplay";
+import { LeaseStats } from "~/components/LeaseDetailsStats";
 import { Button } from "~/components/ui/button";
+import { Separator } from "~/components/ui/separator";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
 import {
 	getAllowedMilesToDate,
@@ -21,55 +23,53 @@ export function LeaseDetailsView({ lease }: { lease: LeaseByIdOutput }) {
 	} = getLeaseProgress(lease);
 
 	return (
-		<div className="flex flex-col items-center">
-			<div className="flex flex-col items-center">
-				<h1 className="text-lg">Current Status</h1>
-				<Button asChild variant="ghost">
-					<Link
-						className="text-sm"
-						href={`/leases/${lease.id}/odometer-readings/new`}
-					>
+		<div className="flex flex-col items-center gap-6">
+			<section className="flex flex-col items-center">
+				<p className="py-1 text-xl font-semibold">Current Status</p>
+				<Button asChild variant="link">
+					<Link href={`/leases/${lease.id}/odometer-readings/new`}>
 						Update Now
 					</Link>
 				</Button>
-			</div>
-			<div className="flex flex-col items-center">
-				<div className="flex flex-col items-center py-8">
-					<p className="text-4xl font-black">
-						{Math.abs(estimatedMilesToDate)}
-					</p>
+			</section>
+
+			<MilesDisplay
+				daysElapsedPercentage={daysElapsedPercentage}
+				estimatedMilesToDate={estimatedMilesToDate}
+			/>
+
+			<LeaseStats
+				allowedMilesToDate={allowedMilesToDate}
+				currentOdometerReading={currentOdometerReading}
+				leaseDaysRemaining={leaseDaysRemaining}
+			/>
+
+			<Separator />
+
+			<section className="flex w-full flex-col items-center gap-4">
+				<p className="text-xl font-semibold">Predictions</p>
+				<div className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
+					<p className="text-6xl font-black">${(0).toFixed(2)}</p>
+					<div className="h-4"></div>
 					<p>
-						miles{" "}
+						total fees{" "}
 						<span className="font-semibold">
+							with {Math.abs(estimatedMilesToDate)} miles{" "}
 							{estimatedMilesToDate > 0 ? "over" : "under"}
 						</span>{" "}
-						your allowance
+						your allowance at{" "}
+						<span className="font-semibold">
+							${(lease.excessFeePerMileInCents / 100).toFixed(2)} per mile
+						</span>
 					</p>
 				</div>
-				<p className="text-sm">
-					<span className="font-semibold">{daysElapsedPercentage}%</span> of
-					lease elapsed
-				</p>
-			</div>
-			<div className="flex w-full justify-evenly py-8">
-				<DisplayValueAndLabel
-					label="Current Miles"
-					value={currentOdometerReading}
-				/>
-				<div className="w-0.5 bg-neutral-100"></div>
-				<DisplayValueAndLabel
-					label="Allowed Miles"
-					value={allowedMilesToDate}
-				/>
-				<div className="w-0.5 bg-neutral-100"></div>
-				<DisplayValueAndLabel
-					label="Days Remaining"
-					value={leaseDaysRemaining}
-				/>
-			</div>
-			<div className="flex w-full justify-evenly">
+			</section>
+
+			<Separator />
+
+			<section className="flex w-full justify-evenly">
 				<DeleteLeaseButton leaseId={lease.id} />
-			</div>
+			</section>
 		</div>
 	);
 }
