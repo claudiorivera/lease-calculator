@@ -9,7 +9,7 @@ import {
 	getAllowedMilesToDate,
 	getCurrentOdometerReading,
 	getDaysElapsedPercentage,
-	getLeaseDaysRemaining,
+	getLeaseDaysElapsed,
 } from "~/lib/leases";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
@@ -94,10 +94,9 @@ function getLeaseProgress({
 		end: endDate,
 	});
 
-	const leaseDaysRemaining = getLeaseDaysRemaining({
-		startDate,
-		totalLeaseDays,
-	});
+	const leaseDaysElapsed = getLeaseDaysElapsed({ startDate });
+
+	const leaseDaysRemaining = totalLeaseDays - leaseDaysElapsed;
 
 	const currentOdometerReading = getCurrentOdometerReading({
 		odometerReadings,
@@ -111,9 +110,9 @@ function getLeaseProgress({
 
 	const allowedMilesToDate = getAllowedMilesToDate({
 		allowedMiles,
-		numberOfMonths,
-		startDate,
 		initialMiles,
+		leaseDaysElapsed,
+		totalLeaseDays,
 	});
 
 	const estimatedMilesToDate = currentOdometerReading - allowedMilesToDate;
