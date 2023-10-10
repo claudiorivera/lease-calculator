@@ -66,3 +66,13 @@ export function getAverageMilesPerDay({
 
 	return (currentOdometerReading - initialMiles) / daysElapsed;
 }
+
+export function getEstimatedTotalFeesAtEndOfLease({
+	estimatedExcessMiles,
+	excessFeePerMileInCents,
+}: {
+	estimatedExcessMiles: number;
+	excessFeePerMileInCents: number;
+}) {
+	return Math.max(estimatedExcessMiles * excessFeePerMileInCents, 0);
+}
