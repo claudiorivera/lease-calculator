@@ -76,3 +76,15 @@ export function getEstimatedTotalFeesAtEndOfLease({
 }) {
 	return Math.max(estimatedExcessMiles * excessFeePerMileInCents, 0);
 }
+
+export function getEstimatedExcessMiles({
+	estimatedMilesAtEndOfLease,
+	initialMiles,
+	allowedMiles,
+}: {
+	estimatedMilesAtEndOfLease: number;
+	initialMiles: number;
+	allowedMiles: number;
+}) {
+	return estimatedMilesAtEndOfLease - initialMiles - allowedMiles;
+}
