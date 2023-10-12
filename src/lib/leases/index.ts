@@ -88,3 +88,15 @@ export function getEstimatedExcessMiles({
 }) {
 	return estimatedMilesAtEndOfLease - initialMiles - allowedMiles;
 }
+
+export function getEstimatedMilesAtEndOfLease({
+	averageMilesPerDay,
+	leaseDaysRemaining,
+	latestOdometerReading,
+}: {
+	averageMilesPerDay: number;
+	leaseDaysRemaining: number;
+	latestOdometerReading: number;
+}) {
+	return latestOdometerReading + averageMilesPerDay * leaseDaysRemaining;
+}
