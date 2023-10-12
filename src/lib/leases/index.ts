@@ -1,4 +1,4 @@
-import { getDaysSince, getLastDay, getNumberOfDays } from "~/lib/dates";
+import { getDaysSince } from "~/lib/dates";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
 export function getLeaseDaysElapsed({
@@ -7,35 +7,17 @@ export function getLeaseDaysElapsed({
 	return getDaysSince(startDate);
 }
 
-export function getLeaseDaysRemaining({
-	startDate,
-	totalLeaseDays,
-}: {
-	startDate: LeaseByIdOutput["startDate"];
-	totalLeaseDays: number;
-}) {
-	const leaseDaysElapsed = getLeaseDaysElapsed({ startDate });
-
-	return totalLeaseDays - leaseDaysElapsed;
-}
-
 export function getLeaseMilesRemaining({
 	initialMiles,
 	allowedMiles,
-	odometerReadings,
-}: Pick<
-	LeaseByIdOutput,
-	"allowedMiles" | "odometerReadings" | "initialMiles"
->) {
-	const currentOdometerReading = getCurrentOdometerReading({
-		odometerReadings,
-		initialMiles,
-	});
-
-	return initialMiles + allowedMiles - currentOdometerReading;
+	latestOdometerReading,
+}: Pick<LeaseByIdOutput, "allowedMiles" | "initialMiles"> & {
+	latestOdometerReading: number;
+}) {
+	return initialMiles + allowedMiles - latestOdometerReading;
 }
 
-export function getCurrentOdometerReading({
+export function getLatestOdometerReading({
 	odometerReadings,
 	initialMiles,
 }: Pick<LeaseByIdOutput, "odometerReadings" | "initialMiles">) {
@@ -45,40 +27,76 @@ export function getCurrentOdometerReading({
 }
 
 export function getDaysElapsedPercentage({
-	daysElapsed,
+	leaseDaysElapsed,
 	totalLeaseDays,
 }: {
-	daysElapsed: number;
+	leaseDaysElapsed: number;
 	totalLeaseDays: number;
 }) {
 	if (totalLeaseDays === 0) return 0;
 
-	return Math.floor((daysElapsed / totalLeaseDays) * 100);
+	return Math.floor((leaseDaysElapsed / totalLeaseDays) * 100);
 }
 
 export function getAllowedMilesToDate({
-	startDate,
-	numberOfMonths,
 	allowedMiles,
 	initialMiles,
-}: Pick<
-	LeaseByIdOutput,
-	"startDate" | "numberOfMonths" | "allowedMiles" | "initialMiles"
->) {
-	const leaseDaysElapsed = getLeaseDaysElapsed({
-		startDate,
-	});
-
-	const totalLeaseDays = getNumberOfDays({
-		start: startDate,
-		end: getLastDay({
-			startDate,
-			numberOfMonths,
-		}),
-	});
-
+	leaseDaysElapsed,
+	totalLeaseDays,
+}: Pick<LeaseByIdOutput, "allowedMiles" | "initialMiles"> & {
+	leaseDaysElapsed: number;
+	totalLeaseDays: number;
+}) {
 	return (
 		Math.floor((leaseDaysElapsed * allowedMiles) / totalLeaseDays) +
 		initialMiles
 	);
+}
+
+export function getAverageMilesPerDay({
+	leaseDaysElapsed,
+	initialMiles,
+	latestOdometerReading,
+}: {
+	leaseDaysElapsed: number;
+	initialMiles: number;
+	latestOdometerReading: number;
+}) {
+	if (leaseDaysElapsed === 0) return 0;
+
+	return (latestOdometerReading - initialMiles) / leaseDaysElapsed;
+}
+
+export function getEstimatedTotalFeesAtEndOfLease({
+	estimatedExcessMiles,
+	excessFeePerMileInCents,
+}: {
+	estimatedExcessMiles: number;
+	excessFeePerMileInCents: number;
+}) {
+	return Math.max(estimatedExcessMiles * excessFeePerMileInCents, 0);
+}
+
+export function getEstimatedExcessMiles({
+	estimatedMilesAtEndOfLease,
+	initialMiles,
+	allowedMiles,
+}: {
+	estimatedMilesAtEndOfLease: number;
+	initialMiles: number;
+	allowedMiles: number;
+}) {
+	return estimatedMilesAtEndOfLease - initialMiles - allowedMiles;
+}
+
+export function getEstimatedMilesAtEndOfLease({
+	averageMilesPerDay,
+	leaseDaysRemaining,
+	latestOdometerReading,
+}: {
+	averageMilesPerDay: number;
+	leaseDaysRemaining: number;
+	latestOdometerReading: number;
+}) {
+	return latestOdometerReading + averageMilesPerDay * leaseDaysRemaining;
 }

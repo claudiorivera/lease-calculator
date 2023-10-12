@@ -1,75 +1,69 @@
 import Link from "next/link";
 import { DeleteLeaseButton } from "~/components/DeleteLeaseButton";
-import { DisplayValueAndLabel } from "~/components/DisplayValueAndLabel";
+import { LeasePredictions } from "~/components/LeaseDetailsLeasePredictions";
+import { MilesDisplay } from "~/components/LeaseDetailsMilesDisplay";
+import { LeaseStats } from "~/components/LeaseDetailsStats";
 import { Button } from "~/components/ui/button";
+import { Separator } from "~/components/ui/separator";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
 import {
 	getAllowedMilesToDate,
-	getCurrentOdometerReading,
+	getAverageMilesPerDay,
 	getDaysElapsedPercentage,
-	getLeaseDaysRemaining,
+	getEstimatedExcessMiles,
+	getEstimatedMilesAtEndOfLease,
+	getEstimatedTotalFeesAtEndOfLease,
+	getLatestOdometerReading,
+	getLeaseDaysElapsed,
 } from "~/lib/leases";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
 export function LeaseDetailsView({ lease }: { lease: LeaseByIdOutput }) {
 	const {
-		estimatedMilesToDate,
+		milesOverOrUnder,
 		daysElapsedPercentage,
-		currentOdometerReading,
+		latestOdometerReading,
 		allowedMilesToDate,
 		leaseDaysRemaining,
+		estimatedFeesAtEndOfLease,
+		estimatedExcessMiles,
 	} = getLeaseProgress(lease);
 
 	return (
-		<div className="flex flex-col items-center">
-			<div className="flex flex-col items-center">
-				<h1 className="text-lg">Current Status</h1>
-				<Button asChild variant="ghost">
-					<Link
-						className="text-sm"
-						href={`/leases/${lease.id}/odometer-readings/new`}
-					>
+		<div className="flex flex-col items-center gap-6">
+			<section className="flex flex-col items-center">
+				<p className="py-1 text-xl font-semibold">Current Status</p>
+				<Button asChild variant="link">
+					<Link href={`/leases/${lease.id}/odometer-readings/new`}>
 						Update Now
 					</Link>
 				</Button>
-			</div>
-			<div className="flex flex-col items-center">
-				<div className="flex flex-col items-center py-8">
-					<p className="text-4xl font-black">
-						{Math.abs(estimatedMilesToDate)}
-					</p>
-					<p>
-						miles{" "}
-						<span className="font-semibold">
-							{estimatedMilesToDate > 0 ? "over" : "under"}
-						</span>{" "}
-						your allowance
-					</p>
-				</div>
-				<p className="text-sm">
-					<span className="font-semibold">{daysElapsedPercentage}%</span> of
-					lease elapsed
-				</p>
-			</div>
-			<div className="flex w-full justify-evenly py-8">
-				<DisplayValueAndLabel
-					label="Current Miles"
-					value={currentOdometerReading}
-				/>
-				<div className="w-0.5 bg-neutral-100"></div>
-				<DisplayValueAndLabel
-					label="Allowed Miles"
-					value={allowedMilesToDate}
-				/>
-				<div className="w-0.5 bg-neutral-100"></div>
-				<DisplayValueAndLabel
-					label="Days Remaining"
-					value={leaseDaysRemaining}
-				/>
-			</div>
-			<div className="flex w-full justify-evenly">
+			</section>
+
+			<MilesDisplay
+				daysElapsedPercentage={daysElapsedPercentage}
+				milesOverOrUnder={milesOverOrUnder}
+			/>
+
+			<LeaseStats
+				allowedMilesToDate={allowedMilesToDate}
+				latestOdometerReading={latestOdometerReading}
+				leaseDaysRemaining={leaseDaysRemaining}
+			/>
+
+			<Separator />
+
+			<LeasePredictions
+				excessFeePerMileInCents={lease.excessFeePerMileInCents}
+				estimatedExcessMiles={estimatedExcessMiles}
+				estimatedFeesAtEndOfLease={estimatedFeesAtEndOfLease}
+			/>
+
+			<Separator />
+
+			<section className="flex w-full justify-evenly">
 				<DeleteLeaseButton leaseId={lease.id} />
-			</div>
+			</section>
 		</div>
 	);
 }
@@ -80,10 +74,8 @@ function getLeaseProgress({
 	allowedMiles,
 	odometerReadings,
 	initialMiles,
-}: Omit<
-	LeaseByIdOutput,
-	"name" | "excessFeePerMileInCents" | "id" | "userId"
->) {
+	excessFeePerMileInCents,
+}: Omit<LeaseByIdOutput, "name" | "id" | "userId">) {
 	const endDate = getLastDay({
 		startDate,
 		numberOfMonths,
@@ -94,35 +86,59 @@ function getLeaseProgress({
 		end: endDate,
 	});
 
-	const leaseDaysRemaining = getLeaseDaysRemaining({
-		startDate,
-		totalLeaseDays,
-	});
+	const leaseDaysElapsed = getLeaseDaysElapsed({ startDate });
 
-	const currentOdometerReading = getCurrentOdometerReading({
+	const leaseDaysRemaining = totalLeaseDays - leaseDaysElapsed;
+
+	const latestOdometerReading = getLatestOdometerReading({
 		odometerReadings,
 		initialMiles,
 	});
 
 	const daysElapsedPercentage = getDaysElapsedPercentage({
-		daysElapsed: totalLeaseDays - leaseDaysRemaining,
+		leaseDaysElapsed: totalLeaseDays - leaseDaysRemaining,
 		totalLeaseDays,
 	});
 
 	const allowedMilesToDate = getAllowedMilesToDate({
 		allowedMiles,
-		numberOfMonths,
-		startDate,
+		initialMiles,
+		leaseDaysElapsed,
+		totalLeaseDays,
+	});
+
+	const milesOverOrUnder = latestOdometerReading - allowedMilesToDate;
+
+	const averageMilesPerDay = getAverageMilesPerDay({
+		latestOdometerReading,
+		leaseDaysElapsed: leaseDaysElapsed,
 		initialMiles,
 	});
 
-	const estimatedMilesToDate = currentOdometerReading - allowedMilesToDate;
+	const estimatedMilesAtEndOfLease = getEstimatedMilesAtEndOfLease({
+		averageMilesPerDay,
+		latestOdometerReading,
+		leaseDaysRemaining,
+	});
+
+	const estimatedExcessMiles = getEstimatedExcessMiles({
+		allowedMiles,
+		estimatedMilesAtEndOfLease,
+		initialMiles,
+	});
+
+	const estimatedFeesAtEndOfLease = getEstimatedTotalFeesAtEndOfLease({
+		estimatedExcessMiles,
+		excessFeePerMileInCents,
+	});
 
 	return {
-		estimatedMilesToDate,
+		milesOverOrUnder,
 		daysElapsedPercentage,
-		currentOdometerReading,
+		latestOdometerReading,
 		allowedMilesToDate,
 		leaseDaysRemaining,
+		estimatedFeesAtEndOfLease,
+		estimatedExcessMiles,
 	};
 }

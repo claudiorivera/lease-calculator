@@ -1,55 +1,45 @@
-import { DisplayValueAndLabel } from "~/components/DisplayValueAndLabel";
+import { LeasePredictions } from "~/components/LeaseDetailsLeasePredictions";
+import { MilesDisplay } from "~/components/LeaseDetailsMilesDisplay";
+import { LeaseStats } from "~/components/LeaseDetailsStats";
 import { Button } from "~/components/ui/button";
+import { Separator } from "~/components/ui/separator";
 
 export function LeaseDetailsLoadingSkeleton() {
-	const estimatedMilesToDate = 0;
+	const milesOverOrUnder = 0;
 	const daysElapsedPercentage = 0;
-	const currentOdometerReading = 0;
+	const latestOdometerReading = 0;
 	const allowedMilesToDate = 0;
 	const leaseDaysRemaining = 0;
+	const excessFeePerMileInCents = 0;
+	const estimatedExcessMiles = 0;
+	const estimatedFeesAtEndOfLease = 0;
 
 	return (
-		<div className="flex flex-col items-center">
-			<div className="flex flex-col items-center">
-				<h1 className="text-lg">Current Status</h1>
-				<Button variant="ghost" disabled>
-					Update Now
-				</Button>
-			</div>
-			<div className="flex flex-col items-center">
-				<div className="flex flex-col items-center py-8">
-					<p className="text-4xl font-black">
-						{Math.abs(estimatedMilesToDate)}
-					</p>
-					<p>
-						miles{" "}
-						<span className="font-semibold">
-							{estimatedMilesToDate > 0 ? "over" : "under"}
-						</span>{" "}
-						your allowance
-					</p>
-				</div>
-				<p className="text-sm">
-					<span className="font-semibold">{daysElapsedPercentage}%</span> of
-					lease elapsed
-				</p>
-			</div>
-			<div className="flex w-full justify-evenly py-8">
-				<DisplayValueAndLabel
-					label="Current Miles"
-					value={currentOdometerReading}
-				/>
-				<div className="w-0.5 bg-neutral-100"></div>
-				<DisplayValueAndLabel
-					label="Allowed Miles"
-					value={allowedMilesToDate}
-				/>
-				<div className="w-0.5 bg-neutral-100"></div>
-				<DisplayValueAndLabel
-					label="Days Remaining"
-					value={leaseDaysRemaining}
-				/>
-			</div>
+		<div className="flex flex-col items-center gap-6">
+			<section className="flex flex-col items-center">
+				<p className="py-1 text-xl font-semibold">Current Status</p>
+				<Button variant="link">Update Now</Button>
+			</section>
+
+			<MilesDisplay
+				daysElapsedPercentage={daysElapsedPercentage}
+				milesOverOrUnder={milesOverOrUnder}
+			/>
+
+			<LeaseStats
+				allowedMilesToDate={allowedMilesToDate}
+				latestOdometerReading={latestOdometerReading}
+				leaseDaysRemaining={leaseDaysRemaining}
+			/>
+			<Separator />
+
+			<LeasePredictions
+				excessFeePerMileInCents={excessFeePerMileInCents}
+				estimatedExcessMiles={estimatedExcessMiles}
+				estimatedFeesAtEndOfLease={estimatedFeesAtEndOfLease}
+			/>
+
+			<Separator />
 		</div>
 	);
 }

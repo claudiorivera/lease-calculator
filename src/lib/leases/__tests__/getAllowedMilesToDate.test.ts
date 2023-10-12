@@ -1,7 +1,8 @@
 import MockDate from "mockdate";
 
 import { afterEach, describe, expect, it } from "vitest";
-import { getAllowedMilesToDate } from "~/lib/leases";
+import { getLastDay, getNumberOfDays } from "~/lib/dates";
+import { getAllowedMilesToDate, getLeaseDaysElapsed } from "~/lib/leases";
 
 type MakeTestArgs = {
 	startDate: string;
@@ -70,12 +71,23 @@ function makeTest({
 }: MakeTestArgs) {
 	return it(`should return ${expectedAllowedMilesToDate} when start date is ${startDate} and today is ${today} and allowed miles is ${allowedMiles} and number of months is ${numberOfMonths}`, () => {
 		MockDate.set(today);
+		const leaseDaysElapsed = getLeaseDaysElapsed({
+			startDate: new Date(startDate),
+		});
+
+		const totalLeaseDays = getNumberOfDays({
+			start: new Date(startDate),
+			end: getLastDay({
+				startDate: new Date(startDate),
+				numberOfMonths,
+			}),
+		});
 
 		const allowedMilesToDate = getAllowedMilesToDate({
 			allowedMiles,
 			initialMiles,
-			numberOfMonths,
-			startDate: new Date(startDate),
+			leaseDaysElapsed,
+			totalLeaseDays,
 		});
 
 		expect(allowedMilesToDate).toBe(expectedAllowedMilesToDate);

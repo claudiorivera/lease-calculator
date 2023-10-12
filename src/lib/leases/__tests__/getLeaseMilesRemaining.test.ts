@@ -22,16 +22,6 @@ describe("getLeaseMilesRemaining", () => {
 		latestOdometerReading: 0,
 		expectedLeaseMilesRemaining: 200,
 	});
-
-	it("should return 100 when there are no odometer readings and initial miles is 100", () => {
-		const leaseMilesRemaining = getLeaseMilesRemaining({
-			initialMiles: 100,
-			allowedMiles: 100,
-			odometerReadings: [],
-		});
-
-		expect(leaseMilesRemaining).toBe(100);
-	});
 });
 
 function makeTest({
@@ -44,12 +34,7 @@ function makeTest({
 		const leaseMilesRemaining = getLeaseMilesRemaining({
 			initialMiles,
 			allowedMiles,
-			odometerReadings: [
-				{
-					createdAt: new Date(),
-					miles: latestOdometerReading,
-				},
-			],
+			latestOdometerReading,
 		});
 
 		expect(leaseMilesRemaining).toBe(expectedLeaseMilesRemaining);
