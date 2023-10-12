@@ -1,6 +1,8 @@
+import { LeasePredictions } from "~/components/LeaseDetailsLeasePredictions";
 import { MilesDisplay } from "~/components/LeaseDetailsMilesDisplay";
 import { LeaseStats } from "~/components/LeaseDetailsStats";
 import { Button } from "~/components/ui/button";
+import { Separator } from "~/components/ui/separator";
 
 export function LeaseDetailsLoadingSkeleton() {
 	const milesOverOrUnder = 0;
@@ -8,6 +10,9 @@ export function LeaseDetailsLoadingSkeleton() {
 	const latestOdometerReading = 0;
 	const allowedMilesToDate = 0;
 	const leaseDaysRemaining = 0;
+	const excessFeePerMileInCents = 0;
+	const estimatedExcessMiles = 0;
+	const estimatedFeesAtEndOfLease = 0;
 
 	return (
 		<div className="flex flex-col items-center gap-6">
@@ -26,6 +31,15 @@ export function LeaseDetailsLoadingSkeleton() {
 				latestOdometerReading={latestOdometerReading}
 				leaseDaysRemaining={leaseDaysRemaining}
 			/>
+			<Separator />
+
+			<LeasePredictions
+				excessFeePerMileInCents={excessFeePerMileInCents}
+				estimatedExcessMiles={estimatedExcessMiles}
+				estimatedFeesAtEndOfLease={estimatedFeesAtEndOfLease}
+			/>
+
+			<Separator />
 		</div>
 	);
 }

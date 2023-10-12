@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DeleteLeaseButton } from "~/components/DeleteLeaseButton";
+import { LeasePredictions } from "~/components/LeaseDetailsLeasePredictions";
 import { MilesDisplay } from "~/components/LeaseDetailsMilesDisplay";
 import { LeaseStats } from "~/components/LeaseDetailsStats";
 import { Button } from "~/components/ui/button";
@@ -52,26 +53,11 @@ export function LeaseDetailsView({ lease }: { lease: LeaseByIdOutput }) {
 
 			<Separator />
 
-			<section className="flex w-full flex-col items-center gap-4">
-				<p className="text-xl font-semibold">Predictions</p>
-				<div className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
-					<p className="text-6xl font-black">
-						${(estimatedFeesAtEndOfLease / 100).toFixed(2)}
-					</p>
-					<div className="h-4"></div>
-					<p>
-						total fees{" "}
-						<span className="font-semibold">
-							with {Math.abs(Math.round(estimatedExcessMiles))} miles{" "}
-							{estimatedExcessMiles > 0 ? "over" : "under"}
-						</span>{" "}
-						your allowance at{" "}
-						<span className="font-semibold">
-							${(lease.excessFeePerMileInCents / 100).toFixed(2)} per mile
-						</span>
-					</p>
-				</div>
-			</section>
+			<LeasePredictions
+				excessFeePerMileInCents={lease.excessFeePerMileInCents}
+				estimatedExcessMiles={estimatedExcessMiles}
+				estimatedFeesAtEndOfLease={estimatedFeesAtEndOfLease}
+			/>
 
 			<Separator />
 
