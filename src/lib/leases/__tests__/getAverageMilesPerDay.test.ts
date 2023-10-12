@@ -2,54 +2,54 @@ import { describe, expect, it } from "vitest";
 import { getAverageMilesPerDay } from "~/lib/leases";
 
 type MakeTestArgs = {
-	daysElapsed: number;
+	leaseDaysElapsed: number;
 	initialMiles: number;
-	currentOdometerReading: number;
+	latestOdometerReading: number;
 	expectedAverageMilesPerDay: number;
 };
 
 describe("getAverageMilesPerDay", () => {
 	makeTest({
-		daysElapsed: 0,
+		leaseDaysElapsed: 0,
 		initialMiles: 0,
-		currentOdometerReading: 0,
+		latestOdometerReading: 0,
 		expectedAverageMilesPerDay: 0,
 	});
 
 	makeTest({
-		daysElapsed: 1,
+		leaseDaysElapsed: 1,
 		initialMiles: 0,
-		currentOdometerReading: 10,
+		latestOdometerReading: 10,
 		expectedAverageMilesPerDay: 10,
 	});
 
 	makeTest({
-		daysElapsed: 10,
+		leaseDaysElapsed: 10,
 		initialMiles: 0,
-		currentOdometerReading: 20,
+		latestOdometerReading: 20,
 		expectedAverageMilesPerDay: 2,
 	});
 
 	makeTest({
-		daysElapsed: 3,
+		leaseDaysElapsed: 3,
 		initialMiles: 0,
-		currentOdometerReading: 1,
+		latestOdometerReading: 1,
 		expectedAverageMilesPerDay: 0.33,
 	});
 });
 
 function makeTest({
-	daysElapsed,
+	leaseDaysElapsed,
 	initialMiles,
-	currentOdometerReading,
+	latestOdometerReading,
 	expectedAverageMilesPerDay,
 }: MakeTestArgs) {
-	return it(`should return ${expectedAverageMilesPerDay} when daysElapsed is ${daysElapsed}, initialMiles is ${initialMiles}, currentOdometerReading is ${currentOdometerReading}`, () => {
+	return it(`should return ${expectedAverageMilesPerDay} when leaseDaysElapsed is ${leaseDaysElapsed}, initialMiles is ${initialMiles}, latestOdometerReading is ${latestOdometerReading}`, () => {
 		expect(
 			getAverageMilesPerDay({
-				daysElapsed,
+				leaseDaysElapsed,
 				initialMiles,
-				currentOdometerReading,
+				latestOdometerReading,
 			}),
 		).toBeCloseTo(expectedAverageMilesPerDay);
 	});

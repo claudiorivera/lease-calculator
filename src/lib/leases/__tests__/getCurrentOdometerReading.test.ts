@@ -1,24 +1,24 @@
 import { describe, expect, it } from "vitest";
-import { getCurrentOdometerReading } from "~/lib/leases";
+import { getLatestOdometerReading } from "~/lib/leases";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
 type MakeTestArgs = {
 	odometerReadings: LeaseByIdOutput["odometerReadings"];
 	initialMiles: number;
-	expectedCurrentOdometerReading: number;
+	expectedLatestOdometerReading: number;
 };
 
-describe("getCurrentOdometerReading", () => {
+describe("getLatestOdometerReading", () => {
 	makeTest({
 		initialMiles: 0,
 		odometerReadings: [],
-		expectedCurrentOdometerReading: 0,
+		expectedLatestOdometerReading: 0,
 	});
 
 	makeTest({
 		initialMiles: 100,
 		odometerReadings: [],
-		expectedCurrentOdometerReading: 100,
+		expectedLatestOdometerReading: 100,
 	});
 
 	makeTest({
@@ -29,7 +29,7 @@ describe("getCurrentOdometerReading", () => {
 				miles: 101,
 			},
 		],
-		expectedCurrentOdometerReading: 101,
+		expectedLatestOdometerReading: 101,
 	});
 
 	makeTest({
@@ -40,23 +40,23 @@ describe("getCurrentOdometerReading", () => {
 				miles: 0,
 			},
 		],
-		expectedCurrentOdometerReading: 0,
+		expectedLatestOdometerReading: 0,
 	});
 });
 
 function makeTest({
 	odometerReadings,
 	initialMiles,
-	expectedCurrentOdometerReading,
+	expectedLatestOdometerReading,
 }: MakeTestArgs) {
-	return it(`should return ${expectedCurrentOdometerReading} when initial miles is ${initialMiles} and odometer readings are ${JSON.stringify(
+	return it(`should return ${expectedLatestOdometerReading} when initial miles is ${initialMiles} and odometer readings are ${JSON.stringify(
 		odometerReadings,
 	)}`, () => {
-		const currentOdometerReading = getCurrentOdometerReading({
+		const latestOdometerReading = getLatestOdometerReading({
 			odometerReadings,
 			initialMiles,
 		});
 
-		expect(currentOdometerReading).toBe(expectedCurrentOdometerReading);
+		expect(latestOdometerReading).toBe(expectedLatestOdometerReading);
 	});
 }

@@ -3,9 +3,9 @@ import { LeaseStats } from "~/components/LeaseDetailsStats";
 import { Button } from "~/components/ui/button";
 
 export function LeaseDetailsLoadingSkeleton() {
-	const estimatedMilesToDate = 0;
+	const milesOverOrUnder = 0;
 	const daysElapsedPercentage = 0;
-	const currentOdometerReading = 0;
+	const latestOdometerReading = 0;
 	const allowedMilesToDate = 0;
 	const leaseDaysRemaining = 0;
 
@@ -18,12 +18,12 @@ export function LeaseDetailsLoadingSkeleton() {
 
 			<MilesDisplay
 				daysElapsedPercentage={daysElapsedPercentage}
-				estimatedMilesToDate={estimatedMilesToDate}
+				milesOverOrUnder={milesOverOrUnder}
 			/>
 
 			<LeaseStats
 				allowedMilesToDate={allowedMilesToDate}
-				currentOdometerReading={currentOdometerReading}
+				latestOdometerReading={latestOdometerReading}
 				leaseDaysRemaining={leaseDaysRemaining}
 			/>
 		</div>

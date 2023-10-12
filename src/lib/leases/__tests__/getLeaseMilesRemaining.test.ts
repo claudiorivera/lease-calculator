@@ -34,7 +34,7 @@ function makeTest({
 		const leaseMilesRemaining = getLeaseMilesRemaining({
 			initialMiles,
 			allowedMiles,
-			currentOdometerReading: latestOdometerReading,
+			latestOdometerReading: latestOdometerReading,
 		});
 
 		expect(leaseMilesRemaining).toBe(expectedLeaseMilesRemaining);

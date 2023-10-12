@@ -1,11 +1,11 @@
 import { DisplayValueAndLabel } from "~/components/DisplayValueAndLabel";
 
 export function LeaseStats({
-	currentOdometerReading,
+	latestOdometerReading,
 	allowedMilesToDate,
 	leaseDaysRemaining,
 }: {
-	currentOdometerReading: number;
+	latestOdometerReading: number;
 	allowedMilesToDate: number;
 	leaseDaysRemaining: number;
 }) {
@@ -13,7 +13,7 @@ export function LeaseStats({
 		<section className="flex w-full justify-evenly">
 			<DisplayValueAndLabel
 				label="Current Miles"
-				value={currentOdometerReading}
+				value={latestOdometerReading}
 			/>
 			<div className="w-0.5 bg-neutral-100"></div>
 			<DisplayValueAndLabel label="Allowed Miles" value={allowedMilesToDate} />

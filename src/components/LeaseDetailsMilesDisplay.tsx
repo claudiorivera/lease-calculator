@@ -1,18 +1,18 @@
 export function MilesDisplay({
-	estimatedMilesToDate,
+	milesOverOrUnder,
 	daysElapsedPercentage,
 }: {
-	estimatedMilesToDate: number;
+	milesOverOrUnder: number;
 	daysElapsedPercentage: number;
 }) {
 	return (
 		<section className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
-			<p className="text-6xl font-black">{Math.abs(estimatedMilesToDate)}</p>
+			<p className="text-6xl font-black">{Math.abs(milesOverOrUnder)}</p>
 			<div className="h-4"></div>
 			<p>
 				miles{" "}
 				<span className="font-semibold">
-					{estimatedMilesToDate > 0 ? "over" : "under"}
+					{milesOverOrUnder > 0 ? "over" : "under"}
 				</span>{" "}
 				your allowance
 			</p>

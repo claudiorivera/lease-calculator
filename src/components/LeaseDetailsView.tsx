@@ -7,19 +7,25 @@ import { Separator } from "~/components/ui/separator";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
 import {
 	getAllowedMilesToDate,
-	getCurrentOdometerReading,
+	getAverageMilesPerDay,
 	getDaysElapsedPercentage,
+	getEstimatedExcessMiles,
+	getEstimatedMilesAtEndOfLease,
+	getEstimatedTotalFeesAtEndOfLease,
+	getLatestOdometerReading,
 	getLeaseDaysElapsed,
 } from "~/lib/leases";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 
 export function LeaseDetailsView({ lease }: { lease: LeaseByIdOutput }) {
 	const {
-		estimatedMilesToDate,
+		milesOverOrUnder,
 		daysElapsedPercentage,
-		currentOdometerReading,
+		latestOdometerReading,
 		allowedMilesToDate,
 		leaseDaysRemaining,
+		estimatedFeesAtEndOfLease,
+		estimatedExcessMiles,
 	} = getLeaseProgress(lease);
 
 	return (
@@ -35,12 +41,12 @@ export function LeaseDetailsView({ lease }: { lease: LeaseByIdOutput }) {
 
 			<MilesDisplay
 				daysElapsedPercentage={daysElapsedPercentage}
-				estimatedMilesToDate={estimatedMilesToDate}
+				milesOverOrUnder={milesOverOrUnder}
 			/>
 
 			<LeaseStats
 				allowedMilesToDate={allowedMilesToDate}
-				currentOdometerReading={currentOdometerReading}
+				latestOdometerReading={latestOdometerReading}
 				leaseDaysRemaining={leaseDaysRemaining}
 			/>
 
@@ -49,13 +55,15 @@ export function LeaseDetailsView({ lease }: { lease: LeaseByIdOutput }) {
 			<section className="flex w-full flex-col items-center gap-4">
 				<p className="text-xl font-semibold">Predictions</p>
 				<div className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
-					<p className="text-6xl font-black">${(0).toFixed(2)}</p>
+					<p className="text-6xl font-black">
+						${(estimatedFeesAtEndOfLease / 100).toFixed(2)}
+					</p>
 					<div className="h-4"></div>
 					<p>
 						total fees{" "}
 						<span className="font-semibold">
-							with {Math.abs(estimatedMilesToDate)} miles{" "}
-							{estimatedMilesToDate > 0 ? "over" : "under"}
+							with {Math.abs(Math.round(estimatedExcessMiles))} miles{" "}
+							{estimatedExcessMiles > 0 ? "over" : "under"}
 						</span>{" "}
 						your allowance at{" "}
 						<span className="font-semibold">
@@ -80,10 +88,8 @@ function getLeaseProgress({
 	allowedMiles,
 	odometerReadings,
 	initialMiles,
-}: Omit<
-	LeaseByIdOutput,
-	"name" | "excessFeePerMileInCents" | "id" | "userId"
->) {
+	excessFeePerMileInCents,
+}: Omit<LeaseByIdOutput, "name" | "id" | "userId">) {
 	const endDate = getLastDay({
 		startDate,
 		numberOfMonths,
@@ -98,13 +104,13 @@ function getLeaseProgress({
 
 	const leaseDaysRemaining = totalLeaseDays - leaseDaysElapsed;
 
-	const currentOdometerReading = getCurrentOdometerReading({
+	const latestOdometerReading = getLatestOdometerReading({
 		odometerReadings,
 		initialMiles,
 	});
 
 	const daysElapsedPercentage = getDaysElapsedPercentage({
-		daysElapsed: totalLeaseDays - leaseDaysRemaining,
+		leaseDaysElapsed: totalLeaseDays - leaseDaysRemaining,
 		totalLeaseDays,
 	});
 
@@ -115,13 +121,38 @@ function getLeaseProgress({
 		totalLeaseDays,
 	});
 
-	const estimatedMilesToDate = currentOdometerReading - allowedMilesToDate;
+	const milesOverOrUnder = latestOdometerReading - allowedMilesToDate;
+
+	const averageMilesPerDay = getAverageMilesPerDay({
+		latestOdometerReading,
+		leaseDaysElapsed: leaseDaysElapsed,
+		initialMiles,
+	});
+
+	const estimatedMilesAtEndOfLease = getEstimatedMilesAtEndOfLease({
+		averageMilesPerDay,
+		latestOdometerReading,
+		leaseDaysRemaining,
+	});
+
+	const estimatedExcessMiles = getEstimatedExcessMiles({
+		allowedMiles,
+		estimatedMilesAtEndOfLease,
+		initialMiles,
+	});
+
+	const estimatedFeesAtEndOfLease = getEstimatedTotalFeesAtEndOfLease({
+		estimatedExcessMiles,
+		excessFeePerMileInCents,
+	});
 
 	return {
-		estimatedMilesToDate,
+		milesOverOrUnder,
 		daysElapsedPercentage,
-		currentOdometerReading,
+		latestOdometerReading,
 		allowedMilesToDate,
 		leaseDaysRemaining,
+		estimatedFeesAtEndOfLease,
+		estimatedExcessMiles,
 	};
 }
