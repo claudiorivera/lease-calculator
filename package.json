@@ -2,7 +2,7 @@
 	"name": "lease-calculator",
 	"version": "0.1.0",
 	"private": true,
-	"packageManager": "pnpm@8.10.1",
+	"packageManager": "pnpm@8.10.2",
 	"scripts": {
 		"build": "next build",
 		"vercel-build": "prisma migrate deploy && next build",
