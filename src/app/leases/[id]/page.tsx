@@ -73,6 +73,9 @@ export default async function LeaseDetailsPage({
 				estimatedExcessMiles={estimatedExcessMiles}
 				estimatedFeesAtEndOfLease={estimatedFeesAtEndOfLease}
 			/>
+			<Button asChild variant="link">
+				<Link href={`/leases/${lease.id}/odometer-readings`}>Edit History</Link>
+			</Button>
 
 			<Separator />
 

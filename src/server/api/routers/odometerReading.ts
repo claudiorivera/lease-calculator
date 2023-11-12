@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { z } from "zod";
 import { createOdometerReadingSchema } from "~/schemas/odometerReading";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
@@ -16,6 +17,15 @@ export const odometerReadingRouter = createTRPCRouter({
 			return ctx.db.odometerReading.create({
 				data: input,
 				select: defaultOdometerReadingSelect,
+			});
+		}),
+	byLeaseId: protectedProcedure
+		.input(z.string().cuid())
+		.query(({ ctx, input }) => {
+			return ctx.db.odometerReading.findMany({
+				where: {
+					leaseId: input,
+				},
 			});
 		}),
 });
