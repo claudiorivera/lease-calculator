@@ -135,7 +135,7 @@ export default function LeaseSwitcher() {
 
 function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 	const router = useRouter();
-	const utils = api.useContext();
+	const utils = api.useUtils();
 	const { mutate: createNewLease, isLoading } = api.lease.create.useMutation({
 		onSettled: () => utils.lease.mine.invalidate(),
 	});

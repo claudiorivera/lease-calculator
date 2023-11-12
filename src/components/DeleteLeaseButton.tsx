@@ -11,7 +11,7 @@ export function DeleteLeaseButton({
 	leaseId: LeaseByIdOutput["id"];
 }) {
 	const router = useRouter();
-	const utils = api.useContext();
+	const utils = api.useUtils();
 	const { mutate: deleteLease, isLoading } = api.lease.deleteById.useMutation();
 
 	return (
