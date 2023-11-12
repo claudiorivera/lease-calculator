@@ -5,7 +5,5 @@ export default function NewOdometerReadingPage({
 }: {
 	params: { id: string };
 }) {
-	const leaseId = params.id;
-
-	return <NewOdometerReadingForm leaseId={leaseId} />;
+	return <NewOdometerReadingForm leaseId={params.id} />;
 }
