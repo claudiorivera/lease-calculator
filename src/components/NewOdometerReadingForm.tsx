@@ -14,8 +14,10 @@ import { api } from "~/trpc/client";
 
 export default function NewOdometerReadingForm({
 	leaseId,
+	latestOdometerReading,
 }: {
 	leaseId: LeaseByIdOutput["id"];
+	latestOdometerReading: number;
 }) {
 	const router = useRouter();
 	const { mutate: createNewOdometerReading, isLoading } =
@@ -28,6 +30,7 @@ export default function NewOdometerReadingForm({
 		resolver: zodResolver(createOdometerReadingSchema),
 		defaultValues: {
 			leaseId,
+			miles: latestOdometerReading,
 		},
 	});
 
@@ -46,6 +49,7 @@ export default function NewOdometerReadingForm({
 					type="number"
 					label="Odometer Reading"
 					errorMessage={errors.miles?.message}
+					defaultValue={latestOdometerReading}
 					{...register("miles", {
 						valueAsNumber: true,
 					})}
