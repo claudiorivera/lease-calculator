@@ -5,10 +5,10 @@ import { api } from "~/trpc/server";
 export default async function NewOdometerReadingPage({
 	params,
 }: {
-	params: { id: string };
+	params: { leaseId: string };
 }) {
 	const { initialMiles, odometerReadings } = await api.lease.byId.query(
-		params.id,
+		params.leaseId,
 	);
 
 	const latestOdometerReading = getLatestOdometerReading({
@@ -18,7 +18,7 @@ export default async function NewOdometerReadingPage({
 
 	return (
 		<NewOdometerReadingForm
-			leaseId={params.id}
+			leaseId={params.leaseId}
 			latestOdometerReading={latestOdometerReading}
 		/>
 	);

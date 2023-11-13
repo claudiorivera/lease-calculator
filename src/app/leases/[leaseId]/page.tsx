@@ -24,7 +24,7 @@ import { api } from "~/trpc/server";
 export default async function LeaseDetailsPage({
 	params,
 }: {
-	params: { id: string };
+	params: { leaseId: string };
 }) {
 	const session = await getServerAuthSession();
 
@@ -32,7 +32,7 @@ export default async function LeaseDetailsPage({
 		return redirect("/welcome");
 	}
 
-	const lease = await api.lease.byId.query(params.id);
+	const lease = await api.lease.byId.query(params.leaseId);
 
 	const {
 		milesOverOrUnder,
