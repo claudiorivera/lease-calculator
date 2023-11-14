@@ -5,6 +5,15 @@ export const createOdometerReadingSchema = z.object({
 	leaseId: z.string().cuid(),
 });
 
+export const updateOdometerReadingSchema = z.object({
+	id: z.string().cuid(),
+	miles: z.number().positive().optional(),
+});
+
 export type CreateOdometerReadingInput = z.infer<
 	typeof createOdometerReadingSchema
+>;
+
+export type UpdateOdometerReadingInput = z.infer<
+	typeof updateOdometerReadingSchema
 >;

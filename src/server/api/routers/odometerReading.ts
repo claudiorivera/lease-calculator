@@ -1,6 +1,9 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
-import { createOdometerReadingSchema } from "~/schemas/odometerReading";
+import {
+	createOdometerReadingSchema,
+	updateOdometerReadingSchema,
+} from "~/schemas/odometerReading";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 const defaultOdometerReadingSelect =
@@ -26,6 +29,19 @@ export const odometerReadingRouter = createTRPCRouter({
 				where: {
 					leaseId: input,
 				},
+			});
+		}),
+	update: protectedProcedure
+		.input(updateOdometerReadingSchema)
+		.mutation(({ ctx, input }) => {
+			return ctx.db.odometerReading.update({
+				where: {
+					id: input.id,
+				},
+				data: {
+					miles: input.miles,
+				},
+				select: defaultOdometerReadingSelect,
 			});
 		}),
 });
