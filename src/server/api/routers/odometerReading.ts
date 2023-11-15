@@ -5,6 +5,7 @@ import {
 	updateOdometerReadingSchema,
 } from "~/schemas/odometerReading";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { type RouterOutputs } from "~/trpc/shared";
 
 const defaultOdometerReadingSelect =
 	Prisma.validator<Prisma.OdometerReadingSelect>()({
@@ -29,6 +30,9 @@ export const odometerReadingRouter = createTRPCRouter({
 				where: {
 					leaseId: input,
 				},
+				orderBy: {
+					createdAt: "asc",
+				},
 			});
 		}),
 	update: protectedProcedure
@@ -44,4 +48,15 @@ export const odometerReadingRouter = createTRPCRouter({
 				select: defaultOdometerReadingSelect,
 			});
 		}),
+	byId: protectedProcedure.input(z.string().cuid()).query(({ ctx, input }) => {
+		return ctx.db.odometerReading.findUniqueOrThrow({
+			where: {
+				id: input,
+			},
+			select: { ...defaultOdometerReadingSelect, leaseId: true },
+		});
+	}),
 });
+
+export type OdometerReadingByIdOutput =
+	RouterOutputs["odometerReading"]["byId"];
