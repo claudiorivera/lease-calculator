@@ -11,11 +11,16 @@ export function DeleteOdometerReadingButton({
 	odometerReading: OdometerReadingByIdOutput;
 }) {
 	const router = useRouter();
+	const utils = api.useUtils();
 
 	const { mutate: deleteOdometerReading } =
 		api.odometerReading.delete.useMutation({
-			onSuccess: () =>
-				router.push(`/leases/${odometerReading.leaseId}/odometer-readings`),
+			onSuccess: async () => {
+				await utils.odometerReading.byLeaseId.invalidate(
+					odometerReading.leaseId,
+				);
+				router.push(`/leases/${odometerReading.leaseId}/odometer-readings`);
+			},
 		});
 
 	return (

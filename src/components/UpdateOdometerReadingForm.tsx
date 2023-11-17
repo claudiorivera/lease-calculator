@@ -21,8 +21,12 @@ export default function UpdateOdometerReadingForm({
 	const utils = api.useUtils();
 	const { mutate: updateOdometerReading, isLoading } =
 		api.odometerReading.update.useMutation({
-			onSuccess: () =>
-				utils.odometerReading.byLeaseId.invalidate(odometerReading.leaseId),
+			onSuccess: async () => {
+				await utils.odometerReading.byLeaseId.invalidate(
+					odometerReading.leaseId,
+				);
+				router.push(`/leases/${odometerReading.leaseId}/odometer-readings`);
+			},
 		});
 	const {
 		register,
@@ -36,16 +40,11 @@ export default function UpdateOdometerReadingForm({
 		},
 	});
 
-	const onSubmit = (data: UpdateOdometerReadingInput) => {
-		updateOdometerReading(data, {
-			onSuccess: () => {
-				router.push(`/leases/${odometerReading.leaseId}/odometer-readings`);
-			},
-		});
-	};
-
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+		<form
+			onSubmit={handleSubmit((data) => updateOdometerReading(data))}
+			className="flex flex-col gap-2"
+		>
 			<Input
 				type="number"
 				label="Odometer Reading"
