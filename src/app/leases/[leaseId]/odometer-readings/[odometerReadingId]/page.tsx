@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { DeleteOdometerReadingButton } from "~/components/DeleteOdometerReadingButton";
-import UpdateOdometerReadingForm from "~/components/UpdateOdometerReadingForm";
+import { DeleteOdometerReadingButton } from "~/app/leases/[leaseId]/odometer-readings/[odometerReadingId]/DeleteOdometerReadingButton";
+import UpdateOdometerReadingForm from "~/app/leases/[leaseId]/odometer-readings/[odometerReadingId]/UpdateOdometerReadingForm";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 

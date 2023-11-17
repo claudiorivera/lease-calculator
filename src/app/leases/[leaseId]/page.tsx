@@ -1,9 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { DeleteLeaseButton } from "~/components/DeleteLeaseButton";
-import { LeasePredictions } from "~/components/LeaseDetailsLeasePredictions";
-import { MilesDisplay } from "~/components/LeaseDetailsMilesDisplay";
-import { LeaseStats } from "~/components/LeaseDetailsStats";
+import { DeleteLeaseButton } from "~/app/leases/[leaseId]/DeleteLeaseButton";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
@@ -159,4 +156,101 @@ function getLeaseProgress({
 		estimatedFeesAtEndOfLease,
 		estimatedExcessMiles,
 	};
+}
+
+function LeasePredictions({
+	estimatedFeesAtEndOfLease,
+	estimatedExcessMiles,
+	excessFeePerMileInCents,
+}: {
+	estimatedFeesAtEndOfLease: number;
+	estimatedExcessMiles: number;
+	excessFeePerMileInCents: number;
+}) {
+	return (
+		<section className="flex w-full flex-col items-center gap-4">
+			<p className="text-xl font-semibold">Predictions</p>
+			<div className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
+				<p className="text-6xl font-black">
+					${(estimatedFeesAtEndOfLease / 100).toFixed(2)}
+				</p>
+				<div className="h-4"></div>
+				<p>
+					total fees{" "}
+					<span className="font-semibold">
+						with {Math.abs(Math.round(estimatedExcessMiles))} miles{" "}
+						{estimatedExcessMiles > 0 ? "over" : "under"}
+					</span>{" "}
+					your allowance at{" "}
+					<span className="font-semibold">
+						${(excessFeePerMileInCents / 100).toFixed(2)} per mile
+					</span>
+				</p>
+			</div>
+		</section>
+	);
+}
+
+function LeaseStats({
+	latestOdometerReading,
+	allowedMilesToDate,
+	leaseDaysRemaining,
+}: {
+	latestOdometerReading: number;
+	allowedMilesToDate: number;
+	leaseDaysRemaining: number;
+}) {
+	return (
+		<section className="flex w-full justify-evenly">
+			<DisplayValueAndLabel
+				label="Current Miles"
+				value={latestOdometerReading}
+			/>
+			<div className="w-0.5 bg-neutral-100"></div>
+			<DisplayValueAndLabel label="Allowed Miles" value={allowedMilesToDate} />
+			<div className="w-0.5 bg-neutral-100"></div>
+			<DisplayValueAndLabel label="Days Remaining" value={leaseDaysRemaining} />
+		</section>
+	);
+}
+
+function MilesDisplay({
+	milesOverOrUnder,
+	daysElapsedPercentage,
+}: {
+	milesOverOrUnder: number;
+	daysElapsedPercentage: number;
+}) {
+	return (
+		<section className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
+			<p className="text-6xl font-black">{Math.abs(milesOverOrUnder)}</p>
+			<div className="h-4"></div>
+			<p>
+				miles{" "}
+				<span className="font-semibold">
+					{milesOverOrUnder > 0 ? "over" : "under"}
+				</span>{" "}
+				your allowance
+			</p>
+			<p>
+				with <span className="font-semibold">{daysElapsedPercentage}%</span> of
+				lease elapsed
+			</p>
+		</section>
+	);
+}
+
+function DisplayValueAndLabel({
+	value,
+	label,
+}: {
+	value: number;
+	label: string;
+}) {
+	return (
+		<div className="flex flex-1 flex-col items-center">
+			<p className="text-xl">{value}</p>
+			<p className="text-sm">{label}</p>
+		</div>
+	);
 }

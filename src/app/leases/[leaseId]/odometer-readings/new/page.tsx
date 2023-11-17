@@ -1,4 +1,4 @@
-import NewOdometerReadingForm from "~/components/NewOdometerReadingForm";
+import NewOdometerReadingForm from "~/app/leases/[leaseId]/odometer-readings/new/NewOdometerReadingForm";
 import { getLatestOdometerReading } from "~/lib/leases";
 import { api } from "~/trpc/server";
 
