@@ -1,5 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
 export default async function OdometerReadingsPage({
@@ -13,9 +14,9 @@ export default async function OdometerReadingsPage({
 
 	return (
 		<div>
-			<h1 className="py-4 text-xl font-semibold">Odometer Readings</h1>
+			<h1 className="text-xl font-semibold">Odometer Readings</h1>
 
-			<ul className="flex flex-col">
+			<ul className="flex flex-col py-4">
 				{odometerReadings.map((odometerReading) => (
 					<li key={odometerReading.id}>
 						<Link
@@ -31,6 +32,10 @@ export default async function OdometerReadingsPage({
 					</li>
 				))}
 			</ul>
+
+			<Button asChild className="w-full">
+				<Link href={`/leases/${params.leaseId}`}>Back to Lease</Link>
+			</Button>
 		</div>
 	);
 }
