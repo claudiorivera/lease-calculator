@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Input } from "~/components/Input";
@@ -46,29 +45,20 @@ export default function UpdateOdometerReadingForm({
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<section className="my-4 flex flex-col gap-4">
-				<Input
-					type="number"
-					label="Odometer Reading"
-					errorMessage={errors.miles?.message}
-					defaultValue={odometerReading.miles}
-					{...register("miles", {
-						valueAsNumber: true,
-					})}
-				/>
-			</section>
+		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+			<Input
+				type="number"
+				label="Odometer Reading"
+				errorMessage={errors.miles?.message}
+				defaultValue={odometerReading.miles}
+				{...register("miles", {
+					valueAsNumber: true,
+				})}
+			/>
 
-			<div className="flex flex-col gap-2">
-				<Button asChild variant="secondary">
-					<Link href={`/leases/${odometerReading.leaseId}/odometer-readings`}>
-						Cancel
-					</Link>
-				</Button>
-				<Button type="submit" disabled={isLoading}>
-					Submit
-				</Button>
-			</div>
+			<Button type="submit" disabled={isLoading} className="w-full">
+				Submit
+			</Button>
 		</form>
 	);
 }

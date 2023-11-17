@@ -56,6 +56,15 @@ export const odometerReadingRouter = createTRPCRouter({
 			select: { ...defaultOdometerReadingSelect, leaseId: true },
 		});
 	}),
+	delete: protectedProcedure
+		.input(z.string().cuid())
+		.mutation(({ ctx, input }) => {
+			return ctx.db.odometerReading.delete({
+				where: {
+					id: input,
+				},
+			});
+		}),
 });
 
 export type OdometerReadingByIdOutput =
