@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { DeleteLeaseButton } from "~/app/leases/[leaseId]/DeleteLeaseButton";
+import { DeleteLeaseButton } from "~/app/leases/[leaseId]/delete-lease-button";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";

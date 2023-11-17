@@ -1,8 +1,8 @@
 import { Inter } from "next/font/google";
 import { type ReactNode } from "react";
 import { TrpcProvider } from "~/app/providers";
-import { NavBar } from "~/components/NavBar";
-import { ThemeProvider } from "~/components/ThemeProvider";
+import { NavBar } from "~/components/nav-bar";
+import { ThemeProvider } from "~/components/theme-provider";
 import { cn } from "~/lib/utils";
 import "~/styles/globals.css";
 

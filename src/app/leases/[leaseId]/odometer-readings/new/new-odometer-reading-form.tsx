@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { Input } from "~/components/Input";
+import { FieldInput } from "~/components/field-input";
 import { Button } from "~/components/ui/button";
 import {
 	createOdometerReadingSchema,
@@ -45,7 +45,7 @@ export default function NewOdometerReadingForm({
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<section className="my-4 flex flex-col gap-4">
-				<Input
+				<FieldInput
 					type="number"
 					label="Odometer Reading"
 					errorMessage={errors.miles?.message}

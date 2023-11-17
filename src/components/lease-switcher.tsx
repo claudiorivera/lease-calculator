@@ -10,7 +10,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Input } from "~/components/Input";
+import { FieldInput } from "~/components/field-input";
 import { Button } from "~/components/ui/button";
 import {
 	Command,
@@ -162,14 +162,14 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 			className="my-4 flex flex-col gap-4"
 			onSubmit={handleSubmit(onSubmit)}
 		>
-			<Input
+			<FieldInput
 				label="Name"
 				errorMessage={errors.name?.message}
 				placeholder="My Car Lease"
 				{...register("name")}
 			/>
 
-			<Input
+			<FieldInput
 				type="date"
 				label="Start Date"
 				errorMessage={errors.startDate?.message}
@@ -178,7 +178,7 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 				})}
 			/>
 
-			<Input
+			<FieldInput
 				type="number"
 				label="Number of Months"
 				placeholder="36"
@@ -188,7 +188,7 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 				})}
 			/>
 
-			<Input
+			<FieldInput
 				type="number"
 				label="Miles at Start of Lease"
 				placeholder="0"
@@ -198,7 +198,7 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 				})}
 			/>
 
-			<Input
+			<FieldInput
 				type="number"
 				label="Allowed Miles"
 				placeholder="36000"
@@ -208,7 +208,7 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 				})}
 			/>
 
-			<Input
+			<FieldInput
 				type="number"
 				label="Excess Fee Per Mile"
 				placeholder="25"

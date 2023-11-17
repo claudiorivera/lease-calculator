@@ -1,5 +1,5 @@
-import { DarkModeToggleButton } from "~/components/DarkModeToggleButton";
-import LeaseSwitcher from "~/components/LeaseSwitcher";
+import { DarkModeToggleButton } from "~/components/dark-mode-toggle-button";
+import LeaseSwitcher from "~/components/lease-switcher";
 import { getServerAuthSession } from "~/server/auth";
 
 export async function NavBar() {

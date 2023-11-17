@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { SignInButton } from "~/app/welcome/SignInButton";
+import { SignInButton } from "~/app/welcome/sign-in-button";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function WelcomePage() {

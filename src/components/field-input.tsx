@@ -4,7 +4,7 @@ import { forwardRef, type ComponentProps } from "react";
 import { Input as _Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 
-export const Input = forwardRef<
+export const FieldInput = forwardRef<
 	HTMLInputElement,
 	ComponentProps<typeof _Input> & {
 		label?: string;
