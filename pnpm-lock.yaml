@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@hookform/resolvers':
     specifier: 3.3.2
-    version: 3.3.2(react-hook-form@7.48.2)
+    version: 3.3.2(react-hook-form@7.49.0)
   '@next-auth/prisma-adapter':
     specifier: 1.0.7
     version: 1.0.7(@prisma/client@5.6.0)(next-auth@4.24.5)
@@ -93,8 +93,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
   react-hook-form:
-    specifier: 7.48.2
-    version: 7.48.2(react@18.2.0)
+    specifier: 7.49.0
+    version: 7.49.0(react@18.2.0)
   superjson:
     specifier: 2.2.1
     version: 2.2.1
@@ -462,12 +462,12 @@ packages:
     resolution: {integrity: sha512-uvnFKtPgzLnpzzTRfhDlvXX0kLYi9lDRQbcDmT8iXl71Rx+uwSuaUIQl3DNC7w5OweAQ7XQMDObML+KaYDQfng==}
     dev: false
 
-  /@hookform/resolvers@3.3.2(react-hook-form@7.48.2):
+  /@hookform/resolvers@3.3.2(react-hook-form@7.49.0):
     resolution: {integrity: sha512-Tw+GGPnBp+5DOsSg4ek3LCPgkBOuOgS5DsDV7qsWNH9LZc433kgsWICjlsh2J9p04H2K66hsXPPb9qn9ILdUtA==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.48.2(react@18.2.0)
+      react-hook-form: 7.49.0(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
@@ -4058,9 +4058,9 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-hook-form@7.48.2(react@18.2.0):
-    resolution: {integrity: sha512-H0T2InFQb1hX7qKtDIZmvpU1Xfn/bdahWBN1fH19gSe4bBEqTfmlr7H3XWTaVtiK4/tpPaI1F3355GPMZYge+A==}
-    engines: {node: '>=12.22.0'}
+  /react-hook-form@7.49.0(react@18.2.0):
+    resolution: {integrity: sha512-gf4qyY4WiqK2hP/E45UUT6wt3Khl49pleEVcIzxhLBrD6m+GMWtLRk0vMrRv45D1ZH8PnpXFwRPv0Pewske2jw==}
+    engines: {node: '>=18', pnpm: '8'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
