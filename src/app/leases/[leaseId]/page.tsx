@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { DeleteLeaseButton } from "~/app/leases/[leaseId]/delete-lease-button";
+import { LeaseChart } from "~/app/leases/[leaseId]/lease-chart";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
@@ -70,6 +71,9 @@ export default async function LeaseDetailsPage({
 				estimatedExcessMiles={estimatedExcessMiles}
 				estimatedFeesAtEndOfLease={estimatedFeesAtEndOfLease}
 			/>
+
+			<LeaseChart />
+
 			<Button asChild variant="link">
 				<Link href={`/leases/${lease.id}/odometer-readings`}>Edit History</Link>
 			</Button>
