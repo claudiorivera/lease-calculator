@@ -39,7 +39,7 @@
 		"@trpc/react-query": "10.44.1",
 		"@trpc/server": "10.44.1",
 		"class-variance-authority": "0.7.0",
-		"clsx": "2.0.0",
+		"clsx": "2.1.0",
 		"cmdk": "^0.2.0",
 		"dayjs": "1.11.10",
 		"lucide-react": "0.294.0",
