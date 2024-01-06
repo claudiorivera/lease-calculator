@@ -15,7 +15,7 @@ import {
 	getLeaseDaysElapsed,
 } from "~/lib/leases";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
-import { getServerAuthSession } from "~/server/auth";
+import { auth } from "~/server/auth";
 import { api } from "~/trpc/server";
 
 export default async function LeaseDetailsPage({
@@ -23,7 +23,7 @@ export default async function LeaseDetailsPage({
 }: {
 	params: { leaseId: string };
 }) {
-	const session = await getServerAuthSession();
+	const session = await auth();
 
 	if (!session) {
 		return redirect("/welcome");

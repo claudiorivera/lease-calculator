@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
-import { getServerAuthSession } from "~/server/auth";
+import { auth } from "~/server/auth";
 
 export default async function HomePage() {
-	const session = await getServerAuthSession();
+	const session = await auth();
 
 	if (!session) {
 		return redirect("/welcome");
