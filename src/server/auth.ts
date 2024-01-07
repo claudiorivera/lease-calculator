@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth, { type NextAuthConfig } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import GitHubProvider from "next-auth/providers/github";
 import { db } from "~/server/db";
 
 /**
@@ -10,7 +11,7 @@ import { db } from "~/server/db";
  */
 const authOptions = {
 	adapter: PrismaAdapter(db),
-	providers: [DiscordProvider],
+	providers: [GitHubProvider, DiscordProvider],
 	callbacks: {
 		session: ({ session, user }) => ({
 			...session,
