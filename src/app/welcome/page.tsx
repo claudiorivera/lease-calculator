@@ -12,7 +12,8 @@ export default async function WelcomePage() {
 	return (
 		<div className="flex flex-col items-center gap-4">
 			<h1>Welcome to Lease Calculator</h1>
-			<SignInButton />
+			<SignInButton provider="discord" />
+			<SignInButton provider="github" />
 		</div>
 	);
 }

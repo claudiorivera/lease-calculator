@@ -3,8 +3,8 @@
 import { signIn } from "next-auth/react";
 import { Button } from "~/components/ui/button";
 
-export function SignInButton() {
+export function SignInButton({ provider }: { provider: "discord" | "github" }) {
 	return (
-		<Button onClick={() => signIn("discord")}>Sign In with Discord</Button>
+		<Button onClick={() => signIn(provider)}>Sign In with {provider}</Button>
 	);
 }
