@@ -1,10 +1,12 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { Button } from "~/components/ui/button";
 
-export function SignInButton({ provider }: { provider: "discord" | "github" }) {
+export function SignInButton() {
 	return (
-		<Button onClick={() => signIn(provider)}>Sign In with {provider}</Button>
+		<Button asChild>
+			<Link href="/api/auth/signin">Sign In</Link>
+		</Button>
 	);
 }
