@@ -8,8 +8,8 @@ import { Button } from "~/components/ui/button";
 import {
 	type UpdateOdometerReadingInput,
 	updateOdometerReadingSchema,
-} from "~/schemas/odometerReading";
-import { type OdometerReadingByIdOutput } from "~/server/api/routers/odometerReading";
+} from "~/schemas/odometer-reading";
+import { type OdometerReadingByIdOutput } from "~/server/api/routers/odometer-reading";
 import { api } from "~/trpc/client";
 
 export default function UpdateOdometerReadingForm({

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
-import { type OdometerReadingByIdOutput } from "~/server/api/routers/odometerReading";
+import { type OdometerReadingByIdOutput } from "~/server/api/routers/odometer-reading";
 import { api } from "~/trpc/client";
 
 export function DeleteOdometerReadingButton({

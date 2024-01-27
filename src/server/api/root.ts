@@ -1,6 +1,6 @@
 import { authRouter } from "~/server/api/routers/auth";
 import { leaseRouter } from "~/server/api/routers/lease";
-import { odometerReadingRouter } from "~/server/api/routers/odometerReading";
+import { odometerReadingRouter } from "~/server/api/routers/odometer-reading";
 import { createTRPCRouter } from "~/server/api/trpc";
 
 /**

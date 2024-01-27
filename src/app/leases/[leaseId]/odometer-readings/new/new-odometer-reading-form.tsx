@@ -8,7 +8,7 @@ import { Button } from "~/components/ui/button";
 import {
 	type CreateOdometerReadingInput,
 	createOdometerReadingSchema,
-} from "~/schemas/odometerReading";
+} from "~/schemas/odometer-reading";
 import { type LeaseByIdOutput } from "~/server/api/routers/lease";
 import { api } from "~/trpc/client";
 

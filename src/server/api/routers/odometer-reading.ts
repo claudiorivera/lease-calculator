@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
 	createOdometerReadingSchema,
 	updateOdometerReadingSchema,
-} from "~/schemas/odometerReading";
+} from "~/schemas/odometer-reading";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { type RouterOutputs } from "~/trpc/shared";
 
