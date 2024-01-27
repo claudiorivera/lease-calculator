@@ -1,6 +1,5 @@
+import { afterEach, describe, expect, it } from "bun:test";
 import MockDate from "mockdate";
-
-import { afterEach, describe, expect, it } from "vitest";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
 import { getAllowedMilesToDate, getLeaseDaysElapsed } from "~/lib/leases";
 

@@ -4,13 +4,13 @@ Log your odometer readings and the lease calculator will tell you how much you m
 
 ## Prerequisites
 
-- [pnpm](https://pnpm.js.org/en/installation)
+- [bun](https://bun.sh)
 
 ## Setup
 
 - `cp .env.example .env` and update values
-- `pnpm i`
+- `bun i`
 
 ## Develop
 
-- `pnpm dev`
+- `bun dev`

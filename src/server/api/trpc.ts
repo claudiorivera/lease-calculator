@@ -8,7 +8,7 @@
  */
 
 import { experimental_createServerActionHandler as createServerActionHandler } from "@trpc/next/app-dir/server";
-import { initTRPC, TRPCError } from "@trpc/server";
+import { TRPCError, initTRPC } from "@trpc/server";
 import { type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { headers } from "next/headers";
 import superjson from "superjson";
