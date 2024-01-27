@@ -22,6 +22,7 @@ const authOptions = {
 		}),
 	],
 	callbacks: {
+		// @ts-expect-error https://github.com/nextauthjs/next-auth/pull/9756
 		session: ({ session, user }) => ({
 			...session,
 			user: {
