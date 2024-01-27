@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, type ComponentProps } from "react";
+import { type ComponentProps, forwardRef } from "react";
 import { Input as _Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 

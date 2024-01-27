@@ -33,7 +33,7 @@ import {
 	PopoverTrigger,
 } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
-import { createLeaseSchema, type CreateLeaseInput } from "~/schemas/lease";
+import { type CreateLeaseInput, createLeaseSchema } from "~/schemas/lease";
 import { type LeaseMineOutput } from "~/server/api/routers/lease";
 import { api } from "~/trpc/client";
 

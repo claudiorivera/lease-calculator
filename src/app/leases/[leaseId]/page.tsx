@@ -174,7 +174,7 @@ function LeasePredictions({
 				<p className="text-6xl font-black">
 					${(estimatedFeesAtEndOfLease / 100).toFixed(2)}
 				</p>
-				<div className="h-4"></div>
+				<div className="h-4" />
 				<p>
 					total fees{" "}
 					<span className="font-semibold">
@@ -206,9 +206,9 @@ function LeaseStats({
 				label="Current Miles"
 				value={latestOdometerReading}
 			/>
-			<div className="w-0.5 bg-neutral-100"></div>
+			<div className="w-0.5 bg-neutral-100" />
 			<DisplayValueAndLabel label="Allowed Miles" value={allowedMilesToDate} />
-			<div className="w-0.5 bg-neutral-100"></div>
+			<div className="w-0.5 bg-neutral-100" />
 			<DisplayValueAndLabel label="Days Remaining" value={leaseDaysRemaining} />
 		</section>
 	);
@@ -224,7 +224,7 @@ function MilesDisplay({
 	return (
 		<section className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
 			<p className="text-6xl font-black">{Math.abs(milesOverOrUnder)}</p>
-			<div className="h-4"></div>
+			<div className="h-4" />
 			<p>
 				miles{" "}
 				<span className="font-semibold">
