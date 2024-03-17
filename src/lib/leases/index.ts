@@ -1,5 +1,6 @@
+import dayjs from "dayjs";
 import { getDaysSince } from "~/lib/dates";
-import { type LeaseByIdOutput } from "~/server/api/routers/lease";
+import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 
 export function getLeaseDaysElapsed({
 	startDate,
@@ -99,4 +100,50 @@ export function getEstimatedMilesAtEndOfLease({
 	latestOdometerReading: number;
 }) {
 	return latestOdometerReading + averageMilesPerDay * leaseDaysRemaining;
+}
+
+type LeaseChartData = {
+	monthsSinceLeaseStart: number;
+	expectedOdometerReading: number;
+	odometerReading?: number;
+};
+
+export function getLeaseChartData({
+	lease,
+}: {
+	lease: LeaseByIdOutput;
+}) {
+	const chartData = new Set<LeaseChartData>();
+
+	chartData.add({
+		monthsSinceLeaseStart: 0,
+		odometerReading: lease.initialMiles,
+		expectedOdometerReading: lease.initialMiles,
+	});
+
+	chartData.add({
+		monthsSinceLeaseStart: lease.numberOfMonths,
+		expectedOdometerReading: lease.initialMiles + lease.allowedMiles,
+	});
+
+	for (const odometerReading of lease.odometerReadings) {
+		const monthsSinceLeaseStart = dayjs(odometerReading.createdAt).diff(
+			lease.startDate,
+			"months",
+		);
+
+		chartData.add({
+			monthsSinceLeaseStart,
+			odometerReading: odometerReading.miles,
+			expectedOdometerReading:
+				lease.initialMiles +
+				monthsSinceLeaseStart * (lease.allowedMiles / lease.numberOfMonths),
+		});
+	}
+
+	const data = [...chartData].sort(
+		(a, b) => a.monthsSinceLeaseStart - b.monthsSinceLeaseStart,
+	);
+
+	return data;
 }

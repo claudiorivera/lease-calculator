@@ -15,7 +15,7 @@ import {
 	getLatestOdometerReading,
 	getLeaseDaysElapsed,
 } from "~/lib/leases";
-import { type LeaseByIdOutput } from "~/server/api/routers/lease";
+import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 import { auth } from "~/server/auth";
 import { api } from "~/trpc/server";
 
@@ -72,7 +72,7 @@ export default async function LeaseDetailsPage({
 				estimatedFeesAtEndOfLease={estimatedFeesAtEndOfLease}
 			/>
 
-			<LeaseChart />
+			<LeaseChart lease={lease} />
 
 			<Button asChild variant="link">
 				<Link href={`/leases/${lease.id}/odometer-readings`}>Edit History</Link>

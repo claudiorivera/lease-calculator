@@ -1,8 +1,26 @@
 "use client";
 
 import { AgChartsReact } from "ag-charts-react";
+import { getLeaseChartData } from "~/lib/leases";
+import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 
-export function LeaseChart() {
+export function LeaseChart({
+	lease,
+}: {
+	lease: LeaseByIdOutput;
+}) {
+	const data = getLeaseChartData({
+		lease,
+	});
+
+	const milesMin = lease.initialMiles;
+	const milesMax = lease.allowedMiles + lease.initialMiles;
+	const milesInterval = (milesMax - milesMin) / 6;
+
+	const monthsMin = 0;
+	const monthsMax = lease.numberOfMonths;
+	const monthsInterval = monthsMax / 6;
+
 	return (
 		<section className="w-full">
 			<AgChartsReact
@@ -28,11 +46,11 @@ export function LeaseChart() {
 						{
 							type: "number",
 							position: "left",
-							min: 0,
-							max: 36000,
+							min: milesMin,
+							max: milesMax,
 							nice: false,
 							tick: {
-								interval: 6000,
+								interval: milesInterval,
 								color: "white",
 							},
 							label: {
@@ -50,10 +68,10 @@ export function LeaseChart() {
 						{
 							type: "number",
 							position: "bottom",
-							min: 0,
-							max: 36,
+							min: monthsMin,
+							max: monthsMax,
 							tick: {
-								interval: 6,
+								interval: monthsInterval,
 								color: "white",
 							},
 							label: {
@@ -69,27 +87,7 @@ export function LeaseChart() {
 							},
 						},
 					],
-					data: [
-						{
-							monthsSinceLeaseStart: 0,
-							odometerReading: 0,
-							expectedOdometerReading: 0,
-						},
-						{
-							monthsSinceLeaseStart: 18,
-							odometerReading: 21000,
-							expectedOdometerReading: 18000,
-						},
-						{
-							monthsSinceLeaseStart: 25,
-							odometerReading: 21000,
-							expectedOdometerReading: 25000,
-						},
-						{
-							monthsSinceLeaseStart: 36,
-							expectedOdometerReading: 36000,
-						},
-					],
+					data,
 					series: [
 						{
 							type: "line",
