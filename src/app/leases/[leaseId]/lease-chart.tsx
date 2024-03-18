@@ -101,6 +101,9 @@ export function LeaseChart({
 							type: "area",
 							xKey: "monthsSinceLeaseStart",
 							yKey: "expectedOdometerReading",
+							tooltip: {
+								enabled: false,
+							},
 							fillOpacity: 0.05,
 							lineDash: [3, 3],
 							strokeWidth: 1,
