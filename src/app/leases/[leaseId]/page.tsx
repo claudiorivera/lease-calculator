@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { DeleteLeaseButton } from "~/app/leases/[leaseId]/delete-lease-button";
+import { DeleteLease } from "~/app/leases/[leaseId]/delete-lease";
 import { LeaseChart } from "~/app/leases/[leaseId]/lease-chart";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
@@ -80,9 +80,9 @@ export default async function LeaseDetailsPage({
 
 			<Separator />
 
-			<section className="flex w-full justify-evenly">
-				<DeleteLeaseButton leaseId={lease.id} />
-			</section>
+			<DeleteLease leaseId={lease.id} />
+
+			<Separator />
 		</div>
 	);
 }
