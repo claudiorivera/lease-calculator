@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { TrpcProvider } from "~/app/providers";
 import { NavBar } from "~/components/nav-bar";
 import { ThemeProvider } from "~/components/theme-provider";
