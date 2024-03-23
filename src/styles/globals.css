@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --ag-border-radius: 0.25rem;
+  }
+}
+
+.ag-chart-wrapper {
+  border-radius: var(--ag-border-radius);
+}
