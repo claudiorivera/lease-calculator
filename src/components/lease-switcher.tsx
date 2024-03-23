@@ -34,7 +34,7 @@ import {
 } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
 import { type CreateLeaseInput, createLeaseSchema } from "~/schemas/lease";
-import { type LeaseMineOutput } from "~/server/api/routers/lease";
+import type { LeaseMineOutput } from "~/server/api/routers/lease";
 import { api } from "~/trpc/client";
 
 export default function LeaseSwitcher() {
@@ -122,7 +122,7 @@ export default function LeaseSwitcher() {
 					</Command>
 				</PopoverContent>
 			</Popover>
-			<DialogContent>
+			<DialogContent className="rounded">
 				<DialogHeader>
 					<DialogTitle>Add a Lease</DialogTitle>
 				</DialogHeader>
