@@ -1,6 +1,7 @@
 "use client";
 
 import { AgChartsReact } from "ag-charts-react";
+import { useTheme } from "next-themes";
 import { getLeaseChartData } from "~/lib/leases";
 import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 
@@ -13,28 +14,28 @@ export function LeaseChart({
 		lease,
 	});
 
-	const milesMin = lease.initialMiles;
-	const milesMax = lease.allowedMiles + lease.initialMiles;
-	const milesInterval = (milesMax - milesMin) / 6;
+	const { resolvedTheme } = useTheme();
+	const isDarkMode = resolvedTheme === "dark";
 
-	const monthsMin = 0;
-	const monthsMax = lease.numberOfMonths;
-	const monthsInterval = monthsMax / 6;
+	const DEFAULT_COLOR = "gray";
+	const BG_NEUTRAL = isDarkMode ? "#262626" : "#e5e5e5";
 
 	return (
 		<section className="w-full">
 			<AgChartsReact
 				options={{
 					theme: {
-						baseTheme: "ag-default-dark",
+						baseTheme: isDarkMode ? "ag-default-dark" : "ag-default",
 						palette: {
-							fills: ["white"],
-							strokes: ["white"],
+							fills: isDarkMode
+								? [DEFAULT_COLOR, "white"]
+								: [DEFAULT_COLOR, "black"],
+							strokes: [DEFAULT_COLOR],
 						},
 						overrides: {
 							common: {
 								background: {
-									fill: "transparent",
+									fill: BG_NEUTRAL,
 								},
 							},
 						},
@@ -46,21 +47,20 @@ export function LeaseChart({
 						{
 							type: "number",
 							position: "left",
-							min: milesMin,
-							max: milesMax,
+							min: lease.initialMiles,
+							max: lease.allowedMiles + lease.initialMiles,
 							nice: false,
 							tick: {
-								interval: milesInterval,
-								color: "white",
+								interval: lease.allowedMiles / 6,
+								color: BG_NEUTRAL,
 							},
 							label: {
-								formatter: ({ index, value }) =>
-									index === 0 ? "" : `${value}`,
+								formatter: ({ index, value }) => (index === 0 ? "" : value),
 							},
 							gridLine: {
 								style: [
 									{
-										stroke: "gray",
+										stroke: DEFAULT_COLOR,
 									},
 								],
 							},
@@ -68,20 +68,19 @@ export function LeaseChart({
 						{
 							type: "number",
 							position: "bottom",
-							min: monthsMin,
-							max: monthsMax,
+							min: 0,
+							max: lease.numberOfMonths,
 							tick: {
-								interval: monthsInterval,
-								color: "white",
+								interval: lease.numberOfMonths / 6,
+								color: BG_NEUTRAL,
 							},
 							label: {
-								formatter: ({ index, value }) =>
-									index === 0 ? "" : `${value}`,
+								formatter: ({ index, value }) => (index === 0 ? "" : value),
 							},
 							gridLine: {
 								style: [
 									{
-										stroke: "gray",
+										stroke: DEFAULT_COLOR,
 									},
 								],
 							},
@@ -90,23 +89,23 @@ export function LeaseChart({
 					data,
 					series: [
 						{
-							type: "line",
-							xKey: "monthsSinceLeaseStart",
-							yKey: "odometerReading",
-							tooltip: {
-								enabled: false,
-							},
-						},
-						{
 							type: "area",
 							xKey: "monthsSinceLeaseStart",
 							yKey: "expectedOdometerReading",
 							tooltip: {
 								enabled: false,
 							},
-							fillOpacity: 0.05,
+							fillOpacity: 0.25,
 							lineDash: [3, 3],
 							strokeWidth: 1,
+						},
+						{
+							type: "line",
+							xKey: "monthsSinceLeaseStart",
+							yKey: "odometerReading",
+							tooltip: {
+								enabled: false,
+							},
 						},
 					],
 				}}
