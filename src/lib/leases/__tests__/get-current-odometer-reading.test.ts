@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { getLatestOdometerReading } from "~/lib/leases";
-import { type LeaseByIdOutput } from "~/server/api/routers/lease";
+import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 
 type MakeTestArgs = {
 	odometerReadings: LeaseByIdOutput["odometerReadings"];

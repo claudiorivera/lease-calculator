@@ -9,7 +9,7 @@ import {
 	type CreateOdometerReadingInput,
 	createOdometerReadingSchema,
 } from "~/schemas/odometer-reading";
-import { type LeaseByIdOutput } from "~/server/api/routers/lease";
+import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 import { api } from "~/trpc/client";
 
 export default function NewOdometerReadingForm({

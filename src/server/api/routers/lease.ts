@@ -6,7 +6,7 @@ import {
 	protectedProcedure,
 	publicProcedure,
 } from "~/server/api/trpc";
-import { type RouterOutputs } from "~/trpc/shared";
+import type { RouterOutputs } from "~/trpc/shared";
 
 const defaultLeaseSelect = Prisma.validator<Prisma.LeaseSelect>()({
 	id: true,
