@@ -21,7 +21,7 @@ export function LeaseChart({
 	const BG_NEUTRAL = isDarkMode ? "#262626" : "#e5e5e5";
 
 	return (
-		<section className="w-full">
+		<section className="w-full aspect-square">
 			<AgChartsReact
 				options={{
 					theme: {
