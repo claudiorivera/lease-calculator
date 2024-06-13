@@ -119,7 +119,7 @@ importers:
         version: 8.4.1
       '@types/bun':
         specifier: ^1.0.8
-        version: 1.1.3
+        version: 1.1.4
       '@types/react':
         specifier: 18.3.3
         version: 18.3.3
@@ -949,14 +949,14 @@ packages:
   '@trpc/server@10.45.2':
     resolution: {integrity: sha512-wOrSThNNE4HUnuhJG6PfDRp4L2009KDVxsd+2VYH8ro6o/7/jwYZ8Uu5j+VaW+mOmc8EHerHzGcdbGNQSAUPgg==}
 
-  '@types/bun@1.1.3':
-    resolution: {integrity: sha512-i+mVz8C/lx+RprDR6Mr402iE1kmajgJPnmSfJ/NvU85sGGXSylYZ/6yc+XhVLr2E/t8o6HmjwV0evtnUOR0CFA==}
+  '@types/bun@1.1.4':
+    resolution: {integrity: sha512-ejSuv/3s0hTHj/nkkLzBlHxm4JxOPygbLNi0kzM6ooq8rOiQvIUCv7RRErTaWSfb+QVnKz6x7qlp8N86bGDiIg==}
 
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
-  '@types/node@20.12.12':
-    resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
+  '@types/node@20.12.14':
+    resolution: {integrity: sha512-scnD59RpYD91xngrQQLGkE+6UrHUPzeKZWhhjBSa3HSkwjbQc38+q3RoIVEwxQGRw3M+j5hpNAM+lgV3cVormg==}
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -1036,8 +1036,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
-  bun-types@1.1.9:
-    resolution: {integrity: sha512-3YuLiH4Ne/ghk7K6mHiaqCqKOMrtB0Z5p1WAskHSVgi0iMZgsARV4yGkbfi565YsStvUq6GXTWB3ga7M8cznkA==}
+  bun-types@1.1.13:
+    resolution: {integrity: sha512-G/TqF0SsMQGLr4g7K3B2BK8BrPEA1EqCNwxZbyRdj5M4t54zvwyaqvRJOW34kuPqc2IvNNalRU3swc8B4oc4FA==}
 
   bun@1.1.13:
     resolution: {integrity: sha512-yrujTLEspzQJfh7hd2xkYM5skQsjBwVm/wq0cyYBkR5x4FRveOUqeAqtFOPH4aHvsDgwVN+dO0uIrlvE7dDsDQ==}
@@ -2469,13 +2469,13 @@ snapshots:
 
   '@trpc/server@10.45.2': {}
 
-  '@types/bun@1.1.3':
+  '@types/bun@1.1.4':
     dependencies:
-      bun-types: 1.1.9
+      bun-types: 1.1.13
 
   '@types/cookie@0.6.0': {}
 
-  '@types/node@20.12.12':
+  '@types/node@20.12.14':
     dependencies:
       undici-types: 5.26.5
 
@@ -2492,7 +2492,7 @@ snapshots:
 
   '@types/ws@8.5.10':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.14
 
   ag-charts-community@9.2.0: {}
 
@@ -2555,9 +2555,9 @@ snapshots:
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
 
-  bun-types@1.1.9:
+  bun-types@1.1.13:
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.14
       '@types/ws': 8.5.10
 
   bun@1.1.13:
