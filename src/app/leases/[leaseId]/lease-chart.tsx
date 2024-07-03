@@ -1,6 +1,6 @@
 "use client";
 
-import { AgChartsReact } from "ag-charts-react";
+import { AgCharts } from "ag-charts-react";
 import { useTheme } from "next-themes";
 import { getLeaseChartData } from "~/lib/leases";
 import type { LeaseByIdOutput } from "~/server/api/routers/lease";
@@ -22,7 +22,7 @@ export function LeaseChart({
 
 	return (
 		<section className="w-full aspect-square">
-			<AgChartsReact
+			<AgCharts
 				options={{
 					theme: {
 						baseTheme: isDarkMode ? "ag-default-dark" : "ag-default",
