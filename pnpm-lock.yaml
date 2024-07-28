@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@auth/prisma-adapter':
-        specifier: 2.4.1
-        version: 2.4.1(@prisma/client@5.16.2(prisma@5.16.2))(nodemailer@6.9.14)
+        specifier: 2.4.2
+        version: 2.4.2(@prisma/client@5.16.2(prisma@5.16.2))(nodemailer@6.9.14)
       '@hookform/resolvers':
         specifier: 3.7.0
         version: 3.7.0(react-hook-form@7.52.1(react@18.3.1))
@@ -171,8 +171,8 @@ packages:
       nodemailer:
         optional: true
 
-  '@auth/core@0.34.1':
-    resolution: {integrity: sha512-tuYU2VIbI8rFbkSwP710LmybB2FXJsPN7j3sjRVfN9SXVQBK2ej6LdewQaofpBGp4Mk+cC2UeiGNH0or4tgaeA==}
+  '@auth/core@0.34.2':
+    resolution: {integrity: sha512-KywHKRgLiF3l7PLyL73fjLSIBe1YNcA6sMeew4yMP6cfCWGXZrkkXd32AjRi1hlJ9nvovUBGZHvbn+LijO6ZeQ==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.2
@@ -185,8 +185,8 @@ packages:
       nodemailer:
         optional: true
 
-  '@auth/prisma-adapter@2.4.1':
-    resolution: {integrity: sha512-VF5IOTHEWHX6WHUxIbsbc12m34cp5T82fzJfi7DmzwBZb89UsoROejV8l0B1dCTZ+pDIS0d4zN9dSa2gIKywNQ==}
+  '@auth/prisma-adapter@2.4.2':
+    resolution: {integrity: sha512-QQwnGYfDiyTcAxMVhTrim+lLFFA3TKq3nIrbPtGZXlkiuNQ5t0rUg//Km7Wv21pD5bxhy4aRPlfq7TdFKk3XIw==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3 || >=4 || >=5'
 
@@ -1702,7 +1702,7 @@ snapshots:
     optionalDependencies:
       nodemailer: 6.9.14
 
-  '@auth/core@0.34.1(nodemailer@6.9.14)':
+  '@auth/core@0.34.2(nodemailer@6.9.14)':
     dependencies:
       '@panva/hkdf': 1.1.1
       '@types/cookie': 0.6.0
@@ -1714,9 +1714,9 @@ snapshots:
     optionalDependencies:
       nodemailer: 6.9.14
 
-  '@auth/prisma-adapter@2.4.1(@prisma/client@5.16.2(prisma@5.16.2))(nodemailer@6.9.14)':
+  '@auth/prisma-adapter@2.4.2(@prisma/client@5.16.2(prisma@5.16.2))(nodemailer@6.9.14)':
     dependencies:
-      '@auth/core': 0.34.1(nodemailer@6.9.14)
+      '@auth/core': 0.34.2(nodemailer@6.9.14)
       '@prisma/client': 5.16.2(prisma@5.16.2)
     transitivePeerDependencies:
       - '@simplewebauthn/browser'
