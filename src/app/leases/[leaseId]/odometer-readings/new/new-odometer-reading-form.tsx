@@ -50,6 +50,8 @@ export default function NewOdometerReadingForm({
 					label="Odometer Reading"
 					errorMessage={errors.miles?.message}
 					defaultValue={latestOdometerReading}
+					autoFocus
+					onFocus={(event) => event.target.select()}
 					{...register("miles", {
 						valueAsNumber: true,
 					})}
