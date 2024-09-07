@@ -59,7 +59,7 @@
 		"@types/react": "18.3.5",
 		"@types/react-dom": "18.3.0",
 		"autoprefixer": "10.4.20",
-		"bun": "1.1.26",
+		"bun": "1.1.27",
 		"mockdate": "3.0.5",
 		"nodemailer": "6.9.15",
 		"postcss": "8.4.45",
