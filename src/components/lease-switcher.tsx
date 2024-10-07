@@ -52,7 +52,6 @@ export default function LeaseSwitcher() {
 				<PopoverTrigger asChild>
 					<Button
 						variant="outline"
-						role="combobox"
 						aria-expanded={open}
 						aria-label="Select a lease"
 						className={cn("w-48")}
