@@ -119,7 +119,7 @@ importers:
         version: 9.1.0
       '@types/bun':
         specifier: ^1.1.10
-        version: 1.1.12
+        version: 1.1.13
       '@types/react':
         specifier: 18.3.12
         version: 18.3.12
@@ -944,8 +944,8 @@ packages:
   '@trpc/server@10.45.2':
     resolution: {integrity: sha512-wOrSThNNE4HUnuhJG6PfDRp4L2009KDVxsd+2VYH8ro6o/7/jwYZ8Uu5j+VaW+mOmc8EHerHzGcdbGNQSAUPgg==}
 
-  '@types/bun@1.1.12':
-    resolution: {integrity: sha512-UkewJesRDP3+AW30Gc8hvxuIt+vHgYZXmVOKaXV8xnwAnMXTAs3XZDsa/jW+LSdAYhHslokSm72lq63FYYjZqA==}
+  '@types/bun@1.1.13':
+    resolution: {integrity: sha512-KmQxSBgVWCl6RSuerlLGZlIWfdxkKqat0nxN61+qu4y1KDn0Ll3j7v1Pl8GnaL3a/U6GGWVTJh75ap62kR1E8Q==}
 
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
@@ -989,8 +989,8 @@ packages:
   '@types/react@18.3.12':
     resolution: {integrity: sha512-D2wOSq/d6Agt28q7rSI3jhU7G6aiuzljDGZ2hTZHIkrTLUI+AF3WMeKkEZ9nN2fkBAlcktT6vcZjDFiIhMYEQw==}
 
-  '@types/ws@8.5.12':
-    resolution: {integrity: sha512-3tPRkv1EtkDpzlgyKyI8pGsGZAGPEaXeu0DOj5DI25Ja91bdAYddYHbADRYVrZMRbfW+1l5YwXVDKohDJNQxkQ==}
+  '@types/ws@8.5.13':
+    resolution: {integrity: sha512-osM/gWBTPKgHV8XkTunnegTRIsvF6owmf5w+JtAfOw472dptdm0dlGv4xCt6GwQRcC2XVOvvRE/0bAoQcL2QkA==}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -1048,8 +1048,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
-  bun-types@1.1.32:
-    resolution: {integrity: sha512-Lxgux4InO/WRjSAEy3iyDscsnDXR8+3rgNDeZYjPAizFYjUraoNuMl9PuRd9XMgFZgdyQwaUX7/QHmOw5KGFQw==}
+  bun-types@1.1.34:
+    resolution: {integrity: sha512-br5QygTEL/TwB4uQOb96Ky22j4Gq2WxWH/8Oqv20fk5HagwKXo/akB+LiYgSfzexCt6kkcUaVm+bKiPl71xPvw==}
 
   bun@1.1.34:
     resolution: {integrity: sha512-ULiiLQG+bQC6YHW6u9jisGtwVn8msgqvDvurwsEs26mKtcAl7lRS+5yKfo/xxxnrcSIqx1QFM4vqki42s6GDVw==}
@@ -2541,9 +2541,9 @@ snapshots:
 
   '@trpc/server@10.45.2': {}
 
-  '@types/bun@1.1.12':
+  '@types/bun@1.1.13':
     dependencies:
-      bun-types: 1.1.32
+      bun-types: 1.1.34
 
   '@types/cookie@0.6.0': {}
 
@@ -2586,7 +2586,7 @@ snapshots:
       '@types/prop-types': 15.7.13
       csstype: 3.1.3
 
-  '@types/ws@8.5.12':
+  '@types/ws@8.5.13':
     dependencies:
       '@types/node': 20.12.14
 
@@ -2642,10 +2642,10 @@ snapshots:
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
 
-  bun-types@1.1.32:
+  bun-types@1.1.34:
     dependencies:
       '@types/node': 20.12.14
-      '@types/ws': 8.5.12
+      '@types/ws': 8.5.13
 
   bun@1.1.34:
     optionalDependencies:
