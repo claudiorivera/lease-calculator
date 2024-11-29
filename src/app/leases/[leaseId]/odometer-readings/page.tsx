@@ -3,11 +3,10 @@ import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
-export default async function OdometerReadingsPage({
-	params,
-}: {
-	params: { leaseId: string };
+export default async function OdometerReadingsPage(props: {
+	params: Promise<{ leaseId: string }>;
 }) {
+	const params = await props.params;
 	const odometerReadings = await api.odometerReading.byLeaseId.query(
 		params.leaseId,
 	);

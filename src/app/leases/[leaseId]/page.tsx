@@ -19,11 +19,10 @@ import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 import { auth } from "~/server/auth";
 import { api } from "~/trpc/server";
 
-export default async function LeaseDetailsPage({
-	params,
-}: {
-	params: { leaseId: string };
+export default async function LeaseDetailsPage(props: {
+	params: Promise<{ leaseId: string }>;
 }) {
+	const params = await props.params;
 	const session = await auth();
 
 	if (!session) {

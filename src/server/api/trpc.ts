@@ -10,7 +10,7 @@
 import { experimental_createServerActionHandler as createServerActionHandler } from "@trpc/next/app-dir/server";
 import { TRPCError, initTRPC } from "@trpc/server";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { headers } from "next/headers";
+import { type UnsafeUnwrappedHeaders, headers } from "next/headers";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { auth } from "~/server/auth";
@@ -91,7 +91,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 export const createAction = createServerActionHandler(t, {
 	async createContext() {
 		const ctx = await createInnerTRPCContext({
-			headers: headers(),
+			headers: headers() as unknown as UnsafeUnwrappedHeaders,
 		});
 		return ctx;
 	},

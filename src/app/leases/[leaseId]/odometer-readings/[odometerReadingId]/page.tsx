@@ -4,11 +4,10 @@ import UpdateOdometerReadingForm from "~/app/leases/[leaseId]/odometer-readings/
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
-export default async function OdometerReadingPage({
-	params,
-}: {
-	params: { odometerReadingId: string };
+export default async function OdometerReadingPage(props: {
+	params: Promise<{ odometerReadingId: string }>;
 }) {
+	const params = await props.params;
 	const odometerReading = await api.odometerReading.byId.query(
 		params.odometerReadingId,
 	);
