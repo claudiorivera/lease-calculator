@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "vitest";
 import { getLeaseChartData } from "~/lib/leases";
 import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 

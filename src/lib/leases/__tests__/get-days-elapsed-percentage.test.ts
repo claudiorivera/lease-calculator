@@ -1,55 +1,42 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { getDaysElapsedPercentage } from "~/lib/leases";
 
-type MakeTestArgs = {
-	leaseDaysElapsed: number;
-	totalLeaseDays: number;
-	expectedDaysElapsedPercentage: number;
-};
-
 describe("getDaysElapsedPercentage", () => {
-	makeTest({
-		leaseDaysElapsed: 0,
-		totalLeaseDays: 100,
-		expectedDaysElapsedPercentage: 0,
-	});
+	test.each([
+		{
+			leaseDaysElapsed: 0,
+			totalLeaseDays: 100,
+			expectedDaysElapsedPercentage: 0,
+		},
+		{
+			leaseDaysElapsed: 50,
+			totalLeaseDays: 100,
+			expectedDaysElapsedPercentage: 50,
+		},
+		{
+			leaseDaysElapsed: 1,
+			totalLeaseDays: 3,
+			expectedDaysElapsedPercentage: 33,
+		},
+		{
+			leaseDaysElapsed: 1,
+			totalLeaseDays: 1,
+			expectedDaysElapsedPercentage: 100,
+		},
+		{
+			leaseDaysElapsed: 2,
+			totalLeaseDays: 1,
+			expectedDaysElapsedPercentage: 200,
+		},
+	])(
+		"should return $expectedDaysElapsedPercentage when leaseDaysElapsed is $leaseDaysElapsed and totalLeaseDays is $totalLeaseDays",
+		({ leaseDaysElapsed, totalLeaseDays, expectedDaysElapsedPercentage }) => {
+			const daysElapsedPercentage = getDaysElapsedPercentage({
+				leaseDaysElapsed,
+				totalLeaseDays,
+			});
 
-	makeTest({
-		leaseDaysElapsed: 50,
-		totalLeaseDays: 100,
-		expectedDaysElapsedPercentage: 50,
-	});
-
-	makeTest({
-		leaseDaysElapsed: 1,
-		totalLeaseDays: 3,
-		expectedDaysElapsedPercentage: 33,
-	});
-
-	makeTest({
-		leaseDaysElapsed: 1,
-		totalLeaseDays: 1,
-		expectedDaysElapsedPercentage: 100,
-	});
-
-	makeTest({
-		leaseDaysElapsed: 2,
-		totalLeaseDays: 1,
-		expectedDaysElapsedPercentage: 200,
-	});
+			expect(daysElapsedPercentage).toBe(expectedDaysElapsedPercentage);
+		},
+	);
 });
-
-function makeTest({
-	leaseDaysElapsed,
-	totalLeaseDays,
-	expectedDaysElapsedPercentage,
-}: MakeTestArgs) {
-	it(`should return ${expectedDaysElapsedPercentage} when leaseDaysElapsed is ${leaseDaysElapsed} and totalLeaseDays is ${totalLeaseDays}`, () => {
-		const daysElapsedPercentage = getDaysElapsedPercentage({
-			leaseDaysElapsed,
-			totalLeaseDays,
-		});
-
-		expect(daysElapsedPercentage).toBe(expectedDaysElapsedPercentage);
-	});
-}
