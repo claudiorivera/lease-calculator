@@ -121,7 +121,7 @@ export default function LeaseSwitcher() {
 					</Command>
 				</PopoverContent>
 			</Popover>
-			<DialogContent className="rounded">
+			<DialogContent className="rounded-sm">
 				<DialogHeader>
 					<DialogTitle>Add a Lease</DialogTitle>
 				</DialogHeader>

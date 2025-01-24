@@ -173,7 +173,7 @@ function LeasePredictions({
 	return (
 		<section className="flex w-full flex-col items-center gap-4">
 			<p className="text-xl font-semibold">Predictions</p>
-			<div className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
+			<div className="w-full rounded-sm bg-neutral-200 p-8 text-center dark:bg-neutral-800">
 				<p className="text-6xl font-black">
 					${(estimatedFeesAtEndOfLease / 100).toFixed(2)}
 				</p>
@@ -225,7 +225,7 @@ function MilesDisplay({
 	daysElapsedPercentage: number;
 }) {
 	return (
-		<section className="w-full rounded bg-neutral-200 p-8 text-center dark:bg-neutral-800">
+		<section className="w-full rounded-sm bg-neutral-200 p-8 text-center dark:bg-neutral-800">
 			<p className="text-6xl font-black">{Math.abs(milesOverOrUnder)}</p>
 			<div className="h-4" />
 			<p>
