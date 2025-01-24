@@ -1,62 +1,47 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { getLatestOdometerReading } from "~/lib/leases";
-import type { LeaseByIdOutput } from "~/server/api/routers/lease";
-
-type MakeTestArgs = {
-	odometerReadings: LeaseByIdOutput["odometerReadings"];
-	initialMiles: number;
-	expectedLatestOdometerReading: number;
-};
 
 describe("getLatestOdometerReading", () => {
-	makeTest({
-		initialMiles: 0,
-		odometerReadings: [],
-		expectedLatestOdometerReading: 0,
-	});
+	test.each([
+		{
+			initialMiles: 0,
+			odometerReadings: [],
+			expectedLatestOdometerReading: 0,
+		},
+		{
+			initialMiles: 100,
+			odometerReadings: [],
+			expectedLatestOdometerReading: 100,
+		},
+		{
+			initialMiles: 100,
+			odometerReadings: [
+				{
+					createdAt: new Date(),
+					miles: 101,
+				},
+			],
+			expectedLatestOdometerReading: 101,
+		},
+		{
+			initialMiles: 100,
+			odometerReadings: [
+				{
+					createdAt: new Date(),
+					miles: 0,
+				},
+			],
+			expectedLatestOdometerReading: 0,
+		},
+	])(
+		"should return $expectedLatestOdometerReading when initial miles is $initialMiles and odometer readings are $odometerReadings",
+		({ initialMiles, odometerReadings, expectedLatestOdometerReading }) => {
+			const latestOdometerReading = getLatestOdometerReading({
+				odometerReadings,
+				initialMiles,
+			});
 
-	makeTest({
-		initialMiles: 100,
-		odometerReadings: [],
-		expectedLatestOdometerReading: 100,
-	});
-
-	makeTest({
-		initialMiles: 100,
-		odometerReadings: [
-			{
-				createdAt: new Date(),
-				miles: 101,
-			},
-		],
-		expectedLatestOdometerReading: 101,
-	});
-
-	makeTest({
-		initialMiles: 100,
-		odometerReadings: [
-			{
-				createdAt: new Date(),
-				miles: 0,
-			},
-		],
-		expectedLatestOdometerReading: 0,
-	});
+			expect(latestOdometerReading).toBe(expectedLatestOdometerReading);
+		},
+	);
 });
-
-function makeTest({
-	odometerReadings,
-	initialMiles,
-	expectedLatestOdometerReading,
-}: MakeTestArgs) {
-	return it(`should return ${expectedLatestOdometerReading} when initial miles is ${initialMiles} and odometer readings are ${JSON.stringify(
-		odometerReadings,
-	)}`, () => {
-		const latestOdometerReading = getLatestOdometerReading({
-			odometerReadings,
-			initialMiles,
-		});
-
-		expect(latestOdometerReading).toBe(expectedLatestOdometerReading);
-	});
-}

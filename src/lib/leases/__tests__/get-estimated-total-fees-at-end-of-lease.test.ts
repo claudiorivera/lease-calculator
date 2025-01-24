@@ -1,37 +1,31 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { getEstimatedTotalFeesAtEndOfLease } from "~/lib/leases";
 
-type MakeTestArgs = {
-	estimatedExcessMiles: number;
-	excessFeePerMileInCents: number;
-	expectedEstimatedTotalFeesAtEndOfLease: number;
-};
-
 describe("getEstimatedTotalFeesAtEndOfLease", () => {
-	makeTest({
-		estimatedExcessMiles: 100,
-		excessFeePerMileInCents: 10,
-		expectedEstimatedTotalFeesAtEndOfLease: 1000,
-	});
-
-	makeTest({
-		estimatedExcessMiles: -100,
-		excessFeePerMileInCents: 10,
-		expectedEstimatedTotalFeesAtEndOfLease: 0,
-	});
+	test.each([
+		{
+			estimatedExcessMiles: 100,
+			excessFeePerMileInCents: 10,
+			expectedEstimatedTotalFeesAtEndOfLease: 1000,
+		},
+		{
+			estimatedExcessMiles: -100,
+			excessFeePerMileInCents: 10,
+			expectedEstimatedTotalFeesAtEndOfLease: 0,
+		},
+	])(
+		"should return $expectedEstimatedTotalFeesAtEndOfLease when estimatedExcessMiles is $estimatedExcessMiles and excessFeePerMileInCents is $excessFeePerMileInCents",
+		({
+			estimatedExcessMiles,
+			excessFeePerMileInCents,
+			expectedEstimatedTotalFeesAtEndOfLease,
+		}) => {
+			expect(
+				getEstimatedTotalFeesAtEndOfLease({
+					estimatedExcessMiles,
+					excessFeePerMileInCents,
+				}),
+			).toBe(expectedEstimatedTotalFeesAtEndOfLease);
+		},
+	);
 });
-
-function makeTest({
-	estimatedExcessMiles,
-	excessFeePerMileInCents,
-	expectedEstimatedTotalFeesAtEndOfLease,
-}: MakeTestArgs) {
-	return it(`should return ${expectedEstimatedTotalFeesAtEndOfLease} when estimatedExcessMiles is ${estimatedExcessMiles} and excessFeePerMileInCents is ${excessFeePerMileInCents}`, () => {
-		expect(
-			getEstimatedTotalFeesAtEndOfLease({
-				estimatedExcessMiles,
-				excessFeePerMileInCents,
-			}),
-		).toBe(expectedEstimatedTotalFeesAtEndOfLease);
-	});
-}
