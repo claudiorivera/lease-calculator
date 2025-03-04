@@ -10,7 +10,7 @@ import {
 	updateOdometerReadingSchema,
 } from "~/schemas/odometer-reading";
 import type { OdometerReadingByIdOutput } from "~/server/api/routers/odometer-reading";
-import { api } from "~/trpc/client";
+import { api } from "~/trpc/react";
 
 export default function UpdateOdometerReadingForm({
 	odometerReading,
@@ -19,7 +19,7 @@ export default function UpdateOdometerReadingForm({
 }) {
 	const router = useRouter();
 	const utils = api.useUtils();
-	const { mutate: updateOdometerReading, isLoading } =
+	const { mutate: updateOdometerReading, isPending } =
 		api.odometerReading.update.useMutation({
 			onSuccess: async () => {
 				await utils.odometerReading.byLeaseId.invalidate(
@@ -55,7 +55,7 @@ export default function UpdateOdometerReadingForm({
 				})}
 			/>
 
-			<Button type="submit" disabled={isLoading} className="w-full">
+			<Button type="submit" disabled={isPending} className="w-full">
 				Submit
 			</Button>
 		</form>

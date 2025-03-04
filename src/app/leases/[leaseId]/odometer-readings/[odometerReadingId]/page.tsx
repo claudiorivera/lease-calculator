@@ -8,7 +8,7 @@ export default async function OdometerReadingPage(props: {
 	params: Promise<{ odometerReadingId: string }>;
 }) {
 	const params = await props.params;
-	const odometerReading = await api.odometerReading.byId.query(
+	const odometerReading = await api.odometerReading.byId(
 		params.odometerReadingId,
 	);
 

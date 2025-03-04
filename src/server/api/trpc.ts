@@ -7,10 +7,7 @@
  * need to use are documented accordingly near the end.
  */
 
-import { experimental_createServerActionHandler as createServerActionHandler } from "@trpc/next/app-dir/server";
 import { TRPCError, initTRPC } from "@trpc/server";
-import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { type UnsafeUnwrappedHeaders, headers } from "next/headers";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { auth } from "~/server/auth";
@@ -22,44 +19,20 @@ import { db } from "~/server/db";
  * This section defines the "contexts" that are available in the backend API.
  *
  * These allow you to access things when processing a request, like the database, the session, etc.
- */
-
-type CreateContextOptions = {
-	headers: Headers;
-};
-
-/**
- * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
- * it from here.
  *
- * Examples of things you may need it for:
- * - testing, so we don't have to mock Next.js' req/res
- * - tRPC's `createSSGHelpers`, where we don't have req/res
+ * This helper generates the "internals" for a tRPC context. The API handler and RSC clients each
+ * wrap this and provides the required context.
  *
- * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
+ * @see https://trpc.io/docs/server/context
  */
-export const createInnerTRPCContext = async (opts: CreateContextOptions) => {
+export const createTRPCContext = async (opts: { headers: Headers }) => {
 	const session = await auth();
 
 	return {
-		session,
-		headers: opts.headers,
 		db,
+		session,
+		...opts,
 	};
-};
-
-/**
- * This is the actual context you will use in your router. It will be used to process every request
- * that goes through your tRPC endpoint.
- *
- * @see https://trpc.io/docs/context
- */
-export const createTRPCContext = async (opts: FetchCreateContextFnOptions) => {
-	// Fetch stuff that depends on the request
-
-	return await createInnerTRPCContext({
-		headers: opts.req.headers,
-	});
 };
 
 /**
@@ -69,7 +42,6 @@ export const createTRPCContext = async (opts: FetchCreateContextFnOptions) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-
 const t = initTRPC.context<typeof createTRPCContext>().create({
 	transformer: superjson,
 	errorFormatter({ shape, error }) {
@@ -85,17 +57,11 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 });
 
 /**
- * Helper to create validated server actions from trpc procedures, or build inline actions using the
- * reusable procedure builders.
+ * Create a server-side caller.
+ *
+ * @see https://trpc.io/docs/server/server-side-calls
  */
-export const createAction = createServerActionHandler(t, {
-	async createContext() {
-		const ctx = await createInnerTRPCContext({
-			headers: headers() as unknown as UnsafeUnwrappedHeaders,
-		});
-		return ctx;
-	},
-});
+export const createCallerFactory = t.createCallerFactory;
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -112,26 +78,36 @@ export const createAction = createServerActionHandler(t, {
 export const createTRPCRouter = t.router;
 
 /**
+ * Middleware for timing procedure execution and adding an artificial delay in development.
+ *
+ * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
+ * network latency that would occur in production but not in local development.
+ */
+const timingMiddleware = t.middleware(async ({ next, path }) => {
+	const start = Date.now();
+
+	if (t._config.isDev) {
+		// artificial delay in dev
+		const waitMs = Math.floor(Math.random() * 400) + 100;
+		await new Promise((resolve) => setTimeout(resolve, waitMs));
+	}
+
+	const result = await next();
+
+	const end = Date.now();
+	console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
+
+	return result;
+});
+
+/**
  * Public (unauthenticated) procedure
  *
  * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const publicProcedure = t.procedure;
-
-/** Reusable middleware that enforces users are logged in before running the procedure. */
-const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-	if (!ctx.session || !ctx.session.user) {
-		throw new TRPCError({ code: "UNAUTHORIZED" });
-	}
-	return next({
-		ctx: {
-			// infers the `session` as non-nullable
-			session: { ...ctx.session, user: ctx.session.user },
-		},
-	});
-});
+export const publicProcedure = t.procedure.use(timingMiddleware);
 
 /**
  * Protected (authenticated) procedure
@@ -141,4 +117,16 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedure = t.procedure
+	.use(timingMiddleware)
+	.use(({ ctx, next }) => {
+		if (!ctx.session || !ctx.session.user) {
+			throw new TRPCError({ code: "UNAUTHORIZED" });
+		}
+		return next({
+			ctx: {
+				// infers the `session` as non-nullable
+				session: { ...ctx.session, user: ctx.session.user },
+			},
+		});
+	});

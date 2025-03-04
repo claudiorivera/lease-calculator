@@ -10,7 +10,7 @@ import {
 	createOdometerReadingSchema,
 } from "~/schemas/odometer-reading";
 import type { LeaseByIdOutput } from "~/server/api/routers/lease";
-import { api } from "~/trpc/client";
+import { api } from "~/trpc/react";
 
 export default function NewOdometerReadingForm({
 	leaseId,
@@ -20,7 +20,7 @@ export default function NewOdometerReadingForm({
 	latestOdometerReading: number;
 }) {
 	const router = useRouter();
-	const { mutate: createNewOdometerReading, isLoading } =
+	const { mutate: createNewOdometerReading, isPending } =
 		api.odometerReading.create.useMutation();
 	const {
 		register,
@@ -58,7 +58,7 @@ export default function NewOdometerReadingForm({
 				/>
 			</section>
 
-			<Button type="submit" disabled={isLoading}>
+			<Button type="submit" disabled={isPending}>
 				Submit
 			</Button>
 		</form>

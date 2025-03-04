@@ -35,7 +35,7 @@ import {
 import { cn } from "~/lib/utils";
 import { type CreateLeaseInput, createLeaseSchema } from "~/schemas/lease";
 import type { LeaseMineOutput } from "~/server/api/routers/lease";
-import { api } from "~/trpc/client";
+import { api } from "~/trpc/react";
 
 export default function LeaseSwitcher() {
 	const router = useRouter();
@@ -135,7 +135,7 @@ export default function LeaseSwitcher() {
 function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 	const router = useRouter();
 	const utils = api.useUtils();
-	const { mutate: createNewLease, isLoading } = api.lease.create.useMutation({
+	const { mutate: createNewLease, isPending } = api.lease.create.useMutation({
 		onSuccess: () => utils.lease.mine.invalidate(),
 	});
 	const {
@@ -217,7 +217,7 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 				})}
 			/>
 
-			<Button className="w-full" type="submit" disabled={isLoading}>
+			<Button className="w-full" type="submit" disabled={isPending}>
 				Submit
 			</Button>
 			<Button onClick={onFinished} variant="outline" className="w-full">

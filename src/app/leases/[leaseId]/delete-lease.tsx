@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/alert-dialog";
 import { Button } from "~/components/ui/button";
 import type { LeaseByIdOutput } from "~/server/api/routers/lease";
-import { api } from "~/trpc/client";
+import { api } from "~/trpc/react";
 
 export function DeleteLease({
 	leaseId,
@@ -23,13 +23,13 @@ export function DeleteLease({
 }) {
 	const router = useRouter();
 	const utils = api.useUtils();
-	const { mutate: deleteLease, isLoading } = api.lease.deleteById.useMutation();
+	const { mutate: deleteLease, isPending } = api.lease.deleteById.useMutation();
 
 	return (
 		<section className="flex w-full justify-evenly">
 			<AlertDialog>
 				<AlertDialogTrigger asChild>
-					<Button disabled={isLoading} variant="destructive">
+					<Button disabled={isPending} variant="destructive">
 						Delete Lease
 					</Button>
 				</AlertDialogTrigger>
@@ -54,7 +54,7 @@ export function DeleteLease({
 								})
 							}
 						>
-							{isLoading ? "Deleting..." : "Continue"}
+							{isPending ? "Deleting..." : "Continue"}
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>

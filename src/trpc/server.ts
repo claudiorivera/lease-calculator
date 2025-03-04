@@ -1,34 +1,30 @@
-"use server";
+import "server-only";
 
-import { httpBatchLink, loggerLink } from "@trpc/client";
-import { experimental_createTRPCNextAppDirServer as createTRPCNextAppDirServer } from "@trpc/next/app-dir/server";
-import { type UnsafeUnwrappedHeaders, headers } from "next/headers";
-import type { AppRouter } from "~/server/api/root";
-import { getUrl, transformer } from "./shared";
+import { createHydrationHelpers } from "@trpc/react-query/rsc";
+import { headers } from "next/headers";
+import { cache } from "react";
 
-export const api = createTRPCNextAppDirServer<AppRouter>({
-	config() {
-		return {
-			transformer,
-			links: [
-				loggerLink({
-					enabled: (op) =>
-						process.env.NODE_ENV === "development" ||
-						(op.direction === "down" && op.result instanceof Error),
-				}),
-				httpBatchLink({
-					url: getUrl(),
-					headers() {
-						// Forward headers from the browser to the API
-						return {
-							...Object.fromEntries(
-								headers() as unknown as UnsafeUnwrappedHeaders,
-							),
-							"x-trpc-source": "rsc",
-						};
-					},
-				}),
-			],
-		};
-	},
+import { type AppRouter, createCaller } from "~/server/api/root";
+import { createTRPCContext } from "~/server/api/trpc";
+import { createQueryClient } from "./query-client";
+
+/**
+ * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
+ * handling a tRPC call from a React Server Component.
+ */
+const createContext = cache(async () => {
+	const heads = new Headers(await headers());
+	heads.set("x-trpc-source", "rsc");
+
+	return createTRPCContext({
+		headers: heads,
+	});
 });
+
+const getQueryClient = cache(createQueryClient);
+const caller = createCaller(createContext);
+
+export const { trpc: api, HydrateClient } = createHydrationHelpers<AppRouter>(
+	caller,
+	getQueryClient,
+);
