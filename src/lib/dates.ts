@@ -1,12 +1,5 @@
 import dayjs from "dayjs";
 
-export function getDaysUntil(date: Date) {
-	const now = dayjs();
-	const then = dayjs(date);
-
-	return then.diff(now, "day");
-}
-
 export function getDaysSince(date: Date) {
 	const now = dayjs();
 	const then = dayjs(date);

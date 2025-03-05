@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	CaretSortIcon,
 	CheckIcon,
+	ExitIcon,
 	PlusCircledIcon,
 } from "@radix-ui/react-icons";
 import { signOut } from "next-auth/react";
@@ -26,7 +27,6 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "~/components/ui/dialog";
-import { Icons } from "~/components/ui/icons";
 import {
 	Popover,
 	PopoverContent,
@@ -57,7 +57,7 @@ export default function LeaseSwitcher() {
 						className={cn("w-48")}
 					>
 						{activeLease ? activeLease.name : "Select a Lease"}
-						<CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+						<CaretSortIcon className="ml-auto size-4 shrink-0 opacity-50" />
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className="w-48 p-0">
@@ -77,7 +77,7 @@ export default function LeaseSwitcher() {
 										{lease.name}
 										<CheckIcon
 											className={cn(
-												"ml-auto h-4 w-4",
+												"ml-auto size-4",
 												activeLease?.id === lease.id
 													? "opacity-100"
 													: "opacity-0",
@@ -97,7 +97,7 @@ export default function LeaseSwitcher() {
 											setShowNewLeaseDialog(true);
 										}}
 									>
-										<PlusCircledIcon className="mr-2 h-5 w-5" />
+										<PlusCircledIcon className="mr-2 size-5" />
 										Add a Lease
 									</CommandItem>
 								</DialogTrigger>
@@ -112,7 +112,7 @@ export default function LeaseSwitcher() {
 											void signOut();
 										}}
 									>
-										<Icons.signOut className="mr-2 h-5 w-5" />
+										<ExitIcon className="mr-2 size-5" />
 										Sign Out
 									</CommandItem>
 								</DialogTrigger>

@@ -44,7 +44,6 @@ export function DeleteLease({
 					<AlertDialogFooter>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
 						<AlertDialogAction
-							variant="destructive"
 							onClick={() =>
 								deleteLease(leaseId, {
 									onSuccess: () => {
