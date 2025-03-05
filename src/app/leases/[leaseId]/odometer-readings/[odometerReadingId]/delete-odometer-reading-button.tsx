@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import type { OdometerReadingByIdOutput } from "~/server/api/routers/odometer-reading";
-import { api } from "~/trpc/client";
+import { api } from "~/trpc/react";
 
 export function DeleteOdometerReadingButton({
 	odometerReading,

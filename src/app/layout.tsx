@@ -1,10 +1,10 @@
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
-import { TrpcProvider } from "~/app/providers";
 import { NavBar } from "~/components/nav-bar";
 import { ThemeProvider } from "~/components/theme-provider";
 import { cn } from "~/lib/utils";
 import "~/styles/globals.css";
+import { TRPCReactProvider } from "~/trpc/react";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -22,14 +22,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html suppressHydrationWarning lang="en">
 			<body className={cn("font-sans", inter.variable)}>
-				<TrpcProvider>
+				<TRPCReactProvider>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 						<main className="container mx-auto max-w-md">
 							<NavBar />
 							<div>{children}</div>
 						</main>
 					</ThemeProvider>
-				</TrpcProvider>
+				</TRPCReactProvider>
 			</body>
 		</html>
 	);

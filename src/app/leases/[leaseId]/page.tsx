@@ -29,7 +29,7 @@ export default async function LeaseDetailsPage(props: {
 		return redirect("/welcome");
 	}
 
-	const lease = await api.lease.byId.query(params.leaseId);
+	const lease = await api.lease.byId(params.leaseId);
 
 	const {
 		milesOverOrUnder,
