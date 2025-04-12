@@ -142,7 +142,7 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<CreateLeaseInput>({
+	} = useForm({
 		resolver: zodResolver(createLeaseSchema),
 	});
 
