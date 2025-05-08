@@ -16,8 +16,6 @@ export const env = createEnv({
 				? z.string().min(1)
 				: z.string().min(1).optional(),
 		DATABASE_URL: z.string().url(),
-		EMAIL_FROM: z.string().email(),
-		EMAIL_SERVER: z.string().url(),
 		NODE_ENV: z.enum(["development", "test", "production"]),
 		VERCEL_ENV: z.string().optional(),
 	},
@@ -42,8 +40,6 @@ export const env = createEnv({
 		AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,
 		AUTH_SECRET: process.env.AUTH_SECRET,
 		DATABASE_URL: process.env.DATABASE_URL,
-		EMAIL_FROM: process.env.EMAIL_FROM,
-		EMAIL_SERVER: process.env.EMAIL_SERVER,
 		NODE_ENV: process.env.NODE_ENV,
 		VERCEL_ENV: process.env.VERCEL_ENV,
 	},
