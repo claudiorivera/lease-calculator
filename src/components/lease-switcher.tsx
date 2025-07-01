@@ -7,8 +7,8 @@ import {
 	ExitIcon,
 	PlusCircledIcon,
 } from "@radix-ui/react-icons";
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FieldInput } from "~/components/field-input";

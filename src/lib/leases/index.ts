@@ -108,11 +108,7 @@ type LeaseChartData = {
 	odometerReading?: number;
 };
 
-export function getLeaseChartData({
-	lease,
-}: {
-	lease: LeaseByIdOutput;
-}) {
+export function getLeaseChartData({ lease }: { lease: LeaseByIdOutput }) {
 	const chartData = new Set<LeaseChartData>();
 
 	chartData.add({

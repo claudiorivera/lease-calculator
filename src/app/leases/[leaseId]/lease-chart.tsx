@@ -13,11 +13,7 @@ import { type ChartConfig, ChartContainer } from "~/components/ui/chart";
 import { getLeaseChartData } from "~/lib/leases";
 import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 
-export function LeaseChart({
-	lease,
-}: {
-	lease: LeaseByIdOutput;
-}) {
+export function LeaseChart({ lease }: { lease: LeaseByIdOutput }) {
 	const data = getLeaseChartData({
 		lease,
 	});
