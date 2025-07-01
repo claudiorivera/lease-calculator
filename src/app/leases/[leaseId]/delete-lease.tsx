@@ -16,11 +16,7 @@ import { Button } from "~/components/ui/button";
 import type { LeaseByIdOutput } from "~/server/api/routers/lease";
 import { api } from "~/trpc/react";
 
-export function DeleteLease({
-	leaseId,
-}: {
-	leaseId: LeaseByIdOutput["id"];
-}) {
+export function DeleteLease({ leaseId }: { leaseId: LeaseByIdOutput["id"] }) {
 	const router = useRouter();
 	const utils = api.useUtils();
 	const { mutate: deleteLease, isPending } = api.lease.deleteById.useMutation();

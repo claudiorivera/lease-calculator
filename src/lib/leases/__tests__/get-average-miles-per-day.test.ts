@@ -1,8 +1,8 @@
-import { describe, expect, it, test } from "vitest";
+import { describe, expect, it } from "vitest";
 import { getAverageMilesPerDay } from "~/lib/leases";
 
 describe("getAverageMilesPerDay", () => {
-	test.each([
+	it.each([
 		{
 			leaseDaysElapsed: 0,
 			initialMiles: 0,

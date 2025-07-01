@@ -1,5 +1,5 @@
 import MockDate from "mockdate";
-import { afterEach, describe, expect, it, test } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { getLastDay, getNumberOfDays } from "~/lib/dates";
 import { getAllowedMilesToDate, getLeaseDaysElapsed } from "~/lib/leases";
 
@@ -8,7 +8,7 @@ describe("getAllowedMilesToDate", () => {
 		MockDate.reset();
 	});
 
-	test.each([
+	it.each([
 		{
 			startDate: "2020-01-01",
 			today: "2020-01-02",
