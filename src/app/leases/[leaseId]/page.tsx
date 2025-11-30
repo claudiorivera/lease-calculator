@@ -1,10 +1,12 @@
+import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { DeleteLease } from "~/app/leases/[leaseId]/delete-lease";
-import { LeaseChart } from "~/app/leases/[leaseId]/lease-chart";
-import { Button } from "~/components/ui/button";
-import { Separator } from "~/components/ui/separator";
-import { getLastDay, getNumberOfDays } from "~/lib/dates";
+import { DeleteLease } from "@/app/leases/[leaseId]/delete-lease";
+import { LeaseChart } from "@/app/leases/[leaseId]/lease-chart";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { auth } from "@/lib/auth";
+import { getLastDay, getNumberOfDays } from "@/lib/dates";
 import {
 	getAllowedMilesToDate,
 	getAverageMilesPerDay,
@@ -14,16 +16,17 @@ import {
 	getEstimatedTotalFeesAtEndOfLease,
 	getLatestOdometerReading,
 	getLeaseDaysElapsed,
-} from "~/lib/leases";
-import type { LeaseByIdOutput } from "~/server/api/routers/lease";
-import { auth } from "~/server/auth";
-import { api } from "~/trpc/server";
+} from "@/lib/leases";
+import type { LeaseByIdOutput } from "@/server/api/routers/lease";
+import { api } from "@/trpc/server";
 
 export default async function LeaseDetailsPage(props: {
 	params: Promise<{ leaseId: string }>;
 }) {
 	const params = await props.params;
-	const session = await auth();
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
 
 	if (!session) {
 		return redirect("/welcome");
@@ -44,7 +47,7 @@ export default async function LeaseDetailsPage(props: {
 	return (
 		<div className="flex flex-col items-center gap-6">
 			<section className="flex flex-col items-center">
-				<p className="py-1 text-xl font-semibold">Current Status</p>
+				<p className="py-1 font-semibold text-xl">Current Status</p>
 				<Button asChild variant="link">
 					<Link href={`/leases/${lease.id}/odometer-readings/new`}>
 						Update Now
@@ -172,9 +175,9 @@ function LeasePredictions({
 }) {
 	return (
 		<section className="flex w-full flex-col items-center gap-4">
-			<p className="text-xl font-semibold">Predictions</p>
+			<p className="font-semibold text-xl">Predictions</p>
 			<div className="w-full rounded-sm bg-neutral-200 p-8 text-center dark:bg-neutral-800">
-				<p className="text-6xl font-black">
+				<p className="font-black text-6xl">
 					${(estimatedFeesAtEndOfLease / 100).toFixed(2)}
 				</p>
 				<div className="h-4" />
@@ -226,7 +229,7 @@ function MilesDisplay({
 }) {
 	return (
 		<section className="w-full rounded-sm bg-neutral-200 p-8 text-center dark:bg-neutral-800">
-			<p className="text-6xl font-black">{Math.abs(milesOverOrUnder)}</p>
+			<p className="font-black text-6xl">{Math.abs(milesOverOrUnder)}</p>
 			<div className="h-4" />
 			<p>
 				miles{" "}

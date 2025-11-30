@@ -1,9 +1,12 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { SignInButton } from "~/app/welcome/sign-in-button";
-import { auth } from "~/server/auth";
+import { SignInButton } from "@/app/welcome/sign-in-button";
+import { auth } from "@/lib/auth";
 
 export default async function WelcomePage() {
-	const session = await auth();
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
 
 	if (session) {
 		return redirect("/");

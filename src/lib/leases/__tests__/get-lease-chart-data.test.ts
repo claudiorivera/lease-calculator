@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { getLeaseChartData } from "~/lib/leases";
-import type { LeaseByIdOutput } from "~/server/api/routers/lease";
+import { getLeaseChartData } from "@/lib/leases";
+import type { LeaseByIdOutput } from "@/server/api/routers/lease";
 
 describe("getLeaseChartData", () => {
 	it("works", () => {

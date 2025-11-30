@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { getEstimatedMilesAtEndOfLease } from "~/lib/leases";
+import { getEstimatedMilesAtEndOfLease } from "@/lib/leases";
 
 describe("getEstimatedMilesAtEndOfLease", () => {
 	test.each([
@@ -21,21 +21,18 @@ describe("getEstimatedMilesAtEndOfLease", () => {
 			latestOdometerReading: 100,
 			expectedEstimatedMilesAtEndOfLease: 200,
 		},
-	])(
-		"should return $expectedEstimatedMilesAtEndOfLease when averageMilesPerDay is $averageMilesPerDay, leaseDaysRemaining is $leaseDaysRemaining and latestOdometerReading is $latestOdometerReading",
-		({
-			averageMilesPerDay,
-			leaseDaysRemaining,
-			latestOdometerReading,
-			expectedEstimatedMilesAtEndOfLease,
-		}) => {
-			expect(
-				getEstimatedMilesAtEndOfLease({
-					averageMilesPerDay,
-					leaseDaysRemaining,
-					latestOdometerReading,
-				}),
-			).toBe(expectedEstimatedMilesAtEndOfLease);
-		},
-	);
+	])("should return $expectedEstimatedMilesAtEndOfLease when averageMilesPerDay is $averageMilesPerDay, leaseDaysRemaining is $leaseDaysRemaining and latestOdometerReading is $latestOdometerReading", ({
+		averageMilesPerDay,
+		leaseDaysRemaining,
+		latestOdometerReading,
+		expectedEstimatedMilesAtEndOfLease,
+	}) => {
+		expect(
+			getEstimatedMilesAtEndOfLease({
+				averageMilesPerDay,
+				leaseDaysRemaining,
+				latestOdometerReading,
+			}),
+		).toBe(expectedEstimatedMilesAtEndOfLease);
+	});
 });

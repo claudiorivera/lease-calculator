@@ -1,17 +1,18 @@
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
-import { NavBar } from "~/components/nav-bar";
-import { ThemeProvider } from "~/components/theme-provider";
-import { cn } from "~/lib/utils";
-import "~/styles/globals.css";
-import { TRPCReactProvider } from "~/trpc/react";
+import { NavBar } from "@/components/nav-bar";
+import { ThemeProvider } from "@/components/theme-provider";
+import "@/styles/globals.css";
+import type { Metadata } from "next";
+import { cn } from "@/lib/utils";
+import { TRPCReactProvider } from "@/trpc/react";
 
 const inter = Inter({
 	subsets: ["latin"],
 	variable: "--font-sans",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: "Lease Calculator",
 	description:
 		"Log your odometer readings and the lease calculator will tell you how much you may owe at the end of your lease.",

@@ -3,22 +3,25 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { FieldInput } from "~/components/field-input";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import {
 	type UpdateOdometerReadingInput,
 	updateOdometerReadingSchema,
-} from "~/schemas/odometer-reading";
-import type { OdometerReadingByIdOutput } from "~/server/api/routers/odometer-reading";
-import { api } from "~/trpc/react";
+} from "@/schemas/odometer-reading";
+import type { OdometerReadingByIdOutput } from "@/server/api/routers/odometer-reading";
+import { api } from "@/trpc/react";
 
-export default function UpdateOdometerReadingForm({
+export function UpdateOdometerReadingForm({
 	odometerReading,
 }: {
 	odometerReading: OdometerReadingByIdOutput;
 }) {
 	const router = useRouter();
+
 	const utils = api.useUtils();
+
 	const { mutate: updateOdometerReading, isPending } =
 		api.odometerReading.update.useMutation({
 			onSuccess: async () => {
@@ -28,6 +31,7 @@ export default function UpdateOdometerReadingForm({
 				router.push(`/leases/${odometerReading.leaseId}/odometer-readings`);
 			},
 		});
+
 	const {
 		register,
 		handleSubmit,
@@ -45,15 +49,17 @@ export default function UpdateOdometerReadingForm({
 			onSubmit={handleSubmit((data) => updateOdometerReading(data))}
 			className="flex flex-col gap-2"
 		>
-			<FieldInput
-				type="number"
-				label="Odometer Reading"
-				errorMessage={errors.miles?.message}
-				defaultValue={odometerReading.miles}
-				{...register("miles", {
-					valueAsNumber: true,
-				})}
-			/>
+			<Field>
+				<FieldLabel htmlFor="miles">Odometer Reading</FieldLabel>
+				<Input
+					type="number"
+					defaultValue={odometerReading.miles}
+					{...register("miles", {
+						valueAsNumber: true,
+					})}
+				/>
+				<FieldError>{errors.miles?.message}</FieldError>
+			</Field>
 
 			<Button type="submit" disabled={isPending} className="w-full">
 				Submit
