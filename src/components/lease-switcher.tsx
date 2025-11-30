@@ -2,42 +2,43 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-	CaretSortIcon,
 	CheckIcon,
-	ExitIcon,
-	PlusCircledIcon,
-} from "@radix-ui/react-icons";
+	ChevronsUpDownIcon,
+	CirclePlusIcon,
+	LogOutIcon,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FieldInput } from "~/components/field-input";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
 	Command,
 	CommandGroup,
 	CommandItem,
 	CommandList,
 	CommandSeparator,
-} from "~/components/ui/command";
+} from "@/components/ui/command";
 import {
 	Dialog,
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "~/components/ui/dialog";
+} from "@/components/ui/dialog";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
-} from "~/components/ui/popover";
-import { cn } from "~/lib/utils";
-import { type CreateLeaseInput, createLeaseSchema } from "~/schemas/lease";
-import type { LeaseMineOutput } from "~/server/api/routers/lease";
-import { api } from "~/trpc/react";
+} from "@/components/ui/popover";
+import { signOut } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
+import { type CreateLeaseInput, createLeaseSchema } from "@/schemas/lease";
+import type { LeaseMineOutput } from "@/server/api/routers/lease";
+import { api } from "@/trpc/react";
 
-export default function LeaseSwitcher() {
+export function LeaseSwitcher() {
 	const router = useRouter();
 	const [open, setOpen] = useState(false);
 	const [showNewLeaseDialog, setShowNewLeaseDialog] = useState(false);
@@ -57,7 +58,7 @@ export default function LeaseSwitcher() {
 						className={cn("w-48")}
 					>
 						{activeLease ? activeLease.name : "Select a Lease"}
-						<CaretSortIcon className="ml-auto size-4 shrink-0 opacity-50" />
+						<ChevronsUpDownIcon className="ml-auto size-4 shrink-0 opacity-50" />
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className="w-48 p-0">
@@ -97,7 +98,7 @@ export default function LeaseSwitcher() {
 											setShowNewLeaseDialog(true);
 										}}
 									>
-										<PlusCircledIcon className="mr-2 size-5" />
+										<CirclePlusIcon className="mr-2 size-5" />
 										Add a Lease
 									</CommandItem>
 								</DialogTrigger>
@@ -108,11 +109,18 @@ export default function LeaseSwitcher() {
 							<CommandGroup>
 								<DialogTrigger asChild>
 									<CommandItem
-										onSelect={() => {
-											void signOut();
-										}}
+										onSelect={() =>
+											signOut({
+												fetchOptions: {
+													onSuccess: () => {
+														setOpen(false);
+														router.push("/");
+													},
+												},
+											})
+										}
 									>
-										<ExitIcon className="mr-2 size-5" />
+										<LogOutIcon className="mr-2 size-5" />
 										Sign Out
 									</CommandItem>
 								</DialogTrigger>
@@ -161,61 +169,76 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 			className="my-4 flex flex-col gap-4"
 			onSubmit={handleSubmit(onSubmit)}
 		>
-			<FieldInput
-				label="Name"
-				errorMessage={errors.name?.message}
-				placeholder="My Car Lease"
-				{...register("name")}
-			/>
+			<Field>
+				<FieldLabel htmlFor="name">Name</FieldLabel>
+				<Input id="name" placeholder="My Car Lease" {...register("name")} />
+				<FieldError>{errors.name?.message}</FieldError>
+			</Field>
 
-			<FieldInput
-				type="date"
-				label="Start Date"
-				errorMessage={errors.startDate?.message}
-				{...register("startDate", {
-					valueAsDate: true,
-				})}
-			/>
+			<Field>
+				<FieldLabel htmlFor="startDate">Start Date</FieldLabel>
+				<Input
+					id="startDate"
+					type="date"
+					{...register("startDate", {
+						valueAsDate: true,
+					})}
+				/>
+				<FieldError>{errors.startDate?.message}</FieldError>
+			</Field>
 
-			<FieldInput
-				type="number"
-				label="Number of Months"
-				placeholder="36"
-				errorMessage={errors.numberOfMonths?.message}
-				{...register("numberOfMonths", {
-					valueAsNumber: true,
-				})}
-			/>
+			<Field>
+				<FieldLabel htmlFor="numberOfMonths">Number of Months</FieldLabel>
+				<Input
+					id="numberOfMonths"
+					type="number"
+					placeholder="36"
+					{...register("numberOfMonths", {
+						valueAsNumber: true,
+					})}
+				/>
+				<FieldError>{errors.numberOfMonths?.message}</FieldError>
+			</Field>
 
-			<FieldInput
-				type="number"
-				label="Miles at Start of Lease"
-				placeholder="0"
-				errorMessage={errors.initialMiles?.message}
-				{...register("initialMiles", {
-					valueAsNumber: true,
-				})}
-			/>
+			<Field>
+				<FieldLabel htmlFor="initialMiles">Miles at Start of Lease</FieldLabel>
+				<Input
+					id="initialMiles"
+					type="number"
+					placeholder="0"
+					{...register("initialMiles", {
+						valueAsNumber: true,
+					})}
+				/>
+				<FieldError>{errors.initialMiles?.message}</FieldError>
+			</Field>
 
-			<FieldInput
-				type="number"
-				label="Allowed Miles"
-				placeholder="36000"
-				errorMessage={errors.allowedMiles?.message}
-				{...register("allowedMiles", {
-					valueAsNumber: true,
-				})}
-			/>
+			<Field>
+				<FieldLabel htmlFor="allowedMiles">Allowed Miles</FieldLabel>
+				<Input
+					id="allowedMiles"
+					type="number"
+					placeholder="36000"
+					{...register("allowedMiles", {
+						valueAsNumber: true,
+					})}
+				/>
+				<FieldError>{errors.allowedMiles?.message}</FieldError>
+			</Field>
 
-			<FieldInput
-				type="number"
-				label="Excess Fee Per Mile"
-				placeholder="25"
-				errorMessage={errors.excessFeePerMileInCents?.message}
-				{...register("excessFeePerMileInCents", {
-					valueAsNumber: true,
-				})}
-			/>
+			<Field>
+				<FieldLabel htmlFor="excessFeePerMileInCents">
+					Excess Fee Per Mile
+				</FieldLabel>
+				<Input
+					id="excessFeePerMileInCents"
+					type="number"
+					placeholder="25"
+					{...register("excessFeePerMileInCents", {
+						valueAsNumber: true,
+					})}
+				/>
+			</Field>
 
 			<Button className="w-full" type="submit" disabled={isPending}>
 				Submit

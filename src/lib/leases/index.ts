@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import { getDaysSince } from "~/lib/dates";
-import type { LeaseByIdOutput } from "~/server/api/routers/lease";
+import { getDaysSince } from "@/lib/dates";
+import type { LeaseByIdOutput } from "@/server/api/routers/lease";
 
 export function getLeaseDaysElapsed({
 	startDate,

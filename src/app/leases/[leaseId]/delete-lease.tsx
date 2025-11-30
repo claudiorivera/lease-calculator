@@ -11,10 +11,10 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
-import { Button } from "~/components/ui/button";
-import type { LeaseByIdOutput } from "~/server/api/routers/lease";
-import { api } from "~/trpc/react";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import type { LeaseByIdOutput } from "@/server/api/routers/lease";
+import { api } from "@/trpc/react";
 
 export function DeleteLease({ leaseId }: { leaseId: LeaseByIdOutput["id"] }) {
 	const router = useRouter();

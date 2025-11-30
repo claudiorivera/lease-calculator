@@ -9,9 +9,9 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
-import { type ChartConfig, ChartContainer } from "~/components/ui/chart";
-import { getLeaseChartData } from "~/lib/leases";
-import type { LeaseByIdOutput } from "~/server/api/routers/lease";
+import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { getLeaseChartData } from "@/lib/leases";
+import type { LeaseByIdOutput } from "@/server/api/routers/lease";
 
 export function LeaseChart({ lease }: { lease: LeaseByIdOutput }) {
 	const data = getLeaseChartData({
@@ -31,7 +31,7 @@ export function LeaseChart({ lease }: { lease: LeaseByIdOutput }) {
 		<section>
 			<ChartContainer
 				config={chartConfig}
-				className="min-h-[375px] w-full aspect-square"
+				className="aspect-square min-h-[375px] w-full"
 			>
 				<ComposedChart data={data} accessibilityLayer>
 					<CartesianGrid stroke="gray" />

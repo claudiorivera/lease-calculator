@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getAverageMilesPerDay } from "~/lib/leases";
+import { getAverageMilesPerDay } from "@/lib/leases";
 
 describe("getAverageMilesPerDay", () => {
 	it.each([
@@ -27,21 +27,18 @@ describe("getAverageMilesPerDay", () => {
 			latestOdometerReading: 1,
 			expectedAverageMilesPerDay: 0.33,
 		},
-	])(
-		"should return $expectedAverageMilesPerDay when leaseDaysElapsed is $leaseDaysElapsed, initialMiles is $initialMiles, latestOdometerReading is $latestOdometerReading",
-		({
-			leaseDaysElapsed,
-			initialMiles,
-			latestOdometerReading,
-			expectedAverageMilesPerDay,
-		}) => {
-			expect(
-				getAverageMilesPerDay({
-					leaseDaysElapsed,
-					initialMiles,
-					latestOdometerReading,
-				}),
-			).toBeCloseTo(expectedAverageMilesPerDay);
-		},
-	);
+	])("should return $expectedAverageMilesPerDay when leaseDaysElapsed is $leaseDaysElapsed, initialMiles is $initialMiles, latestOdometerReading is $latestOdometerReading", ({
+		leaseDaysElapsed,
+		initialMiles,
+		latestOdometerReading,
+		expectedAverageMilesPerDay,
+	}) => {
+		expect(
+			getAverageMilesPerDay({
+				leaseDaysElapsed,
+				initialMiles,
+				latestOdometerReading,
+			}),
+		).toBeCloseTo(expectedAverageMilesPerDay);
+	});
 });
