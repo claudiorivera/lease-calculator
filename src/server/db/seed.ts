@@ -28,7 +28,7 @@ export async function seed() {
 			allowedMiles: 12000,
 			excessFeePerMileInCents: 25,
 			name: "Demo Lease",
-			startDate: new Date(2025, 0, 1),
+			startDate: new Date(2026, 0, 1),
 			numberOfMonths: 12,
 			initialMiles: 0,
 		})
@@ -41,32 +41,32 @@ export async function seed() {
 	await db.insert(odometerReading).values([
 		{
 			miles: 1100,
-			createdAt: new Date(2025, 1, 1),
+			createdAt: new Date(2026, 1, 1),
 			leaseId: newLease.id,
 		},
 		{
 			miles: 1900,
-			createdAt: new Date(2025, 2, 1),
+			createdAt: new Date(2026, 2, 1),
 			leaseId: newLease.id,
 		},
 		{
 			miles: 2600,
-			createdAt: new Date(2025, 3, 1),
+			createdAt: new Date(2026, 3, 1),
 			leaseId: newLease.id,
 		},
 		{
 			miles: 5800,
-			createdAt: new Date(2025, 5, 1),
+			createdAt: new Date(2026, 5, 1),
 			leaseId: newLease.id,
 		},
 		{
 			miles: 6200,
-			createdAt: new Date(2025, 6, 1),
+			createdAt: new Date(2026, 6, 1),
 			leaseId: newLease.id,
 		},
 		{
 			miles: 8500,
-			createdAt: new Date(2025, 7, 1),
+			createdAt: new Date(2026, 7, 1),
 			leaseId: newLease.id,
 		},
 	]);
