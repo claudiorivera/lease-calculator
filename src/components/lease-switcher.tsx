@@ -111,6 +111,7 @@ export function LeaseSwitcher() {
 													onSuccess: () => {
 														setOpen(false);
 														router.push("/");
+														setActiveLease(null);
 													},
 												},
 											})
