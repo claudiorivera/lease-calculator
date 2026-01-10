@@ -12,7 +12,6 @@ export const env = createEnv({
 		NODE_ENV: z
 			.enum(["development", "test", "production"])
 			.default("development"),
-		REDIRECT_URI: z.url().optional(),
 	},
 	runtimeEnv: {
 		BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
@@ -22,7 +21,6 @@ export const env = createEnv({
 		GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
 		GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
 		NODE_ENV: process.env.NODE_ENV,
-		REDIRECT_URI: process.env.REDIRECT_URI,
 	},
 	skipValidation: !!process.env.SKIP_VALIDATION,
 	emptyStringAsUndefined: true,
