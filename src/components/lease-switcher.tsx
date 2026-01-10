@@ -103,24 +103,23 @@ export function LeaseSwitcher() {
 						<CommandSeparator />
 						<CommandList>
 							<CommandGroup>
-								<DialogTrigger asChild>
-									<CommandItem
-										onSelect={() =>
-											signOut({
-												fetchOptions: {
-													onSuccess: () => {
-														setOpen(false);
-														router.push("/");
-														setActiveLease(null);
-													},
+								<CommandItem
+									onSelect={() =>
+										signOut({
+											fetchOptions: {
+												onSuccess: () => {
+													setOpen(false);
+													setActiveLease(null);
+													router.push("/");
+													router.refresh();
 												},
-											})
-										}
-									>
-										<LogOutIcon className="mr-2 size-5" />
-										Sign Out
-									</CommandItem>
-								</DialogTrigger>
+											},
+										})
+									}
+								>
+									<LogOutIcon className="mr-2 size-5" />
+									Sign Out
+								</CommandItem>
 							</CommandGroup>
 						</CommandList>
 					</Command>
