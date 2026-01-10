@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { LoadingButton } from "@/components/loading-button";
 import type { OdometerReadingByIdOutput } from "@/server/api/routers/odometer-reading";
 import { api } from "@/trpc/react";
 
@@ -13,7 +13,7 @@ export function DeleteOdometerReadingButton({
 	const router = useRouter();
 	const utils = api.useUtils();
 
-	const { mutate: deleteOdometerReading } =
+	const { mutate: deleteOdometerReading, isPending } =
 		api.odometerReading.delete.useMutation({
 			onSuccess: async () => {
 				await utils.odometerReading.byLeaseId.invalidate(
@@ -24,11 +24,12 @@ export function DeleteOdometerReadingButton({
 		});
 
 	return (
-		<Button
+		<LoadingButton
+			isLoading={isPending}
 			variant="destructive"
 			onClick={() => deleteOdometerReading(odometerReading.id)}
 		>
 			Delete
-		</Button>
+		</LoadingButton>
 	);
 }

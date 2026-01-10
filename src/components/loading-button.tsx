@@ -1,5 +1,5 @@
 import { Loader2Icon } from "lucide-react";
-import type { ComponentProps } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 
 export function LoadingButton({
@@ -7,7 +7,7 @@ export function LoadingButton({
 	isLoading = false,
 	...props
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 	isLoading?: boolean;
 } & ComponentProps<typeof Button>) {
 	return (

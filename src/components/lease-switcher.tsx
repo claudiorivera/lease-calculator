@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { LoadingButton } from "@/components/loading-button";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -240,9 +241,9 @@ function NewLeaseForm({ onFinished }: { onFinished: () => void }) {
 				/>
 			</Field>
 
-			<Button className="w-full" type="submit" disabled={isPending}>
+			<LoadingButton isLoading={isPending} className="w-full" type="submit">
 				Submit
-			</Button>
+			</LoadingButton>
 			<Button onClick={onFinished} variant="outline" className="w-full">
 				Cancel
 			</Button>

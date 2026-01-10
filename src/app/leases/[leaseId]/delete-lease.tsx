@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { LoadingButton } from "@/components/loading-button";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -12,7 +13,6 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import type { LeaseByIdOutput } from "@/server/api/routers/lease";
 import { api } from "@/trpc/react";
 
@@ -25,9 +25,9 @@ export function DeleteLease({ leaseId }: { leaseId: LeaseByIdOutput["id"] }) {
 		<section className="flex w-full justify-evenly">
 			<AlertDialog>
 				<AlertDialogTrigger asChild>
-					<Button disabled={isPending} variant="destructive">
+					<LoadingButton isLoading={isPending} variant="destructive">
 						Delete Lease
-					</Button>
+					</LoadingButton>
 				</AlertDialogTrigger>
 				<AlertDialogContent>
 					<AlertDialogHeader>

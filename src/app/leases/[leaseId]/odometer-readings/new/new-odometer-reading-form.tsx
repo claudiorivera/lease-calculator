@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { LoadingButton } from "@/components/loading-button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
@@ -63,9 +63,9 @@ export function NewOdometerReadingForm({
 				</Field>
 			</section>
 
-			<Button type="submit" disabled={isPending}>
+			<LoadingButton type="submit" isLoading={isPending}>
 				Submit
-			</Button>
+			</LoadingButton>
 		</form>
 	);
 }
