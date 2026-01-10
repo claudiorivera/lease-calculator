@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { api } from "@/trpc/server";
 
 export default async function HomePage() {
 	const session = await auth.api.getSession({
@@ -9,6 +10,12 @@ export default async function HomePage() {
 
 	if (!session) {
 		return redirect("/welcome");
+	}
+
+	const leases = await api.lease.mine();
+
+	if (leases.length === 1 && leases[0]?.id) {
+		return redirect(`/leases/${leases[0].id}`);
 	}
 
 	return (

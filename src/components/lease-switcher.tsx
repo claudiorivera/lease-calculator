@@ -6,7 +6,7 @@ import {
 	CirclePlusIcon,
 	LogOutIcon,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { NewLeaseForm } from "@/components/new-lease-form";
 import { Button } from "@/components/ui/button";
@@ -31,17 +31,16 @@ import {
 } from "@/components/ui/popover";
 import { signOut } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-import type { LeaseMineOutput } from "@/server/api/routers/lease";
 import { api } from "@/trpc/react";
 
 export function LeaseSwitcher() {
 	const router = useRouter();
+	const params = useParams<{ leaseId?: string }>();
 	const [open, setOpen] = useState(false);
 	const [showNewLeaseDialog, setShowNewLeaseDialog] = useState(false);
-	const [activeLease, setActiveLease] = useState<
-		LeaseMineOutput[number] | null
-	>(null);
 	const { data: leases = [] } = api.lease.mine.useQuery();
+
+	const activeLease = leases.find((lease) => lease.id === params.leaseId);
 
 	return (
 		<Dialog open={showNewLeaseDialog} onOpenChange={setShowNewLeaseDialog}>
@@ -65,7 +64,6 @@ export function LeaseSwitcher() {
 									<CommandItem
 										key={lease.id}
 										onSelect={() => {
-											setActiveLease(lease);
 											router.push(`/leases/${lease.id}`);
 											setOpen(false);
 										}}
@@ -109,7 +107,6 @@ export function LeaseSwitcher() {
 											fetchOptions: {
 												onSuccess: () => {
 													setOpen(false);
-													setActiveLease(null);
 													router.push("/");
 													router.refresh();
 												},
