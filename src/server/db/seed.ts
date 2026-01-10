@@ -4,7 +4,7 @@ import { db } from "@/server/db";
 import { lease, odometerReading, Role, user } from "@/server/db/schema";
 
 export async function seed() {
-	await db.delete(user);
+	await db.delete(user).where(eq(user.role, Role.demo));
 
 	const { user: newUser } = await auth.api.signUpEmail({
 		body: {
