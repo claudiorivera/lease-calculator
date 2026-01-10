@@ -10,13 +10,23 @@ export const auth = betterAuth({
 		provider: "pg",
 		schema,
 	}),
+	socialProviders: {
+		discord: {
+			clientId: env.DISCORD_CLIENT_ID,
+			clientSecret: env.DISCORD_CLIENT_SECRET,
+		},
+		github: {
+			clientId: env.GITHUB_CLIENT_ID,
+			clientSecret: env.GITHUB_CLIENT_SECRET,
+		},
+	},
 	plugins: [oAuthProxy()],
 	emailAndPassword: {
 		enabled: true,
 	},
 	secret: env.BETTER_AUTH_SECRET,
 	logger: {
-		level: process.env.NODE_ENV === "development" ? "debug" : "info",
+		level: env.NODE_ENV === "development" ? "debug" : "info",
 	},
 	trustedOrigins: process.env.VERCEL_URL
 		? [`https://${process.env.VERCEL_URL}`]

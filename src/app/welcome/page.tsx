@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { SignInButton } from "@/app/welcome/sign-in-button";
+import { SignIn } from "@/app/welcome/sign-in";
 import { auth } from "@/lib/auth";
 
 export default async function WelcomePage() {
@@ -15,7 +15,7 @@ export default async function WelcomePage() {
 	return (
 		<div className="flex flex-col items-center gap-4">
 			<h1>Welcome to Lease Calculator</h1>
-			<SignInButton />
+			<SignIn />
 		</div>
 	);
 }
