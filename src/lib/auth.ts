@@ -24,11 +24,7 @@ export const auth = betterAuth({
 				"https://lease-calculator.claudiorivera.com/api/auth/callback/github",
 		},
 	},
-	plugins: [
-		oAuthProxy({
-			productionURL: "https://lease-calculator.claudiorivera.com",
-		}),
-	],
+	plugins: [oAuthProxy()],
 	emailAndPassword: {
 		enabled: true,
 	},
