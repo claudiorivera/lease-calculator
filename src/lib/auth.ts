@@ -14,13 +14,21 @@ export const auth = betterAuth({
 		discord: {
 			clientId: env.DISCORD_CLIENT_ID,
 			clientSecret: env.DISCORD_CLIENT_SECRET,
+			redirectURI:
+				"https://lease-calculator.claudiorivera.com/api/auth/callback/discord",
 		},
 		github: {
 			clientId: env.GITHUB_CLIENT_ID,
 			clientSecret: env.GITHUB_CLIENT_SECRET,
+			redirectURI:
+				"https://lease-calculator.claudiorivera.com/api/auth/callback/github",
 		},
 	},
-	plugins: [oAuthProxy()],
+	plugins: [
+		oAuthProxy({
+			productionURL: "https://lease-calculator.claudiorivera.com",
+		}),
+	],
 	emailAndPassword: {
 		enabled: true,
 	},
