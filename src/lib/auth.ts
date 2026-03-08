@@ -1,5 +1,5 @@
+import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { oAuthProxy } from "better-auth/plugins/oauth-proxy";
 import { env } from "@/env.mjs";
 import { db } from "@/server/db";
@@ -38,10 +38,12 @@ export const auth = betterAuth({
 	user: {
 		additionalFields: {
 			role: {
-				type: "string",
+				type: Object.values(schema.Role),
 				input: false,
 				default: schema.Role.user,
 			},
 		},
 	},
 });
+
+export type Session = typeof auth.$Infer.Session;
