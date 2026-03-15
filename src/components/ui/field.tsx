@@ -144,7 +144,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
 			data-slot="field-description"
 			className={cn(
 				"font-normal text-muted-foreground text-sm leading-normal group-has-[[data-orientation=horizontal]]/field:text-balance",
-				"nth-last-2:-mt-1 [[data-variant=legend]+&]:-mt-1.5 last:mt-0",
+				"nth-last-2:-mt-1 last:mt-0 [[data-variant=legend]+&]:-mt-1.5",
 				"[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
 				className,
 			)}
@@ -165,7 +165,7 @@ function FieldSeparator({
 			data-slot="field-separator"
 			data-content={!!children}
 			className={cn(
-				"-my-2 group-data-[variant=outline]/field-group:-mb-2 relative h-5 text-sm",
+				"relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2",
 				className,
 			)}
 			{...props}
@@ -212,6 +212,7 @@ function FieldError({
 			<ul className="ml-4 flex list-disc flex-col gap-1">
 				{uniqueErrors.map(
 					(error, index) =>
+						// biome-ignore lint/suspicious/noArrayIndexKey: no unique id available
 						error?.message && <li key={index}>{error.message}</li>,
 				)}
 			</ul>
@@ -236,13 +237,13 @@ function FieldError({
 
 export {
 	Field,
-	FieldLabel,
+	FieldContent,
 	FieldDescription,
 	FieldError,
 	FieldGroup,
+	FieldLabel,
 	FieldLegend,
 	FieldSeparator,
 	FieldSet,
-	FieldContent,
 	FieldTitle,
 };
