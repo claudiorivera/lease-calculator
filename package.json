@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@better-auth/drizzle-adapter": "1.5.5",
-		"@dotenvx/dotenvx": "1.57.0",
+		"@dotenvx/dotenvx": "1.61.0",
 		"@hookform/resolvers": "5.2.2",
 		"@paralleldrive/cuid2": "3.3.0",
 		"@radix-ui/react-alert-dialog": "1.1.15",
