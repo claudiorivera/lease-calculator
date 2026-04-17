@@ -48,7 +48,7 @@
 		"pg": "8.20.0",
 		"react": "19.2.5",
 		"react-dom": "19.2.5",
-		"react-hook-form": "7.71.2",
+		"react-hook-form": "7.72.1",
 		"recharts": "2.15.4",
 		"superjson": "2.2.6",
 		"tailwind-merge": "3.5.0",
