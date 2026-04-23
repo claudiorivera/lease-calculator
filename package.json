@@ -18,7 +18,7 @@
 		"test:watch": "vitest --watch"
 	},
 	"dependencies": {
-		"@better-auth/drizzle-adapter": "1.6.5",
+		"@better-auth/drizzle-adapter": "1.6.7",
 		"@dotenvx/dotenvx": "1.61.1",
 		"@hookform/resolvers": "5.2.2",
 		"@paralleldrive/cuid2": "3.3.0",
