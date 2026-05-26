@@ -18,7 +18,7 @@
 		"test:watch": "vitest --watch"
 	},
 	"dependencies": {
-		"@better-auth/drizzle-adapter": "1.6.9",
+		"@better-auth/drizzle-adapter": "1.6.11",
 		"@dotenvx/dotenvx": "1.63.0",
 		"@hookform/resolvers": "5.2.2",
 		"@paralleldrive/cuid2": "3.3.0",
@@ -35,7 +35,7 @@
 		"@trpc/client": "11.16.0",
 		"@trpc/react-query": "11.16.0",
 		"@trpc/server": "11.16.0",
-		"better-auth": "1.6.9",
+		"better-auth": "1.6.11",
 		"class-variance-authority": "0.7.1",
 		"clsx": "2.1.1",
 		"cmdk": "1.1.1",
