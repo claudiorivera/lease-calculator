@@ -49,34 +49,37 @@ describe("getAllowedMilesToDate", () => {
 			numberOfMonths: 1,
 			expectedAllowedMilesToDate: 130,
 		},
-	])("should return $expectedAllowedMilesToDate when start date is $startDate and today is $today and allowed miles is $allowedMiles and number of months is $numberOfMonths", ({
-		startDate,
-		today,
-		allowedMiles,
-		initialMiles,
-		numberOfMonths,
-		expectedAllowedMilesToDate,
-	}) => {
-		MockDate.set(today);
-		const leaseDaysElapsed = getLeaseDaysElapsed({
-			startDate: new Date(startDate),
-		});
-
-		const totalLeaseDays = getNumberOfDays({
-			start: new Date(startDate),
-			end: getLastDay({
-				startDate: new Date(startDate),
-				numberOfMonths,
-			}),
-		});
-
-		const allowedMilesToDate = getAllowedMilesToDate({
+	])(
+		"should return $expectedAllowedMilesToDate when start date is $startDate and today is $today and allowed miles is $allowedMiles and number of months is $numberOfMonths",
+		({
+			startDate,
+			today,
 			allowedMiles,
 			initialMiles,
-			leaseDaysElapsed,
-			totalLeaseDays,
-		});
+			numberOfMonths,
+			expectedAllowedMilesToDate,
+		}) => {
+			MockDate.set(today);
+			const leaseDaysElapsed = getLeaseDaysElapsed({
+				startDate: new Date(startDate),
+			});
 
-		expect(allowedMilesToDate).toBe(expectedAllowedMilesToDate);
-	});
+			const totalLeaseDays = getNumberOfDays({
+				start: new Date(startDate),
+				end: getLastDay({
+					startDate: new Date(startDate),
+					numberOfMonths,
+				}),
+			});
+
+			const allowedMilesToDate = getAllowedMilesToDate({
+				allowedMiles,
+				initialMiles,
+				leaseDaysElapsed,
+				totalLeaseDays,
+			});
+
+			expect(allowedMilesToDate).toBe(expectedAllowedMilesToDate);
+		},
+	);
 });

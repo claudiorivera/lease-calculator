@@ -33,16 +33,15 @@ describe("getLatestOdometerReading", () => {
 			],
 			expectedLatestOdometerReading: 0,
 		},
-	])("should return $expectedLatestOdometerReading when initial miles is $initialMiles and odometer readings are $odometerReadings", ({
-		initialMiles,
-		odometerReadings,
-		expectedLatestOdometerReading,
-	}) => {
-		const latestOdometerReading = getLatestOdometerReading({
-			odometerReadings,
-			initialMiles,
-		});
+	])(
+		"should return $expectedLatestOdometerReading when initial miles is $initialMiles and odometer readings are $odometerReadings",
+		({ initialMiles, odometerReadings, expectedLatestOdometerReading }) => {
+			const latestOdometerReading = getLatestOdometerReading({
+				odometerReadings,
+				initialMiles,
+			});
 
-		expect(latestOdometerReading).toBe(expectedLatestOdometerReading);
-	});
+			expect(latestOdometerReading).toBe(expectedLatestOdometerReading);
+		},
+	);
 });

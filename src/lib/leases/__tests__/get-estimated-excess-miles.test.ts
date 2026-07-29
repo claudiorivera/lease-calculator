@@ -21,18 +21,21 @@ describe("getEstimatedExcessMiles", () => {
 			allowedMiles: 50,
 			expectedEstimatedExcessMiles: -40,
 		},
-	])("should return $expectedEstimatedExcessMiles when estimatedMilesAtEndOfLease is $estimatedMilesAtEndOfLease and initialMiles is $initialMiles and allowedMiles is $allowedMiles", ({
-		estimatedMilesAtEndOfLease,
-		initialMiles,
-		allowedMiles,
-		expectedEstimatedExcessMiles,
-	}) => {
-		expect(
-			getEstimatedExcessMiles({
-				estimatedMilesAtEndOfLease,
-				initialMiles,
-				allowedMiles,
-			}),
-		).toBe(expectedEstimatedExcessMiles);
-	});
+	])(
+		"should return $expectedEstimatedExcessMiles when estimatedMilesAtEndOfLease is $estimatedMilesAtEndOfLease and initialMiles is $initialMiles and allowedMiles is $allowedMiles",
+		({
+			estimatedMilesAtEndOfLease,
+			initialMiles,
+			allowedMiles,
+			expectedEstimatedExcessMiles,
+		}) => {
+			expect(
+				getEstimatedExcessMiles({
+					estimatedMilesAtEndOfLease,
+					initialMiles,
+					allowedMiles,
+				}),
+			).toBe(expectedEstimatedExcessMiles);
+		},
+	);
 });
