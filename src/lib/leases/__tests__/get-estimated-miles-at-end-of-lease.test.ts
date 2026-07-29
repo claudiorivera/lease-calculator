@@ -21,18 +21,21 @@ describe("getEstimatedMilesAtEndOfLease", () => {
 			latestOdometerReading: 100,
 			expectedEstimatedMilesAtEndOfLease: 200,
 		},
-	])("should return $expectedEstimatedMilesAtEndOfLease when averageMilesPerDay is $averageMilesPerDay, leaseDaysRemaining is $leaseDaysRemaining and latestOdometerReading is $latestOdometerReading", ({
-		averageMilesPerDay,
-		leaseDaysRemaining,
-		latestOdometerReading,
-		expectedEstimatedMilesAtEndOfLease,
-	}) => {
-		expect(
-			getEstimatedMilesAtEndOfLease({
-				averageMilesPerDay,
-				leaseDaysRemaining,
-				latestOdometerReading,
-			}),
-		).toBe(expectedEstimatedMilesAtEndOfLease);
-	});
+	])(
+		"should return $expectedEstimatedMilesAtEndOfLease when averageMilesPerDay is $averageMilesPerDay, leaseDaysRemaining is $leaseDaysRemaining and latestOdometerReading is $latestOdometerReading",
+		({
+			averageMilesPerDay,
+			leaseDaysRemaining,
+			latestOdometerReading,
+			expectedEstimatedMilesAtEndOfLease,
+		}) => {
+			expect(
+				getEstimatedMilesAtEndOfLease({
+					averageMilesPerDay,
+					leaseDaysRemaining,
+					latestOdometerReading,
+				}),
+			).toBe(expectedEstimatedMilesAtEndOfLease);
+		},
+	);
 });

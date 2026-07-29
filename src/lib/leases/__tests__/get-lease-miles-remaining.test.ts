@@ -15,18 +15,21 @@ describe("getLeaseMilesRemaining", () => {
 			latestOdometerReading: 0,
 			expectedLeaseMilesRemaining: 200,
 		},
-	])("should return $expectedLeaseMilesRemaining when initial miles is $initialMiles and allowed miles is $allowedMiles and latest odometer reading is $latestOdometerReading", ({
-		initialMiles,
-		allowedMiles,
-		latestOdometerReading,
-		expectedLeaseMilesRemaining,
-	}) => {
-		const leaseMilesRemaining = getLeaseMilesRemaining({
+	])(
+		"should return $expectedLeaseMilesRemaining when initial miles is $initialMiles and allowed miles is $allowedMiles and latest odometer reading is $latestOdometerReading",
+		({
 			initialMiles,
 			allowedMiles,
 			latestOdometerReading,
-		});
+			expectedLeaseMilesRemaining,
+		}) => {
+			const leaseMilesRemaining = getLeaseMilesRemaining({
+				initialMiles,
+				allowedMiles,
+				latestOdometerReading,
+			});
 
-		expect(leaseMilesRemaining).toBe(expectedLeaseMilesRemaining);
-	});
+			expect(leaseMilesRemaining).toBe(expectedLeaseMilesRemaining);
+		},
+	);
 });

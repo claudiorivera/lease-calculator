@@ -13,16 +13,19 @@ describe("getEstimatedTotalFeesAtEndOfLease", () => {
 			excessFeePerMileInCents: 10,
 			expectedEstimatedTotalFeesAtEndOfLease: 0,
 		},
-	])("should return $expectedEstimatedTotalFeesAtEndOfLease when estimatedExcessMiles is $estimatedExcessMiles and excessFeePerMileInCents is $excessFeePerMileInCents", ({
-		estimatedExcessMiles,
-		excessFeePerMileInCents,
-		expectedEstimatedTotalFeesAtEndOfLease,
-	}) => {
-		expect(
-			getEstimatedTotalFeesAtEndOfLease({
-				estimatedExcessMiles,
-				excessFeePerMileInCents,
-			}),
-		).toBe(expectedEstimatedTotalFeesAtEndOfLease);
-	});
+	])(
+		"should return $expectedEstimatedTotalFeesAtEndOfLease when estimatedExcessMiles is $estimatedExcessMiles and excessFeePerMileInCents is $excessFeePerMileInCents",
+		({
+			estimatedExcessMiles,
+			excessFeePerMileInCents,
+			expectedEstimatedTotalFeesAtEndOfLease,
+		}) => {
+			expect(
+				getEstimatedTotalFeesAtEndOfLease({
+					estimatedExcessMiles,
+					excessFeePerMileInCents,
+				}),
+			).toBe(expectedEstimatedTotalFeesAtEndOfLease);
+		},
+	);
 });

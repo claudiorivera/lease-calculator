@@ -28,16 +28,15 @@ describe("getDaysElapsedPercentage", () => {
 			totalLeaseDays: 1,
 			expectedDaysElapsedPercentage: 200,
 		},
-	])("should return $expectedDaysElapsedPercentage when leaseDaysElapsed is $leaseDaysElapsed and totalLeaseDays is $totalLeaseDays", ({
-		leaseDaysElapsed,
-		totalLeaseDays,
-		expectedDaysElapsedPercentage,
-	}) => {
-		const daysElapsedPercentage = getDaysElapsedPercentage({
-			leaseDaysElapsed,
-			totalLeaseDays,
-		});
+	])(
+		"should return $expectedDaysElapsedPercentage when leaseDaysElapsed is $leaseDaysElapsed and totalLeaseDays is $totalLeaseDays",
+		({ leaseDaysElapsed, totalLeaseDays, expectedDaysElapsedPercentage }) => {
+			const daysElapsedPercentage = getDaysElapsedPercentage({
+				leaseDaysElapsed,
+				totalLeaseDays,
+			});
 
-		expect(daysElapsedPercentage).toBe(expectedDaysElapsedPercentage);
-	});
+			expect(daysElapsedPercentage).toBe(expectedDaysElapsedPercentage);
+		},
+	);
 });
