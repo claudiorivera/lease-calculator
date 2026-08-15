@@ -68,7 +68,7 @@
 		"happy-dom": "20.11.2",
 		"jsdom": "^30.0.0",
 		"mockdate": "3.0.5",
-		"postcss": "8.5.25",
+		"postcss": "8.5.26",
 		"tailwindcss": "4.3.3",
 		"tsx": "4.23.1",
 		"typescript": "7.0.2",
