@@ -1,8 +1,16 @@
 import { relations } from "drizzle-orm";
-import { lease, odometerReading, user } from "@/server/db/schema";
+import {
+	account,
+	lease,
+	odometerReading,
+	session,
+	user,
+} from "@/server/db/schema";
 
 export const userRelations = relations(user, ({ many }) => ({
 	leases: many(lease),
+	sessions: many(session),
+	accounts: many(account),
 }));
 
 export const leaseRelations = relations(lease, ({ one, many }) => ({
@@ -22,3 +30,17 @@ export const odometerReadingRelations = relations(
 		}),
 	}),
 );
+
+export const sessionRelations = relations(session, ({ one }) => ({
+	user: one(user, {
+		fields: [session.userId],
+		references: [user.id],
+	}),
+}));
+
+export const accountRelations = relations(account, ({ one }) => ({
+	user: one(user, {
+		fields: [account.userId],
+		references: [user.id],
+	}),
+}));
