@@ -11,7 +11,7 @@ export default async function OdometerReadingsPage(props: {
 
 	return (
 		<div>
-			<h1 className="font-semibold text-xl">Odometer Readings</h1>
+			<h1 className="text-xl font-semibold">Odometer Readings</h1>
 
 			<ul className="flex flex-col py-4">
 				{odometerReadings.map((odometerReading) => (

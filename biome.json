@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.5.6/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.6.2/schema.json",
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
@@ -22,12 +22,9 @@
 				"noEnum": "error"
 			},
 			"nursery": {
-				"useSortedClasses": {
+				"useTailwindSortedClasses": {
 					"fix": "safe",
-					"level": "warn",
-					"options": {
-						"functions": ["cn", "clsx", "cva"]
-					}
+					"level": "warn"
 				}
 			}
 		},
@@ -66,5 +63,6 @@
 				}
 			}
 		}
-	]
+	],
+	"tailwind": { "mergeFunctions": ["cn", "clsx"], "variantFunctions": ["cva"] }
 }
